@@ -6,6 +6,7 @@ namespace Infraestrutura.Data
     public class ApplicationDbContext : DbContext
     {
         private readonly string _connectionString;
+        public ApplicationDbContext() { }
         public ApplicationDbContext(string connectionString)
         {
             _connectionString = connectionString;
