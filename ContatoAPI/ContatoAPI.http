@@ -1,0 +1,6 @@
+@ContatoAPI_HostAddress = http://localhost:5252
+
+GET {{ContatoAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
