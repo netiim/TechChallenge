@@ -1,4 +1,6 @@
+using Core.Interfaces;
 using Infraestrutura.Data;
+using Infraestrutura.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
+
+builder.Services.AddScoped<IEstadoService,EstadoService>();
+builder.Services.AddScoped<IEstadoRepository,EstadoRepository>();
 
 var connectionString = configuration.GetValue<string>("ConnectionString");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

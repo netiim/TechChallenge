@@ -9,6 +9,6 @@ namespace Core.Entidades
     public abstract class EntityBase
     {
         public int Id { get; set; }
-        public DateTime DataCriacao { get; set; }
+        public DateTime DataCriacao { get; set; } = DateTime.Now;
     }
 }
