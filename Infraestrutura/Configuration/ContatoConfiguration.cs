@@ -21,6 +21,11 @@ namespace Infraestrutura.Configuration
             builder.Property(p => p.Email).HasColumnType("VARCHAR(100)").IsRequired();
             builder.Property(p => p.Telefone).HasColumnType("INT").IsRequired();
             builder.Property(p => p.CidadeId).HasColumnType("INT").IsRequired();
+
+            builder.HasOne(c => c.Cidade)
+                   .WithOne(e => e.Contato)
+                   .HasForeignKey<Contato>(c => c.CidadeId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

@@ -20,6 +20,11 @@ namespace Infraestrutura.Configuration
             builder.Property(p => p.Nome).HasColumnType("VARCHAR(100)").IsRequired();
             builder.Property(p => p.numeroDDD).HasColumnType("INT").IsRequired();
             builder.Property(p => p.EstadoId).HasColumnType("INT").IsRequired();
+
+            builder.HasOne(c => c.Estado)
+                   .WithMany(e => e.Cidades)  
+                   .HasForeignKey(c => c.EstadoId)  
+                   .OnDelete(DeleteBehavior.Restrict);  
         }
     }
 }

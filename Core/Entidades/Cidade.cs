@@ -22,5 +22,9 @@ namespace Core.Entidades
         /// Id do estado ao qual aquela cidade pertence
         /// </summary>
         public int EstadoId { get; set; }
+
+        public virtual Estado Estado { get; set; }
+
+        public virtual Contato Contato { get; set; }
     }
 }

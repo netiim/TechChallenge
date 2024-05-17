@@ -16,5 +16,7 @@ namespace Core.Entidades
         /// </summary>
         [StringLength(2, MinimumLength = 2, ErrorMessage = "A sigla do estado deve ter exatamente 2 caracteres.")]
         public string siglaEstado { get; set; }
+
+        public virtual List<Cidade> Cidades {  get; set; }
     }
 }

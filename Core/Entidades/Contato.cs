@@ -8,5 +8,7 @@ namespace Core.Entidades
         public string Email { get; set; }
         public int Telefone { get; set; }
         public int CidadeId { get; set; }
+
+        public virtual Cidade Cidade { get; set; }
     }
 }
