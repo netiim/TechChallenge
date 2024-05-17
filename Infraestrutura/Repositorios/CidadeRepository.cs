@@ -1,0 +1,23 @@
+﻿using Core.Entidades;
+using Core.Interfaces;
+using Infraestrutura.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infraestrutura.Repositorios
+{
+    public class CidadeRepository : ICidadeRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public CidadeRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task AdicionarCidadesEmMassa(List<Cidade> cidades)
+        {
+             await _context.Cidade.AddRangeAsync(cidades);
+             await _context.SaveChangesAsync();
+        }
+    }
+}

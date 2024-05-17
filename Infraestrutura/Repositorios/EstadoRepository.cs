@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Infraestrutura.Repositorios
 {
@@ -14,14 +15,16 @@ namespace Infraestrutura.Repositorios
             _context = context;
         }
 
-        public void AdicionarEstadosEmMassa(List<Estado> estados)
+        public async Task AdicionarEstadosEmMassa(List<Estado> estados)
         {
-            //foreach (Estado estado in estados)
-            //{
-            
-            _context.Estado.AddRange(estados);
-                _context.SaveChanges();
-            //}    
+            await _context.Estado.AddRangeAsync(estados);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Estado>> GetAll()
+        {
+            List<Estado> estados = await _context.Estado.ToListAsync();
+            return estados;
         }
     }
 }

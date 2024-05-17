@@ -1,8 +1,6 @@
-﻿using Aplicacao.Services;
-using Core.DTOs;
+﻿using Core.DTOs;
 using Core.Entidades;
 using Core.Interfaces;
-using System.Net.Http;
 using System.Text.Json;
 
 public class EstadoService : IEstadoService
@@ -34,7 +32,7 @@ public class EstadoService : IEstadoService
                     });
                 }
 
-                _repository.AdicionarEstadosEmMassa(estados);
+                await _repository.AdicionarEstadosEmMassa(estados);
             }
             else
             {
