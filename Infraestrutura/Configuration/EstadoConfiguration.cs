@@ -14,8 +14,8 @@ namespace Infraestrutura.Configuration
         public void Configure(EntityTypeBuilder<Estado> builder)
         {
             builder.ToTable("Estado");
-            builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).HasColumnType("INT").ValueGeneratedNever().UseIdentityColumn();
+            builder.HasKey(p => p.Id);  
+            builder.Property(p => p.Id).HasColumnType("INT").ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(p => p.DataCriacao).HasColumnName("DataCriacao").HasColumnType("DATETIME").IsRequired();
             builder.Property(p => p.Nome).HasColumnType("VARCHAR(100)").IsRequired();
             builder.Property(p => p.siglaEstado).HasColumnType("VARCHAR(2)").IsRequired();
