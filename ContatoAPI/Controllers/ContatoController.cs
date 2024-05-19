@@ -7,21 +7,21 @@ namespace ContatoAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CidadeController : ControllerBase
+    public class ContatoController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly ICidadeService _service;
+        private readonly IContatoService _contatoService;
 
-        public CidadeController(ApplicationDbContext context, ICidadeService service)
+        public ContatoController(ApplicationDbContext context, IContatoService contatoService)
         {
             _context = context;
-            _service = service;
+            _contatoService = contatoService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PreencherCidadesComDDD()
+        public async Task<IActionResult> PreencherTabelaComEstadosBrasil()
         {
-            await _service.PreencherCidadesComDDD();
+            //await _contatoService.PreencherTabelaComEstadosBrasil();
             return Ok();
         }
     }

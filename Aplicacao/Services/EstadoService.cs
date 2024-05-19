@@ -1,6 +1,7 @@
 ﻿using Core.DTOs;
 using Core.Entidades;
-using Core.Interfaces;
+using Core.Interfaces.Repository;
+using Core.Interfaces.Services;
 using System.Text.Json;
 
 public class EstadoService : IEstadoService

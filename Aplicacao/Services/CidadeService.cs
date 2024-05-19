@@ -1,7 +1,8 @@
 ﻿using Aplicacao.Util;
 using Core.DTOs;
 using Core.Entidades;
-using Core.Interfaces;
+using Core.Interfaces.Repository;
+using Core.Interfaces.Services;
 using System.Collections.Generic;
 using System.Text.Json;
 

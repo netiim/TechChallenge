@@ -1,5 +1,5 @@
 ﻿using Core.Entidades;
-using Core.Interfaces;
+using Core.Interfaces.Repository;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
