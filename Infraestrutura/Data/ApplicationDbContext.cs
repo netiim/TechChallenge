@@ -25,6 +25,7 @@ namespace Infraestrutura.Data
             {
                 optionsBuilder.UseSqlServer("Server=localhost;Database=TechChallenge;User ID=sa;Password=@GIU130218;TrustServerCertificate=True;");
             }
+            //optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

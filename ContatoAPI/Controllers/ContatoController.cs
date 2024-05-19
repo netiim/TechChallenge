@@ -20,10 +20,17 @@ namespace ContatoAPI.Controllers
             _contatoService = contatoService;
         }
 
-        [HttpGet]
+        [HttpGet("BuscarTodosContatos")]
         public async Task<IActionResult> ObterTodos()
         {
             var contatos = await _contatoService.ObterTodosAsync();
+            return Ok(contatos);
+        }
+
+        [HttpGet("BuscarPorDDD")]
+        public async Task<IActionResult> ObterPorDdd(int ddd)
+        {
+            var contatos = await _contatoService.FindAsync(c => c.Cidade.numeroDDD == ddd);
             return Ok(contatos);
         }
 
