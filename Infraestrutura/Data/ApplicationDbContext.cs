@@ -5,11 +5,16 @@ namespace Infraestrutura.Data
 {
     public class ApplicationDbContext : DbContext
     {
+
+        private readonly string _connectionString;
+        public ApplicationDbContext(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         public ApplicationDbContext()        
         {
 
         }
-
         public DbSet<Contato> Contato { get; set; }
         public DbSet<Cidade> Cidade { get; set; }
         public DbSet<Estado> Estado { get; set; }
