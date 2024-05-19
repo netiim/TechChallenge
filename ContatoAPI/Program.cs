@@ -1,3 +1,4 @@
+using Aplicacao.Services;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
 using Infraestrutura.Data;
@@ -51,11 +52,14 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEstadoService,EstadoService>();
 builder.Services.AddScoped<IEstadoRepository,EstadoRepository>();
 builder.Services.AddScoped<ICidadeService, CidadeService>();
 builder.Services.AddScoped<ICidadeRepository,CidadeRepository>();
+builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
+builder.Services.AddScoped<IContatoService, ContatoService>();
+
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")

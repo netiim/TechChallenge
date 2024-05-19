@@ -21,17 +21,17 @@ namespace Infraestrutura.Repositorios
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> ObterTodosAsync()
         {
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> ObterPorIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AdicionarAsync(T entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -40,7 +40,7 @@ namespace Infraestrutura.Repositorios
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task AtualizarAsync(T entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -49,7 +49,7 @@ namespace Infraestrutura.Repositorios
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task RemoverAsync(int id)
         {
             T entity = await _dbSet.FindAsync(id);
             if (entity == null)
