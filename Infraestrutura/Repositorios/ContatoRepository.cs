@@ -1,5 +1,11 @@
-﻿namespace Infraestrutura.Repositorios;
+﻿using Core.Entidades;
+using Infraestrutura.Data;
 
-public class ContatoRepository
+namespace Infraestrutura.Repositorios;
+
+public class ContatoRepository : BaseRepository<Contato>
 {
+    public ContatoRepository(ApplicationDbContext context) : base(context)
+    {
+    }
 }

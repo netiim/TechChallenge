@@ -1,5 +1,7 @@
-﻿namespace Core.Interfaces.Repository;
+﻿using Core.Entidades;
 
-public interface IContatoRepository
+namespace Core.Interfaces.Repository;
+
+public interface IContatoRepository : IBaseRepository<Contato>
 {
 }

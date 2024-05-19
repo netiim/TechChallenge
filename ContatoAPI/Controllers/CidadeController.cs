@@ -2,6 +2,8 @@
 using Infraestrutura.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TemplateWebApiNet8.Controllers;
+using TemplateWebApiNet8.Logging;
 
 namespace ContatoAPI.Controllers
 {
@@ -9,18 +11,21 @@ namespace ContatoAPI.Controllers
     [Route("[controller]")]
     public class CidadeController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly ICidadeService _service;
+        private readonly ILogger<CidadeController> _logger;
 
-        public CidadeController(ApplicationDbContext context, ICidadeService service)
+        public CidadeController(ICidadeService service, ILogger<CidadeController> logger)
         {
-            _context = context;
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> PreencherCidadesComDDD()
         {
+            CustomLogger.Arquivo = true;
+            _logger.LogInformation("Iniciando Função para preencher os DDDs");
+
             await _service.PreencherCidadesComDDD();
             return Ok();
         }

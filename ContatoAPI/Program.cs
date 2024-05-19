@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using System.Data;
 using System.Reflection;
 using System.Text;
+using TemplateWebApiNet8.Logging;
 using TemplateWebApiNet8.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,6 +85,12 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
+
+builder.Logging.ClearProviders();
+builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
+{
+    LogLevel = LogLevel.Information
+}));
 
 var app = builder.Build();
 

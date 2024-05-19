@@ -10,10 +10,11 @@ namespace TemplateWebApiNet8.Controllers
     public class TokenController : ControllerBase
     {
         private readonly ITokenService _token;
-
-        public TokenController(ITokenService token)
+        private readonly ILogger<TokenController> _logger;
+        public TokenController(ITokenService token, ILogger<TokenController> logger)
         {
             _token = token;
+            _logger = logger;
         }
 
         /// <summary>
