@@ -16,56 +16,18 @@ using System.Reflection;
 using System.Text;
 using TemplateWebApiNet8.Logging;
 using TemplateWebApiNet8.Services;
+using ContatoAPI.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Template API" });
+builder.Services.AddDocumentacaoSwagger();
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-    c.IncludeXmlComments(xmlPath);
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization Header -  utilizado com Bearer Authentication" +
-        "Digite 'Bearer' [espaço] token" +
-        "Exemplo (informar sem as aspas): 'Bearer 123456abcdef'",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-});
-
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IEstadoService,EstadoService>();
-builder.Services.AddScoped<IEstadoRepository,EstadoRepository>();
-builder.Services.AddScoped<IRegiaoService, RegiaoService>();
-builder.Services.AddScoped<IRegiaoRepository, RegiaoRepository>();
-builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
-builder.Services.AddScoped<IContatoService, ContatoService>();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-builder.Services.AddValidatorsFromAssemblyContaining<ContatoValidator>();
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddInjecoesDependencias();
+builder.Services.AddAutoMapper();
+builder.Services.AddFluentValidation();
+builder.Services.AddCustomAuthentication(builder.Configuration);
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -78,29 +40,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT"));
 
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
-
-builder.Logging.ClearProviders();
-builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
-{
-    LogLevel = LogLevel.Information
-}));
+builder.Logging.AddCustomLogging();
 
 var app = builder.Build();
 
