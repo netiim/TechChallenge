@@ -3,6 +3,7 @@ using Core.DTOs.RegiaoDTO;
 using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
 public class RegiaoService : IRegiaoService
@@ -10,13 +11,15 @@ public class RegiaoService : IRegiaoService
     private const string UrlAPI = "https://brasilapi.com.br/api/ddd/v1/";
     private readonly IRegiaoRepository _regiaorepository;
     private readonly IEstadoRepository _estadoRepository;
+    private readonly ILogger<RegiaoService> _logger;
     private List<Estado> Estados;
 
-    public RegiaoService(IRegiaoRepository repository, IEstadoRepository estadoRepository)
+    public RegiaoService(IRegiaoRepository repository, IEstadoRepository estadoRepository, ILogger<RegiaoService> logger)
     {
         _regiaorepository = repository;
         _estadoRepository = estadoRepository;
         Estados = new List<Estado>();
+        _logger = logger;
     }
 
     public async Task<IEnumerable<Regiao>> ObterTodosAsync()
@@ -46,7 +49,7 @@ public class RegiaoService : IRegiaoService
                 }
                 else
                 {
-                    //TODO:Fazer o Log para sabermos quais ddds não salvaram
+                    _logger.LogWarning($"Falha ao obter dados para o DDD {ddd}. StatusCode: {response.StatusCode}");
                 }
             }
         }
@@ -54,13 +57,21 @@ public class RegiaoService : IRegiaoService
 
     private Regiao MontaRegiaoComRetornoAPI(int ddd, BrasilAPIdddDTO brasilApiDTO)
     {
-        ValidandoRetornoAPI(brasilApiDTO);
-
-        return new Regiao()
+        try
         {
-            numeroDDD = ddd,
-            EstadoId = (int)Estados.FirstOrDefault(x => x.siglaEstado.Equals(brasilApiDTO.state))?.Id
-        };
+            ValidandoRetornoAPI(brasilApiDTO);
+
+            return new Regiao()
+            {
+                numeroDDD = ddd,
+                EstadoId = (int)Estados.FirstOrDefault(x => x.siglaEstado.Equals(brasilApiDTO.state))?.Id
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Erro ao montar região para o DDD {ddd}");
+            throw;
+        }
     }
 
     private void ValidandoRetornoAPI(BrasilAPIdddDTO brasilApiDTO)

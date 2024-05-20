@@ -54,7 +54,6 @@ namespace ContatoAPI.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
             
@@ -77,7 +76,6 @@ namespace ContatoAPI.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }           
         }
