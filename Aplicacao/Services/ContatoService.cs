@@ -32,7 +32,7 @@ public class ContatoService : IContatoService
 
     public virtual async Task AdicionarAsync(Contato entity)
     {
-        await ValidacaoTelefone(entity);
+        await ValidarPropriedades(entity);
 
         string ddd = entity.Telefone.ToString().Substring(0, 2);
         var list = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
@@ -41,7 +41,7 @@ public class ContatoService : IContatoService
         await _repository.AdicionarAsync(entity);
     }
 
-    private async Task ValidacaoTelefone(Contato entity)
+    private async Task ValidarPropriedades(Contato entity)
     {
         var result = await _validator.ValidateAsync(entity);
 

@@ -16,6 +16,15 @@ namespace Aplicacao.Validators
         {
             _regiaoRepository = regiaoRepository;
 
+            RuleFor(contato => contato.Nome)
+                .NotEmpty().WithMessage("O nome não pode ser vazio.")
+                .Length(2, 100).WithMessage("O nome deve ter entre 2 e 100 caracteres.")
+                .Matches(@"^[a-zA-Z\s]*$").WithMessage("O nome deve conter apenas caracteres alfabéticos.");
+
+            RuleFor(contato => contato.Email)
+                .NotEmpty().WithMessage("O email não pode ser vazio.")
+                .EmailAddress().WithMessage("O email deve ser válido.");
+
             RuleFor(contato => contato.Telefone)
            .Cascade(CascadeMode.Stop)
            .NotEmpty().WithMessage("O telefone não pode ser vazio.")
@@ -28,11 +37,9 @@ namespace Aplicacao.Validators
         {
             string ddd = telefone.Substring(0, 2);
 
-            // Consultar o repositório para verificar se o DDD está presente
             var regiao = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
 
-            // Retorna verdadeiro se encontrar uma região com o DDD correspondente
-            return regiao != null;
+            return regiao != null && regiao.Count() > 0;
         }
     }
 }
