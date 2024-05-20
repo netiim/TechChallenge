@@ -23,8 +23,8 @@ namespace Infraestrutura.Configuration
             builder.Property(p => p.CidadeId).HasColumnType("INT").IsRequired();
 
             builder.HasOne(c => c.Cidade)
-                   .WithOne(e => e.Contato)
-                   .HasForeignKey<Contato>(c => c.CidadeId)
+                   .WithMany(e => e.Contatos)
+                   .HasForeignKey(c => c.CidadeId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
 

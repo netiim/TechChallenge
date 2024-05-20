@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.UsuarioDTO;
 using Core.Entidades;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;

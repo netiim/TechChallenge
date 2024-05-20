@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.EstadoDTO;
 using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;

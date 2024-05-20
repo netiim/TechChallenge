@@ -1,4 +1,5 @@
 using Aplicacao.Services;
+using Core.DTOs;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
 using Infraestrutura.Data;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<ICidadeService, CidadeService>();
 builder.Services.AddScoped<ICidadeRepository,CidadeRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")

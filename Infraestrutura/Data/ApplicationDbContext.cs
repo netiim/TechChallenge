@@ -6,7 +6,6 @@ namespace Infraestrutura.Data
 {
     public class ApplicationDbContext : DbContext
     {
-
         private readonly string _connectionString;
         public ApplicationDbContext(string connectionString)
         {
@@ -26,13 +25,11 @@ namespace Infraestrutura.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
-         
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(_connectionString);//"Server=localhost;Database=TechChallenge;User ID=sa;Password=@GIU130218;TrustServerCertificate=True;");
             }
-            //optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

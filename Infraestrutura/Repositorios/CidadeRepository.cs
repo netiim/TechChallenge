@@ -13,7 +13,10 @@ namespace Infraestrutura.Repositorios
         {
             _context = context;
         }
-
+        public async Task<IEnumerable<Cidade>> ObterTodosAsync()
+        {
+            return await _context.Cidade.ToListAsync();
+        }
         public async Task AdicionarCidadesEmMassa(List<Cidade> cidades)
         {
              await _context.Cidade.AddRangeAsync(cidades);

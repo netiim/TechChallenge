@@ -30,11 +30,11 @@ namespace ContatoAPI.Controllers
             return Ok();
         }
 
-    //    [HttpGet]
-    //    public async Task<IActionResult> ObterTodos()
-    //    {
-    //        //await _service.ObterTodos()
-    //        return Ok(); 
-    //    }
+        [HttpGet]
+        public async Task<IActionResult> ObterTodos()
+        {
+            var cidades = await _service.ObterTodosAsync();
+            return Ok(cidades);
+        }
     }
 }

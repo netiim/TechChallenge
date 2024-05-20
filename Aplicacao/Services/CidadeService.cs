@@ -1,5 +1,5 @@
 ﻿using Aplicacao.Util;
-using Core.DTOs;
+using Core.DTOs.CidadeDTO;
 using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
@@ -23,7 +23,7 @@ public class CidadeService : ICidadeService
 
     public async Task<IEnumerable<Cidade>> ObterTodosAsync()
     {
-        return null;// await _cidaderepository.ObterTodosAsync();
+        return await _cidaderepository.ObterTodosAsync();
     }
 
     public async Task PreencherCidadesComDDD()

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs
+namespace Core.DTOs.CidadeDTO
 {
     public class BrasilAPIdddDTO
     {
-        public string state {  get; set; }
+        public string state { get; set; }
         public List<string> cities { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.DTOs;
+﻿using AutoMapper;
+using Core.DTOs.ContatoDTO;
 using Core.Entidades;
 using Core.Interfaces.Services;
 using Infraestrutura.Data;
@@ -13,18 +14,21 @@ namespace ContatoAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IContatoService _contatoService;
+        private readonly IMapper _mapper;
 
-        public ContatoController(ApplicationDbContext context, IContatoService contatoService)
+        public ContatoController(ApplicationDbContext context, IContatoService contatoService, IMapper mapper)
         {
             _context = context;
             _contatoService = contatoService;
+            _mapper = mapper;
         }
 
         [HttpGet("BuscarTodosContatos")]
         public async Task<IActionResult> ObterTodos()
         {
             var contatos = await _contatoService.ObterTodosAsync();
-            return Ok(contatos);
+            List<ReadContatoDTO> result = _mapper.Map<List<ReadContatoDTO>>(contatos);
+            return Ok(result);
         }
 
         [HttpGet("BuscarPorDDD")]
@@ -54,26 +58,16 @@ namespace ContatoAPI.Controllers
             }
             try
             {
-            Contato contato = MapearDTO(contatoDTO);
+                Contato contato = _mapper.Map<Contato>(contatoDTO);
 
-            await _contatoService.AdicionarAsync(contato);
-            return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, contato);
-            }catch(Exception ex)
+                await _contatoService.AdicionarAsync(contato);
+                return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, contato);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-        }
-
-        private static Contato MapearDTO(CreateContatoDTO contatoDTO)
-        {
-            return new Contato()
-            {
-                Nome = contatoDTO.Nome,
-                Email = contatoDTO.Email,
-                Telefone = contatoDTO.Telefone,
-                CidadeId = contatoDTO.CidadeId,
-            };
         }
 
         [HttpPut("{id}")]

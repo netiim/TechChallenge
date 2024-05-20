@@ -25,6 +25,6 @@ namespace Core.Entidades
 
         public virtual Estado Estado { get; set; }
 
-        public virtual Contato Contato { get; set; }
+        public virtual ICollection<Contato> Contatos { get; set; }
     }
 }
