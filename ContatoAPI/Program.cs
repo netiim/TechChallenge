@@ -56,8 +56,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEstadoService,EstadoService>();
 builder.Services.AddScoped<IEstadoRepository,EstadoRepository>();
-builder.Services.AddScoped<ICidadeService, CidadeService>();
-builder.Services.AddScoped<ICidadeRepository,CidadeRepository>();
+builder.Services.AddScoped<IRegiaoService, RegiaoService>();
+builder.Services.AddScoped<IRegiaoRepository, RegiaoRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));

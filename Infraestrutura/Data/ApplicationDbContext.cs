@@ -20,7 +20,7 @@ namespace Infraestrutura.Data
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public DbSet<Contato> Contato { get; set; }
-        public DbSet<Cidade> Cidade { get; set; }
+        public DbSet<Regiao> Regiao { get; set; }
         public DbSet<Estado> Estado { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

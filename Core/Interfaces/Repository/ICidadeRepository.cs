@@ -2,8 +2,8 @@
 
 namespace Core.Interfaces.Repository;
 
-public interface ICidadeRepository
+public interface IRegiaoRepository
 {
-    Task AdicionarCidadesEmMassa(List<Cidade> cidades);
-    Task<IEnumerable<Cidade>> ObterTodosAsync();
+    Task Adicionar(Regiao regiao);
+    Task<IEnumerable<Regiao>> ObterTodosAsync();
 }

@@ -5,21 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Repositorios
 {
-    public class CidadeRepository : ICidadeRepository
+    public class RegiaoRepository : IRegiaoRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public CidadeRepository(ApplicationDbContext context)
+        public RegiaoRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<Cidade>> ObterTodosAsync()
+        public async Task<IEnumerable<Regiao>> ObterTodosAsync()
         {
-            return await _context.Cidade.ToListAsync();
+            return await _context.Regiao.ToListAsync();
         }
-        public async Task AdicionarCidadesEmMassa(List<Cidade> cidades)
+        public async Task Adicionar(Regiao regiao)
         {
-             await _context.Cidade.AddRangeAsync(cidades);
+             await _context.Regiao.AddAsync(regiao);
              await _context.SaveChangesAsync();
         }
     }

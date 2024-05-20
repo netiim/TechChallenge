@@ -34,7 +34,7 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarPorDDD")]
         public async Task<IActionResult> ObterPorDdd(int ddd)
         {
-            var contatos = await _contatoService.FindAsync(c => c.Cidade.numeroDDD == ddd);
+            var contatos = await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
             return Ok(contatos);
         }
 
@@ -82,7 +82,6 @@ namespace ContatoAPI.Controllers
             contatoExistente.Nome = contatoDTO.Nome;
             contatoExistente.Email = contatoDTO.Email;
             contatoExistente.Telefone = contatoDTO.Telefone;
-            contatoExistente.CidadeId = contatoDTO.CidadeId;
 
             if (!ModelState.IsValid)
             {

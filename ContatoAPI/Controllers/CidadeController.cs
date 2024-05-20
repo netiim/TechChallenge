@@ -11,10 +11,10 @@ namespace ContatoAPI.Controllers
     [Route("[controller]")]
     public class CidadeController : ControllerBase
     {
-        private readonly ICidadeService _service;
+        private readonly IRegiaoService _service;
         private readonly ILogger<CidadeController> _logger;
 
-        public CidadeController(ICidadeService service, ILogger<CidadeController> logger)
+        public CidadeController(IRegiaoService service, ILogger<CidadeController> logger)
         {
             _service = service;
             _logger = logger;
@@ -26,7 +26,7 @@ namespace ContatoAPI.Controllers
             CustomLogger.Arquivo = true;
             _logger.LogInformation("Iniciando Função para preencher os DDDs");
 
-            await _service.PreencherCidadesComDDD();
+            await _service.PreencherRegioesComDDD();
             return Ok();
         }
 

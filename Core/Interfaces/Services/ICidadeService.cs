@@ -2,8 +2,8 @@
 
 namespace Core.Interfaces.Services;
 
-public interface ICidadeService
+public interface IRegiaoService
 {
-    Task<IEnumerable<Cidade>> ObterTodosAsync();
-    Task PreencherCidadesComDDD();
+    Task<IEnumerable<Regiao>> ObterTodosAsync();
+    Task PreencherRegioesComDDD();
 }
