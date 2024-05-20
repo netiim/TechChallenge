@@ -1,7 +1,10 @@
 using Aplicacao.Services;
+using Aplicacao.Validators;
 using Core.DTOs;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using Infraestrutura.Data;
 using Infraestrutura.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,6 +64,8 @@ builder.Services.AddScoped<IRegiaoRepository, RegiaoRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddValidatorsFromAssemblyContaining<ContatoValidator>();
+builder.Services.AddFluentValidationAutoValidation();
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")

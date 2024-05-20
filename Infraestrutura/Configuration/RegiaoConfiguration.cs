@@ -1,15 +1,10 @@
 ﻿using Core.Entidades;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestrutura.Configuration
 {
-    public class CidadeConfiguration : IEntityTypeConfiguration<Regiao>
+    public class RegiaoConfiguration : IEntityTypeConfiguration<Regiao>
     {
         public void Configure(EntityTypeBuilder<Regiao> builder)
         {
