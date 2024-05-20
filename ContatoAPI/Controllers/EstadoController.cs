@@ -1,7 +1,9 @@
 ﻿using Core.Interfaces.Services;
 using Infraestrutura.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Core.Entidades.Usuario;
 
 namespace ContatoAPI.Controllers
 {
@@ -19,6 +21,7 @@ namespace ContatoAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> PreencherTabelaComEstadosBrasil()
         {
             await _estadoService.PreencherTabelaComEstadosBrasil();

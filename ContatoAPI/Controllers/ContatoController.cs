@@ -3,8 +3,11 @@ using Core.DTOs.ContatoDTO;
 using Core.Entidades;
 using Core.Interfaces.Services;
 using Infraestrutura.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
+using static Core.Entidades.Usuario;
 
 namespace ContatoAPI.Controllers
 {
@@ -52,6 +55,7 @@ namespace ContatoAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Adicionar([FromBody] CreateContatoDTO contatoDTO)
         {
             if (!ModelState.IsValid)

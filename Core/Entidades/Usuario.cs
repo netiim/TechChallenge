@@ -17,4 +17,10 @@ public class Usuario : EntityBase
         Visitante = 2,
         Usuario = 3
     }
+    public static class Roles
+    {
+        public const string Administrador = nameof(PerfilUsuario.Administrador);
+        public const string Visitante = nameof(PerfilUsuario.Visitante);
+        public const string Usuario = nameof(PerfilUsuario.Usuario);
+    }
 }
