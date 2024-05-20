@@ -29,5 +29,12 @@ namespace ContatoAPI.Controllers
             await _service.PreencherCidadesComDDD();
             return Ok();
         }
+
+    //    [HttpGet]
+    //    public async Task<IActionResult> ObterTodos()
+    //    {
+    //        //await _service.ObterTodos()
+    //        return Ok(); 
+    //    }
     }
 }

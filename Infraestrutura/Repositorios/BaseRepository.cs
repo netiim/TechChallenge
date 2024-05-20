@@ -1,4 +1,5 @@
-﻿using Core.Interfaces.Repository;
+﻿using Core.Entidades;
+using Core.Interfaces.Repository;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infraestrutura.Repositorios
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class 
+    public abstract class BaseRepository<T> : IBaseRepository<T> where T : EntityBase 
     {
         protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;

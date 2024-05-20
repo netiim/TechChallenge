@@ -52,11 +52,17 @@ namespace ContatoAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            try
+            {
             Contato contato = MapearDTO(contatoDTO);
 
             await _contatoService.AdicionarAsync(contato);
             return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, contato);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         private static Contato MapearDTO(CreateContatoDTO contatoDTO)

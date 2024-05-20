@@ -1,5 +1,6 @@
 ﻿using Core.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infraestrutura.Data
 {
@@ -13,7 +14,11 @@ namespace Infraestrutura.Data
         }
         public ApplicationDbContext()        
         {
-
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public DbSet<Contato> Contato { get; set; }
         public DbSet<Cidade> Cidade { get; set; }
@@ -21,9 +26,11 @@ namespace Infraestrutura.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
+         
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost;Database=TechChallenge;User ID=sa;Password=@GIU130218;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(_connectionString);//"Server=localhost;Database=TechChallenge;User ID=sa;Password=@GIU130218;TrustServerCertificate=True;");
             }
             //optionsBuilder.UseLazyLoadingProxies();
         }

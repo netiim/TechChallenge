@@ -1,8 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using Core.Entidades;
+using System.Linq.Expressions;
 
 namespace Core.Interfaces.Repository;
 
-public interface IBaseRepository<T>
+public interface IBaseRepository<T> where T : EntityBase
 {
     Task<IEnumerable<T>> ObterTodosAsync();
     Task<T> ObterPorIdAsync(int id);

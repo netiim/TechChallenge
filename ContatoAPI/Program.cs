@@ -60,12 +60,11 @@ builder.Services.AddScoped<ICidadeRepository,CidadeRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
 
-
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-var connectionString = configuration.GetValue<string>("ConnectionString");
+var connectionString = configuration.GetValue<string>("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString),
     ServiceLifetime.Scoped);

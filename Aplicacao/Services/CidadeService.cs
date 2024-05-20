@@ -3,6 +3,7 @@ using Core.DTOs;
 using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -18,6 +19,11 @@ public class CidadeService : ICidadeService
         _cidaderepository = repository;
         _estadoRepository = estadoRepository;
         Estados = new List<Estado>();
+    }
+
+    public async Task<IEnumerable<Cidade>> ObterTodosAsync()
+    {
+        return null;// await _cidaderepository.ObterTodosAsync();
     }
 
     public async Task PreencherCidadesComDDD()
