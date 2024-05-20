@@ -29,6 +29,15 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarTodosContatos")]
         public async Task<IActionResult> ObterTodos()
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
             var contatos = await _contatoService.ObterTodosAsync();
             List<ReadContatoDTO> result = _mapper.Map<List<ReadContatoDTO>>(contatos);
             return Ok(result);
@@ -37,6 +46,15 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarPorDDD")]
         public async Task<IActionResult> ObterPorDdd(int ddd)
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
             List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
             List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
             return Ok(contatoDTO);
@@ -45,25 +63,37 @@ namespace ContatoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterPorId(int id)
         {
-            var contato = await _contatoService.ObterPorIdAsync(id);
-            if (contato == null)
+            try
             {
-                return NotFound();
+                var contato = await _contatoService.ObterPorIdAsync(id);
+                if (contato == null)
+                {
+                    return NotFound();
+                }
+
+                ReadContatoDTO contatoDTO = _mapper.Map<ReadContatoDTO>(contato);
+                return Ok(contatoDTO);
             }
-            ReadContatoDTO contatoDTO = _mapper.Map<ReadContatoDTO>(contato);
-            return Ok(contatoDTO);
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+
+
         }
 
         [HttpPost]
         [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Adicionar([FromBody] CreateContatoDTO contatoDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 Contato contato = _mapper.Map<Contato>(contatoDTO);
 
                 await _contatoService.AdicionarAsync(contato);
@@ -79,23 +109,32 @@ namespace ContatoAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Atualizar(int id, [FromBody] CreateContatoDTO contatoDTO)
         {
-            var contatoExistente = await _contatoService.ObterPorIdAsync(id);
-            if (contatoExistente == null)
+            try
             {
-                return NotFound();
+                var contatoExistente = await _contatoService.ObterPorIdAsync(id);
+                if (contatoExistente == null)
+                {
+                    return NotFound();
+                }
+
+                contatoExistente.Nome = contatoDTO.Nome;
+                contatoExistente.Email = contatoDTO.Email;
+                contatoExistente.Telefone = contatoDTO.Telefone;
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+
+                await _contatoService.AtualizarAsync(contatoExistente);
+                return NoContent();
             }
-
-            contatoExistente.Nome = contatoDTO.Nome;
-            contatoExistente.Email = contatoDTO.Email;
-            contatoExistente.Telefone = contatoDTO.Telefone;
-
-            if (!ModelState.IsValid)
+            catch (Exception e)
             {
-                return BadRequest(ModelState);
-            }
 
-            await _contatoService.AtualizarAsync(contatoExistente);
-            return NoContent();
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
@@ -106,9 +145,17 @@ namespace ContatoAPI.Controllers
             {
                 return NotFound();
             }
+            try
+            {
 
-            await _contatoService.RemoverAsync(id);
-            return NoContent();
+                await _contatoService.RemoverAsync(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
     }
 }
