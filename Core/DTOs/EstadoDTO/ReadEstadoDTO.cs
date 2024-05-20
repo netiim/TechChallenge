@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs.ContatoDTO
+namespace Core.DTOs.EstadoDTO
 {
-    public class CreateContatoDTO
+    public class ReadEstadoDTO
     {
         public string Nome { get; set; }
-        public string Email { get; set; }
-        public string Telefone { get; set; }
+        public string siglaEstado { get; set; }
     }
 }

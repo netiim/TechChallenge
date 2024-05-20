@@ -19,7 +19,7 @@ namespace Infraestrutura.Configuration
             builder.Property(p => p.DataCriacao).HasColumnName("DataCriacao").HasColumnType("DATETIME").IsRequired();
             builder.Property(p => p.Nome).HasColumnType("VARCHAR(100)").IsRequired();
             builder.Property(p => p.Email).HasColumnType("VARCHAR(100)").IsRequired();
-            builder.Property(p => p.Telefone).HasColumnType("INT").IsRequired();
+            builder.Property(p => p.Telefone).HasColumnType("VARCHAR(11)").IsRequired();
             builder.Property(p => p.RegiaoId).HasColumnType("INT").IsRequired();
 
             builder.HasOne(c => c.Regiao)

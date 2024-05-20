@@ -34,8 +34,9 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarPorDDD")]
         public async Task<IActionResult> ObterPorDdd(int ddd)
         {
-            var contatos = await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
-            return Ok(contatos);
+            List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
+            List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
+            return Ok(contatoDTO);
         }
 
         [HttpGet("{id}")]
@@ -46,7 +47,8 @@ namespace ContatoAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(contato);
+            ReadContatoDTO contatoDTO = _mapper.Map<ReadContatoDTO>(contato);
+            return Ok(contatoDTO);
         }
 
         [HttpPost]
@@ -61,7 +63,7 @@ namespace ContatoAPI.Controllers
                 Contato contato = _mapper.Map<Contato>(contatoDTO);
 
                 await _contatoService.AdicionarAsync(contato);
-                return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, contato);
+                return CreatedAtAction(nameof(ObterPorId), new { id = contato.Id }, _mapper.Map<ReadContatoDTO>(contato));
             }
             catch (Exception ex)
             {

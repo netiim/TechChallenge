@@ -9,12 +9,12 @@ namespace ContatoAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CidadeController : ControllerBase
+    public class RegiaoController : ControllerBase
     {
         private readonly IRegiaoService _service;
-        private readonly ILogger<CidadeController> _logger;
+        private readonly ILogger<RegiaoController> _logger;
 
-        public CidadeController(IRegiaoService service, ILogger<CidadeController> logger)
+        public RegiaoController(IRegiaoService service, ILogger<RegiaoController> logger)
         {
             _service = service;
             _logger = logger;

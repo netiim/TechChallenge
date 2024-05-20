@@ -14,6 +14,8 @@ namespace Aplicacao.Validators
         private readonly IRegiaoRepository _regiaoRepository;
         public ContatoValidator(IRegiaoRepository regiaoRepository)
         {
+            _regiaoRepository = regiaoRepository;
+
             RuleFor(contato => contato.Telefone)
            .Cascade(CascadeMode.Stop)
            .NotEmpty().WithMessage("O telefone não pode ser vazio.")
@@ -22,9 +24,9 @@ namespace Aplicacao.Validators
            .MustAsync(ValidarDDD).WithMessage("O DDD não corresponde a uma região válida.");
         }
 
-        private async Task<bool> ValidarDDD(int telefone, CancellationToken cancellationToken)
+        private async Task<bool> ValidarDDD(string telefone, CancellationToken token)
         {
-            string ddd = telefone.ToString().Substring(0, 2);
+            string ddd = telefone.Substring(0, 2);
 
             // Consultar o repositório para verificar se o DDD está presente
             var regiao = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
