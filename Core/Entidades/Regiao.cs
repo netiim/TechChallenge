@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entidades
 {
-    public class Cidade : EntityBase
+    public class Regiao : EntityBase
     {
-        /// <summary>
-        /// Nome da cidade 
-        /// </summary>        
-        public string Nome { get; set; }
         /// <summary>
         /// Numero referente ao DDD da cidade
         /// </summary>

@@ -1,17 +1,23 @@
 ﻿using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
+using FluentValidation;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Aplicacao.Services;
 
 public class ContatoService : IContatoService
 {
     protected readonly IContatoRepository _repository;
+    private readonly IValidator<Contato> _validator;
+    private readonly IRegiaoRepository _regiaoRepository;
 
-    public ContatoService(IContatoRepository repository)
+    public ContatoService(IContatoRepository repository, IValidator<Contato> validator, IRegiaoRepository regiaoRepository)
     {
         _repository = repository;
+        _validator = validator;
+        _regiaoRepository = regiaoRepository;
     }
 
     public virtual async Task<IEnumerable<Contato>> ObterTodosAsync()
@@ -26,7 +32,23 @@ public class ContatoService : IContatoService
 
     public virtual async Task AdicionarAsync(Contato entity)
     {
+        await ValidacaoTelefone(entity);
+
+        string ddd = entity.Telefone.ToString().Substring(0, 2);
+        var list = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
+        entity.RegiaoId = list.FirstOrDefault().Id;
+
         await _repository.AdicionarAsync(entity);
+    }
+
+    private async Task ValidacaoTelefone(Contato entity)
+    {
+        var result = await _validator.ValidateAsync(entity);
+
+        if (!result.IsValid)
+        {
+            throw new ValidationException(result.Errors);
+        }
     }
 
     public virtual async Task AtualizarAsync(Contato entity)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs.CidadeDTO
+namespace Core.DTOs.RegiaoDTO
 {
     public class BrasilAPIdddDTO
     {

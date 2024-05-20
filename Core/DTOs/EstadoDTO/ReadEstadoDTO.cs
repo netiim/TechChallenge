@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs.CidadeDTO
+namespace Core.DTOs.EstadoDTO
 {
-    public class ReadCidadeDTO
+    public class ReadEstadoDTO
     {
         public string Nome { get; set; }
-        public int numeroDDD { get; set; }
+        public string siglaEstado { get; set; }
     }
 }
