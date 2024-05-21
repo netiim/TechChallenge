@@ -46,15 +46,15 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-
+                var contatos = await _contatoService.ObterTodosAsync();
+                List<ReadContatoDTO> result = _mapper.Map<List<ReadContatoDTO>>(contatos);
+                return Ok(result);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            var contatos = await _contatoService.ObterTodosAsync();
-            List<ReadContatoDTO> result = _mapper.Map<List<ReadContatoDTO>>(contatos);
-            return Ok(result);
+
         }
 
         /// <summary>
@@ -69,15 +69,15 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-
+                List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
+                List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
+                return Ok(contatoDTO);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
-            List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
-            return Ok(contatoDTO);
+
         }
 
         /// <summary>
@@ -192,13 +192,13 @@ namespace ContatoAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remover(int id)
         {
-            var contatoExistente = await _contatoService.ObterPorIdAsync(id);
-            if (contatoExistente == null)
-            {
-                return NotFound();
-            }
             try
             {
+                var contatoExistente = await _contatoService.ObterPorIdAsync(id);
+                if (contatoExistente == null)
+                {
+                    return NotFound();
+                }
 
                 await _contatoService.RemoverAsync(id);
                 return NoContent();
