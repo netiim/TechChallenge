@@ -1,0 +1,379 @@
+Log de Execução Information: 0 - Iniciando Função para preencher os DDDs
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/11
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/11
+Log de Execução Information: RequestEnd - Received HTTP response headers after 73.2172ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 78.6372ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/12
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/12
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.3779ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.6995ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/13
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/13
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.2043ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.2755ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/14
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/14
+Log de Execução Information: RequestEnd - Received HTTP response headers after 28.1027ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.1042ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/15
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/15
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.177ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.5467ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/16
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/16
+Log de Execução Information: RequestEnd - Received HTTP response headers after 31.3831ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 35.0082ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/17
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/17
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.1343ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.1822ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/18
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/18
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.5561ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 25.5678ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/19
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/19
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.1304ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.0715ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/20
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/20
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.8346ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 30.1411ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 20. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/21
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/21
+Log de Execução Information: RequestEnd - Received HTTP response headers after 31.111ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 34.1584ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/22
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/22
+Log de Execução Information: RequestEnd - Received HTTP response headers after 29.7761ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 35.4009ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/23
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/23
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.7497ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.9605ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 23. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/24
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/24
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.429ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 25.1705ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/25
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/25
+Log de Execução Information: RequestEnd - Received HTTP response headers after 31.688ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 32.4532ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 25. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/26
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/26
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.6003ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 25.3858ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 26. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/27
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/27
+Log de Execução Information: RequestEnd - Received HTTP response headers after 31.733ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 32.305ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/28
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/28
+Log de Execução Information: RequestEnd - Received HTTP response headers after 23.9669ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 24.962ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/29
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/29
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.0849ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 24.9472ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 29. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/30
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/30
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.3489ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 25.5748ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 30. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/31
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/31
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.5731ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.0171ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/32
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/32
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.0196ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.1453ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/33
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/33
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.6884ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 33.0461ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/34
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/34
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.666ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.5546ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/35
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/35
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.9414ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.6752ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/36
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/36
+Log de Execução Information: RequestEnd - Received HTTP response headers after 23.8839ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 24.6503ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 36. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/37
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/37
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.6858ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.3834ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/38
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/38
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.8746ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.7495ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/39
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/39
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.3119ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.1991ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 39. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/40
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/40
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.6365ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.3463ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 40. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/41
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/41
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.0408ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.9523ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/42
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/42
+Log de Execução Information: RequestEnd - Received HTTP response headers after 415.2386ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 417.2715ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/43
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/43
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.8919ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.4682ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/44
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/44
+Log de Execução Information: RequestEnd - Received HTTP response headers after 404.6825ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 408.0406ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/45
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/45
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.1645ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.6711ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/46
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/46
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.3259ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.3187ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/47
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/47
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.5324ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.5693ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/48
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/48
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.5958ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.4101ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/49
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/49
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.6167ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.9549ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/50
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/50
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.7592ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.1048ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 50. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/51
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/51
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.928ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.7317ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/52
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/52
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.9333ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.8907ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 52. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/53
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/53
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.6085ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.0178ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/54
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/54
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.4022ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 25.1466ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/55
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/55
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.4819ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.4311ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/56
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/56
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.7261ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.1022ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 56. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/57
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/57
+Log de Execução Information: RequestEnd - Received HTTP response headers after 29.1464ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 34.4866ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 57. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/58
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/58
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.7166ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.9964ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 58. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/59
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/59
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.9142ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.4997ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 59. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/60
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/60
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.7804ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.5745ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 60. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/61
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/61
+Log de Execução Information: RequestEnd - Received HTTP response headers after 493.5576ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 496.3919ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/62
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/62
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.6544ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.5569ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/63
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/63
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.7113ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.26ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/64
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/64
+Log de Execução Information: RequestEnd - Received HTTP response headers after 441.1202ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 443.272ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/65
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/65
+Log de Execução Information: RequestEnd - Received HTTP response headers after 42.3638ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 45.3678ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/66
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/66
+Log de Execução Information: RequestEnd - Received HTTP response headers after 49.5641ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 54.4588ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/67
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/67
+Log de Execução Information: RequestEnd - Received HTTP response headers after 29.4186ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 31.3054ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/68
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/68
+Log de Execução Information: RequestEnd - Received HTTP response headers after 23.8037ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 24.5609ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/69
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/69
+Log de Execução Information: RequestEnd - Received HTTP response headers after 367.4288ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 369.2447ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/70
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/70
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.5091ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.7148ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 70. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/71
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/71
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.6595ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 32.2585ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/72
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/72
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.4014ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.0391ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 72. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/73
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/73
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.4219ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 30.2318ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/74
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/74
+Log de Execução Information: RequestEnd - Received HTTP response headers after 28.6879ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 31.6192ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/75
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/75
+Log de Execução Information: RequestEnd - Received HTTP response headers after 394.6278ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 396.8561ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/76
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/76
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.7554ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.6869ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 76. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/77
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/77
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.376ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.0255ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/78
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/78
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.0568ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.8936ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 78. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/79
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/79
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.6241ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.8681ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/80
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/80
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.2951ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 27.8838ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 80. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/81
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/81
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.6503ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.3209ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/82
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/82
+Log de Execução Information: RequestEnd - Received HTTP response headers after 23.8538ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 24.8969ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/83
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/83
+Log de Execução Information: RequestEnd - Received HTTP response headers after 333.4333ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 336.7343ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/84
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/84
+Log de Execução Information: RequestEnd - Received HTTP response headers after 27.2276ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.2624ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/85
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/85
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.9456ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.9936ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/86
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/86
+Log de Execução Information: RequestEnd - Received HTTP response headers after 29.1076ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 32.777ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/87
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/87
+Log de Execução Information: RequestEnd - Received HTTP response headers after 36.3748ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 38.5811ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/88
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/88
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.2692ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 29.036ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/89
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/89
+Log de Execução Information: RequestEnd - Received HTTP response headers after 288.064ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 290.094ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/90
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/90
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.9546ms - 404
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 28.3989ms - 404
+Log de Execução Warning: 0 - Falha ao obter dados para o DDD 90. StatusCode: NotFound
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/91
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/91
+Log de Execução Information: RequestEnd - Received HTTP response headers after 26.7945ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 31.5865ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/92
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/92
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.3918ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.4376ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/93
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/93
+Log de Execução Information: RequestEnd - Received HTTP response headers after 30.4105ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 34.5059ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/94
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/94
+Log de Execução Information: RequestEnd - Received HTTP response headers after 321.1859ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 323.1139ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/95
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/95
+Log de Execução Information: RequestEnd - Received HTTP response headers after 384.2537ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 385.7958ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/96
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/96
+Log de Execução Information: RequestEnd - Received HTTP response headers after 25.4361ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.3802ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/97
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/97
+Log de Execução Information: RequestEnd - Received HTTP response headers after 284.1486ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 286.0024ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/98
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/98
+Log de Execução Information: RequestEnd - Received HTTP response headers after 24.784ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 26.0371ms - 200
+Log de Execução Information: RequestPipelineStart - Start processing HTTP request GET https://brasilapi.com.br/api/ddd/v1/99
+Log de Execução Information: RequestStart - Sending HTTP request GET https://brasilapi.com.br/api/ddd/v1/99
+Log de Execução Information: RequestEnd - Received HTTP response headers after 33.1088ms - 200
+Log de Execução Information: RequestPipelineEnd - End processing HTTP request after 34.0904ms - 200
