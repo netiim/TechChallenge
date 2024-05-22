@@ -15,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Teste.Services.Regioes
+namespace Testes.Services.Regioes
 {
     public class RegiaoServiceTests
     {

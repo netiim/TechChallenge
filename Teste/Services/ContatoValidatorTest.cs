@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 
-namespace Teste.Services.Contatos.Validators
+namespace Testes.Services.Contatos.Validators
 {
     public class ContatoValidatorTests
     {

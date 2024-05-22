@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Teste.Services.Contatos.Base
+namespace Testes.Services.Contatos.Base
 {
     public class BaseServiceTests
     {
