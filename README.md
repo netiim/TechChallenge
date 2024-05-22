@@ -40,7 +40,7 @@ O projeto está estruturado em camadas para separação de responsabilidades e f
 
 1. **Clonando o Repositório**:
    ```shell
-   git clone https://github.com/seu-usuario/seu-projeto.git
+   git clone https://github.com/netiim/TechChallenge.git
    ```
 
 2. **Instalando Dependências**:
