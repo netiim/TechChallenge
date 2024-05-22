@@ -13,13 +13,15 @@ public class RegiaoService : IRegiaoService
     private readonly IEstadoRepository _estadoRepository;
     private readonly ILogger<RegiaoService> _logger;
     private List<Estado> Estados;
+    private readonly HttpClient _httpClient;
 
-    public RegiaoService(IRegiaoRepository repository, IEstadoRepository estadoRepository, ILogger<RegiaoService> logger)
+    public RegiaoService(IRegiaoRepository repository, IEstadoRepository estadoRepository, ILogger<RegiaoService> logger, HttpClient httpClient)
     {
         _regiaorepository = repository;
         _estadoRepository = estadoRepository;
         Estados = new List<Estado>();
         _logger = logger;
+        _httpClient = httpClient;
     }
 
     public async Task<IEnumerable<Regiao>> ObterTodosAsync()
@@ -31,12 +33,11 @@ public class RegiaoService : IRegiaoService
     {
         List<int> DDDPosiveis = Enumerable.Range(11, 89).ToList();
         Estados = await _estadoRepository.GetAll();
-
-        foreach (int ddd in DDDPosiveis)
+        try
         {
-            using (var client = HttpClientFactory.Create())
+            foreach (int ddd in DDDPosiveis)
             {
-                var response = await client.GetAsync($"{UrlAPI}{ddd}");
+                var response = await _httpClient.GetAsync($"{UrlAPI}{ddd}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -52,6 +53,11 @@ public class RegiaoService : IRegiaoService
                     _logger.LogWarning($"Falha ao obter dados para o DDD {ddd}. StatusCode: {response.StatusCode}");
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Erro ao montar as regiões");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -70,7 +76,7 @@ public class RegiaoService : IRegiaoService
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Erro ao montar região para o DDD {ddd}");
-            throw;
+            throw new Exception(ex.Message);
         }
     }
 

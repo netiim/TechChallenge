@@ -14,7 +14,7 @@ public class ContatoService : BaseService<Contato>,IContatoService
     private readonly IRegiaoRepository _regiaoRepository;
 
     public ContatoService(IContatoRepository contatorepository, IValidator<Contato> validator, IRegiaoRepository regiaoRepository)
-        :base(contatorepository)
+        :base(contatorepository, validator)
     {
         _contatoRepository = contatorepository;
         _validator = validator;

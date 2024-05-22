@@ -1,6 +1,7 @@
 ﻿using Core.Entidades;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace Aplicacao.Services;
 public class BaseService<T> : IBaseService<T> where T : EntityBase
 {
     private readonly IBaseRepository<T> _repository;
+    private readonly IValidator<T> _validator;
 
-    public BaseService(IBaseRepository<T> repository)
+    public BaseService(IBaseRepository<T> repository, IValidator<T> validator)
     {
         _repository = repository;
+        _validator = validator;
     }
     public virtual async Task<IEnumerable<T>> ObterTodosAsync()
     {
@@ -29,10 +32,12 @@ public class BaseService<T> : IBaseService<T> where T : EntityBase
     }
     public virtual async Task AdicionarAsync(T entity)
     {
+        await ValidarPropriedades(entity);
         await _repository.AdicionarAsync(entity);
     }
     public virtual async Task AtualizarAsync(T entity)
     {
+        await ValidarPropriedades(entity);
         await _repository.AtualizarAsync(entity);
     }
     public virtual async Task RemoverAsync(int id)
@@ -43,5 +48,13 @@ public class BaseService<T> : IBaseService<T> where T : EntityBase
     public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
     {
         return await _repository.FindAsync(predicate);
+    }
+    protected async Task ValidarPropriedades(T entity)
+    {
+        var validationResult = await _validator.ValidateAsync(entity);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
     }
 }
