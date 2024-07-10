@@ -3,6 +3,7 @@ using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using ContatoAPI.Extension;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,10 +37,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpMetrics();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapMetrics();
 
 app.Run();

@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:  
+  # Serviço da Aplicação .NET
   api:
     image: netiim/api-tech-challenge:1.0
     container_name: api-tech-challenge
@@ -14,6 +15,8 @@ services:
     ports:
       - "5001:8080"
       - "5002:8081"
+
+  # Serviço do Banco de Dados
   db:
     image: mcr.microsoft.com/mssql/server:latest
     ports:
@@ -24,7 +27,31 @@ services:
       SA_PASSWORD: "YourStrongPassword1!"
       ACCEPT_EULA: "Y"
 
+  # Serviço do Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - tech-bridge
+    ports:
+      - "9090:9090"
+
+  # Serviço do Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    networks:
+      - tech-bridge
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  grafana-storage:
+
 networks:
   tech-bridge:
     driver: bridge
-    

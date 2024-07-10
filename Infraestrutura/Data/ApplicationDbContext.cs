@@ -27,7 +27,7 @@ namespace Infraestrutura.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionString);//"Server=localhost;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(_connectionString);
             }
             optionsBuilder.UseLazyLoadingProxies();
         }
