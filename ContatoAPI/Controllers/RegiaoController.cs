@@ -46,7 +46,6 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                CustomLogger.Arquivo = true;
                 _logger.LogInformation("Iniciando Função para preencher os DDDs");
 
                 await _service.PreencherRegioesComDDD();
