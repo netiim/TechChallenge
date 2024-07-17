@@ -50,3 +50,6 @@ app.MapMetrics();
 app.UseMetricServer();
 
 app.Run();
+
+
+public partial class Program { }
