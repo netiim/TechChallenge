@@ -26,7 +26,7 @@ public class ContatoService : BaseService<Contato>,IContatoService
         await ValidarPropriedades(entity);
 
         string ddd = entity.Telefone.ToString().Substring(0, 2);
-        var list = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
+        var list = await _regiaoRepository.FindAsync(r => r.NumeroDDD.ToString() == ddd);
         entity.RegiaoId = list.FirstOrDefault().Id;
 
         await _contatoRepository.AdicionarAsync(entity);

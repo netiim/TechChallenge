@@ -37,7 +37,7 @@ namespace Aplicacao.Validators
         {
             string ddd = telefone.Substring(0, 2);
 
-            var regiao = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
+            var regiao = await _regiaoRepository.FindAsync(r => r.NumeroDDD.ToString() == ddd);
 
             return regiao != null && regiao.Count() > 0;
         }

@@ -62,8 +62,6 @@ namespace ContatoAPI.Controllers
         /// </summary>
         /// <returns>Uma lista de regiões.</returns>
         /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de regiões.</response>
-        /// <response code="401">Se o usuário não está autenticado.</response>
-        /// <response code="403">Se o usuário não tem permissão para executar esta ação.</response>
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {

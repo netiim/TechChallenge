@@ -12,7 +12,7 @@ namespace Infraestrutura.Configuration
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).HasColumnType("INT").ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(p => p.DataCriacao).HasColumnName("DataCriacao").HasColumnType("DATETIME").IsRequired();
-            builder.Property(p => p.numeroDDD).HasColumnType("INT").IsRequired();
+            builder.Property(p => p.NumeroDDD).HasColumnType("INT").IsRequired();
             builder.Property(p => p.EstadoId).HasColumnType("INT").IsRequired();
 
             builder.HasOne(c => c.Estado)

@@ -69,7 +69,7 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
+                List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.NumeroDDD == ddd);
                 List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
                 return Ok(contatoDTO);
             }

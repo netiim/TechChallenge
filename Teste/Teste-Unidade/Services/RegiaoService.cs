@@ -73,7 +73,7 @@ namespace Testes.Services.Regioes
             await _regiaoService.PreencherRegioesComDDD();
 
             // Assert
-            _regiaoRepositoryMock.Verify(repo => repo.Adicionar(It.Is<Regiao>(r => r.numeroDDD == 11 && r.EstadoId == 1)), Times.AtLeastOnce);
+            _regiaoRepositoryMock.Verify(repo => repo.Adicionar(It.Is<Regiao>(r => r.NumeroDDD == 11 && r.EstadoId == 1)), Times.AtLeastOnce);
         }
 
         [Fact]

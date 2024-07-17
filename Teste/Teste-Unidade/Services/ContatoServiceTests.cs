@@ -26,7 +26,7 @@ namespace Testes.Services.Contatos
             _regiaoRepositoryMock = new Mock<IRegiaoRepository>();
 
             _regiaoRepositoryMock.Setup(repo => repo.FindAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Regiao, bool>>>()))
-                .ReturnsAsync(new List<Regiao> { new Regiao { Id = 1, numeroDDD = 11 } });
+                .ReturnsAsync(new List<Regiao> { new Regiao { Id = 1, NumeroDDD = 11 } });
 
             _validatorMock.Setup(v => v.ValidateAsync(It.IsAny<Contato>(), default))
                 .ReturnsAsync(new ValidationResult());
@@ -146,10 +146,10 @@ namespace Testes.Services.Contatos
                 new Contato { Id = 1, Nome = "Contato 1", Email = "contato1@test.com", Telefone = $"{ddd}999999999" },
                 new Contato { Id = 2, Nome = "Contato 2", Email = "contato2@test.com", Telefone = $"{ddd}888888888" }
             };
-            _contatoRepositoryMock.Setup(repo => repo.FindAsync(c => c.Regiao.numeroDDD == ddd)).ReturnsAsync(expectedContatos);
+            _contatoRepositoryMock.Setup(repo => repo.FindAsync(c => c.Regiao.NumeroDDD == ddd)).ReturnsAsync(expectedContatos);
 
             // Act
-            var result = await _contatoService.FindAsync(c => c.Regiao.numeroDDD == ddd);
+            var result = await _contatoService.FindAsync(c => c.Regiao.NumeroDDD == ddd);
 
             // Assert
             Assert.Equal(expectedContatos.Count, result.Count());

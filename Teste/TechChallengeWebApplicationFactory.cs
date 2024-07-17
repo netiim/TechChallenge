@@ -39,11 +39,11 @@ namespace Testes
 
             var user = new UsuarioTokenDTO { Username = "netim", Password = "123456" };
 
-            var resultado = await client.PostAsJsonAsync("/auth-login", user);
+            var resultado = await client.PostAsJsonAsync("/api/Token", user);
 
             resultado.EnsureSuccessStatusCode();
 
-            var result = await resultado.Content.ReadFromJsonAsync<string>();
+            var result = await resultado.Content.ReadAsStringAsync();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result);
 

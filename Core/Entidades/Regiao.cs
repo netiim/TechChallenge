@@ -8,7 +8,7 @@ namespace Core.Entidades
         /// Numero referente ao DDD da cidade
         /// </summary>
         [Range(minimum: 11, maximum: 99, MinimumIsExclusive = true, MaximumIsExclusive = true, ErrorMessage = "O número deve estar entre 11 e 99")]
-        public int numeroDDD { get; set; }
+        public int NumeroDDD { get; set; }
         /// <summary>
         /// Id do estado ao qual aquela cidade pertence
         /// </summary>

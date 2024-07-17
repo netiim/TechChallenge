@@ -18,9 +18,9 @@ namespace Testes.Services.Contatos.Validators
             _regiaoRepositoryMock = new Mock<IRegiaoRepository>();
 
             _regiaoRepositoryMock.Setup(repo => repo.FindAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Regiao, bool>>>()))
-              .ReturnsAsync(new List<Regiao> { new Regiao { Id = 1, numeroDDD = 11 },
-                                               new Regiao { Id = 2, numeroDDD = 21 },
-                                               new Regiao { Id = 3, numeroDDD = 31 } });
+              .ReturnsAsync(new List<Regiao> { new Regiao { Id = 1, NumeroDDD = 11 },
+                                               new Regiao { Id = 2, NumeroDDD = 21 },
+                                               new Regiao { Id = 3, NumeroDDD = 31 } });
 
             _validator = new ContatoValidator(_regiaoRepositoryMock.Object); 
         }
