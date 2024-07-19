@@ -11,15 +11,15 @@ namespace Infraestrutura.Data
         {
             _connectionString = connectionString;
         }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-        {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
+        //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        //: base(options)
+        //{
+        //    IConfiguration configuration = new ConfigurationBuilder()
+        //        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+        //        .AddJsonFile("appsettings.json")
+        //        .Build();
+        //    _connectionString = configuration.GetConnectionString("DefaultConnection");
+        //}
         public ApplicationDbContext()        
         {
             IConfiguration configuration = new ConfigurationBuilder()

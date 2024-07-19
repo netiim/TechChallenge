@@ -43,7 +43,6 @@
 
   <ItemGroup>
     <Folder Include="Integracao\HttpContato\" />
-    <Folder Include="Integracao\HttpEstado\" />
   </ItemGroup>
 
 </Project>

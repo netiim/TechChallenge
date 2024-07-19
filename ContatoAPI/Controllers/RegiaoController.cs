@@ -62,6 +62,7 @@ namespace ContatoAPI.Controllers
         /// </summary>
         /// <returns>Uma lista de regiões.</returns>
         /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de regiões.</response>
+        /// <response code="400">Se aconteceu algum problema com a operação.</response>
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {

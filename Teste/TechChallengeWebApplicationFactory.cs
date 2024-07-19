@@ -145,7 +145,7 @@ namespace Testes
                 .UseSqlServer(_connectionString)
                 .Options;
 
-            using var context = new ApplicationDbContext(options);
+            using var context = new ApplicationDbContext();
             await context.Database.MigrateAsync();
         }
     }
