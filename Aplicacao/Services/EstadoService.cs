@@ -37,4 +37,9 @@ public class EstadoService : IEstadoService
             throw new Exception($"Falha ao obter os estados. Código de status: {response.StatusCode}");
         }
     }
+
+    public async Task<IEnumerable<Estado>> ObterTodos(){
+
+        return await _repository.GetAll();
+    }
 }
