@@ -18,7 +18,7 @@ namespace Testes.Integracao.HttpToken
         }
 
         [Fact]
-        public async Task POST_Efetua_Login_Com_Sucesso()
+        public async Task POST_Gera_Token_Usuario_Valido()
         {
             //Arrange
             var user = new UsuarioTokenDTO { Username = "netim", Password = "123456" };
@@ -29,6 +29,19 @@ namespace Testes.Integracao.HttpToken
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
+        }
+        [Fact]
+        public async Task POST_Gera_Token_Usuario_InValido()
+        {
+            //Arrange
+            var user = new UsuarioTokenDTO { Username = "netiim", Password = "123456" };
+            using var client = app.CreateClient();
+
+            //Action
+            var resultado = await client.PostAsJsonAsync("/api/Token", user);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, resultado.StatusCode);
         }
     }
 }
