@@ -41,8 +41,4 @@
     <ProjectReference Include="..\Infraestrutura\Infraestrutura.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Integracao\HttpContato\" />
-  </ItemGroup>
-
 </Project>

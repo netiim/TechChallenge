@@ -30,7 +30,7 @@ namespace Testes
         public TechChallengeWebApplicationFactory()
         {
             this.scope = Services.CreateScope();
-            _connectionString = $"Server=localhost,1435;Database=TechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
+            _connectionString = $"Server=localhost,1435;Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
             Context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();  
             _dockerClient = new DockerClientConfiguration(new Uri(GetUri())).CreateClient();       
         }
@@ -112,7 +112,7 @@ namespace Testes
                 }
             }
 
-            _connectionString = $"Server=localhost,{HostPort};Database=TechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
+            _connectionString = $"Server=localhost,{HostPort};Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
             
             await ApplyMigrationsAsync();
         }
@@ -145,7 +145,7 @@ namespace Testes
                 .UseSqlServer(_connectionString)
                 .Options;
 
-            using var context = new ApplicationDbContext();
+            using var context = new ApplicationDbContext(options);
             await context.Database.MigrateAsync();
         }
     }
