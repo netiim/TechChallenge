@@ -17,7 +17,7 @@ public class BaseService<T> : IBaseService<T> where T : EntityBase
     private readonly IBaseRepository<T> _repository;
     private readonly IValidator<T> _validator;
 
-    public BaseService(IBaseRepository<T> repository, IValidator<T> validator)
+    public BaseService(IBaseRepository<T> repository, IValidator<T> validator) 
     {
         _repository = repository;
         _validator = validator;
