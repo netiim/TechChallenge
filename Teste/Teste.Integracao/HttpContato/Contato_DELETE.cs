@@ -18,6 +18,7 @@ namespace Testes.Integracao.HttpContato
             this.app = app;
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task DELETE_Contato_PorId_Com_Sucesso()
         {
             //Arange
@@ -32,6 +33,7 @@ namespace Testes.Integracao.HttpContato
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task DELETE_Contato_PorId_Contato_Inexistente()
         {
             //Arange
