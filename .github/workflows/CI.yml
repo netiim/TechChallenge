@@ -43,3 +43,21 @@ jobs:
         SA_PASSWORD: "StrongPassword!123"
         ACCEPT_EULA: "Y"
       run: dotnet test --no-build --filter "Categoria=integração" --logger trx
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/api-tech-challenge:latest .
+        echo "$DOCKER_HUB_ACCESS_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/api-tech-challenge:latest
+
+    - name: Deploy with Docker Compose
+      run: |
+        ssh user@your_server "
+          cd /path/to/your/docker-compose &&
+          docker-compose stop api &&
+          docker-compose rm -f api &&
+          docker-compose up -d api
+        "
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
