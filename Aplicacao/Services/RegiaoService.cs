@@ -69,7 +69,7 @@ public class RegiaoService : IRegiaoService
 
             return new Regiao()
             {
-                numeroDDD = ddd,
+                NumeroDDD = ddd,
                 EstadoId = (int)Estados.FirstOrDefault(x => x.siglaEstado.Equals(brasilApiDTO.state))?.Id
             };
         }

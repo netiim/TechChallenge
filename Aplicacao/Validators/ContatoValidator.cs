@@ -19,7 +19,7 @@ namespace Aplicacao.Validators
             RuleFor(contato => contato.Nome)
                 .NotEmpty().WithMessage("O nome não pode ser vazio.")
                 .Length(2, 100).WithMessage("O nome deve ter entre 2 e 100 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$").WithMessage("O nome deve conter apenas caracteres alfabéticos.");
+                .Matches(@"^[\p{L}\s]*$").WithMessage("O nome deve conter apenas caracteres alfabéticos.");
 
             RuleFor(contato => contato.Email)
                 .NotEmpty().WithMessage("O email não pode ser vazio.")
@@ -37,7 +37,7 @@ namespace Aplicacao.Validators
         {
             string ddd = telefone.Substring(0, 2);
 
-            var regiao = await _regiaoRepository.FindAsync(r => r.numeroDDD.ToString() == ddd);
+            var regiao = await _regiaoRepository.FindAsync(r => r.NumeroDDD.ToString() == ddd);
 
             return regiao != null && regiao.Count() > 0;
         }

@@ -20,7 +20,7 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-var connectionString = configuration.GetValue<string>("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString),
     ServiceLifetime.Scoped);
@@ -50,3 +50,6 @@ app.MapMetrics();
 app.UseMetricServer();
 
 app.Run();
+
+
+public partial class Program { }

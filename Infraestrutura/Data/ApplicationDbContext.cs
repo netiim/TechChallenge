@@ -6,18 +6,13 @@ namespace Infraestrutura.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        private readonly string _connectionString;
-        public ApplicationDbContext(string connectionString)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
         {
-            _connectionString = connectionString;
         }
-        public ApplicationDbContext()        
+        public string GetConnectionString()
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            return Database.GetDbConnection().ConnectionString;
         }
         public DbSet<Contato> Contato { get; set; }
         public DbSet<Regiao> Regiao { get; set; }
@@ -27,7 +22,12 @@ namespace Infraestrutura.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                     .AddJsonFile("appsettings.json")
+                     .Build();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
             }
             optionsBuilder.UseLazyLoadingProxies();
         }
