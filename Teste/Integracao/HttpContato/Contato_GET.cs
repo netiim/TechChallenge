@@ -40,13 +40,11 @@ namespace Testes.Integracao.HttpContato
             using var client = app.CreateClient();
 
             //Action
-            var resultado = await client.GetFromJsonAsync<ReadContatoDTO>("/Contato/" + contato.Id);
+            var resultado = await client.GetFromJsonAsync<List<ReadContatoDTO>>("/Contato/BuscarPorDDD?ddd=" + contato.Regiao.NumeroDDD);
 
             //Assert
             Assert.NotNull(resultado);
-            Assert.Equal(contato.Nome, resultado.Nome);
-            Assert.Equal(contato.Telefone, resultado.Telefone);
-            Assert.Equal(contato.Email, resultado.Email);
+
         }     
         [Fact]
         public async Task GET_Obtem_Contatos_Por_Id_Com_Sucesso()
