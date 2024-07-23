@@ -44,6 +44,12 @@ jobs:
         ACCEPT_EULA: "Y"
       run: dotnet test --no-build --filter "Categoria=integração" --logger trx
    
+    - name: Get current version
+      id: vars
+      run: |
+        echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+        echo "NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF++;print}')" >> $GITHUB_ENV
+
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
@@ -55,8 +61,10 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-tech-challenge:latest
+        push: true        
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/api-tech-challenge:${{ env.NEW_VERSION }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/api-tech-challenge:latest
 
     - name: Logout from Docker Hub
       run: docker logout
