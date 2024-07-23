@@ -42,6 +42,7 @@ namespace Testes.Services.Regioes
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task PreencherRegioesComDDD_DeveAdicionarRegioes_QuandoApiResponseForBemSucedida()
         {
             // Arrange
@@ -77,6 +78,7 @@ namespace Testes.Services.Regioes
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task PreencherRegioesComDDD_DeveLogarWarning_QuandoApiResponseNaoForBemSucedida()
         {
             // Arrange

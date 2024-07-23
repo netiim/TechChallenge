@@ -35,6 +35,7 @@ namespace Testes.Services.Contatos
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task ObterTodosAsync_DeveRetornarTodosOsContatos()
         {
             // Arrange
@@ -52,6 +53,7 @@ namespace Testes.Services.Contatos
             result.Should().BeEquivalentTo(expectedContatos);
         }
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task AdicionarAsync_DeveLancarValidationException_QuandoTelefoneContemLetras()
         {
             // Arrange
@@ -76,6 +78,7 @@ namespace Testes.Services.Contatos
                 .WithMessage("*O telefone deve conter apenas números*");
         }
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task AdicionarAsync_DeveLancarValidationException_QuandoTelefoneEstiverVazio()
         {
             // Arrange
@@ -103,6 +106,7 @@ namespace Testes.Services.Contatos
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task AdicionarAsync_DeveChamarAddNoRepositorio()
         {
             // Arrange
@@ -121,6 +125,7 @@ namespace Testes.Services.Contatos
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task ObterPorIdAsync_DeveRetornarContato()
         {
             // Arrange
@@ -135,6 +140,7 @@ namespace Testes.Services.Contatos
             result.Should().Be(expectedContato);
         }
         [Theory]
+        [Trait("Categoria", "Unidade")]
         [InlineData(11)]
         [InlineData(21)]
         [InlineData(31)]

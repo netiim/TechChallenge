@@ -18,6 +18,7 @@ namespace Testes.Integracao.HttpContato
             this.app = app;
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task PUT_Contato_PorId_Com_Sucesso()
         {
             //Arange
@@ -40,6 +41,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task PUT_Contato_PorId_Informacoes_Invalidas()
         {
             //Arange
@@ -62,6 +64,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task PUT_Contato_PorId_Contato_Inexistente()
         {
             //Arange

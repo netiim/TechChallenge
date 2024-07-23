@@ -18,6 +18,7 @@ namespace Testes.Integracao.HttpToken
         }
 
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task POST_Gera_Token_Usuario_Valido()
         {
             //Arrange
@@ -31,6 +32,7 @@ namespace Testes.Integracao.HttpToken
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task POST_Gera_Token_Usuario_InValido()
         {
             //Arrange

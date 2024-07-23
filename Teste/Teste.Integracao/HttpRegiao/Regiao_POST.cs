@@ -20,6 +20,7 @@ namespace Testes.Integracao.HttpRegiao
         }
 
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task POST_Preenche_Regioes_Sem_Autorizacao()
         {
             //Arrange
@@ -33,6 +34,7 @@ namespace Testes.Integracao.HttpRegiao
         }
 
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task POST_Preenche_Regioes_Com_Autorizacao()
         {
             //Arrange

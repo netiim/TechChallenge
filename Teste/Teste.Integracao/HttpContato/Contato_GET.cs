@@ -20,6 +20,7 @@ namespace Testes.Integracao.HttpContato
             this.app = app;
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Todos_Contatos_Com_Sucesso()
         {
             // Verifica se existe um contato
@@ -33,6 +34,7 @@ namespace Testes.Integracao.HttpContato
             Assert.NotNull(resultado);
         }      
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Contatos_Por_DDD_Com_Sucesso()
         {
             // Verifica se existe um contato
@@ -47,6 +49,7 @@ namespace Testes.Integracao.HttpContato
 
         }     
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Contatos_Por_Id_Com_Sucesso()
         {
             // Verifica se existe um contato

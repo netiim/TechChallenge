@@ -13,6 +13,7 @@ namespace Testes
         }
 
         [Fact]
+        [Trait("Categoria", "VerificacaoDatabaseParaTesteIntegracao")]
         public void VerifyConnectionString()
         {
             // Verifique a string de conexão

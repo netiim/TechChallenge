@@ -23,6 +23,7 @@ namespace Testes.Integracao.HttpRegiao
             this.app = app;
         }
         [Fact]
+        [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             // Verifique se as regiões foram inseridas

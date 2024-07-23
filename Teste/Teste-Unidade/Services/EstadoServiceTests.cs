@@ -30,6 +30,7 @@ public class EstadoServiceTests
     }
 
     [Fact]
+    [Trait("Categoria", "Unidade")]
     public async Task PreencherTabelaComEstadosBrasil_DeveAdicionarEstados_QuandoApiResponseForBemSucedida()
     {
         // Arrange
@@ -66,6 +67,7 @@ public class EstadoServiceTests
     }
 
     [Fact]
+    [Trait("Categoria", "Unidade")]
     public async Task PreencherTabelaComEstadosBrasil_DeveLancarExcecao_QuandoApiResponseNaoForBemSucedida()
     {
         // Arrange

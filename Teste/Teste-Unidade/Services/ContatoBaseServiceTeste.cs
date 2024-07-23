@@ -25,6 +25,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task AdicionarAsync_DeveAdicionarContato()
         {
             // Arrange
@@ -38,6 +39,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task AtualizarAsync_DeveAtualizarContato()
         {
             // Arrange
@@ -51,6 +53,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task RemoverAsync_DeveRemoverContatoPorId()
         {
             // Arrange
@@ -64,6 +67,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task ObterTodosAsync_DeveRetornarTodosOsContatos()
         {
             // Arrange
@@ -78,6 +82,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task ObterPorIdAsync_DeveRetornarContatoPorId()
         {
             // Arrange
@@ -93,6 +98,7 @@ namespace Testes.Services.Contatos.Base
         }
 
         [Fact]
+        [Trait("Categoria", "Unidade")]
         public async Task FindAsync_DeveRetornarContatosComBaseNoPredicate()
         {
             // Arrange
