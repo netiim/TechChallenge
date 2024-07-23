@@ -5,12 +5,9 @@ services:
   api:
     image: netiim/api-tech-challenge:1.0
     container_name: api-tech-challenge
-    build:
-      context: .
-      dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection="Server=db;Database=master;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;"
+      - ConnectionStrings__DefaultConnection=Server=db;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
     networks:

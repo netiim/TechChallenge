@@ -15,7 +15,7 @@ builder.Services.AddInjecoesDependencias();
 builder.Services.AddAutoMapper();
 builder.Services.AddFluentValidation();
 builder.Services.AddCustomAuthentication(builder.Configuration);
-
+builder.Configuration.AddEnvironmentVariables();
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
