@@ -15,7 +15,7 @@ namespace Testes.Integracao.HttpEstado
 
         [Fact]
         [Trait("Categoria", "Integração")]
-        public async Task POST_Preenche_Regioes_Sem_Autorizacao()
+        public async Task POST_Preenche_Estados_Sem_Autorizacao()
         {
             //Arrange
             using var client = app.CreateClient();
@@ -29,7 +29,7 @@ namespace Testes.Integracao.HttpEstado
 
         [Fact]
         [Trait("Categoria", "Integração")]
-        public async Task POST_Preenche_Regioes_Com_Autorizacao()
+        public async Task POST_Preenche_Estados_Com_Autorizacao()
         {
             //Arrange
             using var client = await app.GetClientWithAccessTokenAsync();
