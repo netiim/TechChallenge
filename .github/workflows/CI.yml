@@ -37,15 +37,34 @@ jobs:
         SA_PASSWORD: "StrongPassword!123"
         ACCEPT_EULA: "Y"
       run: dotnet test --no-build --filter "Categoria=VerificacaoDatabaseParaTesteIntegracao"
-
+    
     - name: Run integration tests
       env:
         SA_PASSWORD: "StrongPassword!123"
         ACCEPT_EULA: "Y"
       run: dotnet test --no-build --filter "Categoria=integração" --logger trx
+   
+    - name: Get current version
+      id: vars
+      run: |
+        echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+        echo "NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF++;print}')" >> $GITHUB_ENV
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3.3.0
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true        
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/api-tech-challenge:${{ env.NEW_VERSION }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/api-tech-challenge:latest
+
+    - name: Logout from Docker Hub
+      run: docker logout
