@@ -44,7 +44,7 @@ namespace Testes.Integracao.HttpContato
         public async Task POST_Preenche_Regioes_Com_Autorizacao()
         {
             //Arrange
-            Regiao regiao = app.Context.Regiao.FirstOrDefault();
+            Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
             if (regiao is null)
             {
                 regiao = new Regiao()

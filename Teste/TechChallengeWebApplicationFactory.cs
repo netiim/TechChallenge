@@ -167,7 +167,10 @@ namespace Testes
                 .Options;
 
             using var context = new ApplicationDbContext(options);
-            await context.Database.MigrateAsync();
+            if (!context.Database.GetPendingMigrations().Any())
+            {
+                await context.Database.MigrateAsync();
+            }
         }
     }
 }

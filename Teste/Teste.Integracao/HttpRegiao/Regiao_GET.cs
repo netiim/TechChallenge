@@ -27,7 +27,7 @@ namespace Testes.Integracao.HttpRegiao
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             // Verifique se as regiões foram inseridas
-            Regiao regiao = app.Context.Regiao.FirstOrDefault();
+            Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
             if (regiao is null)
             {
                 regiao = new Regiao()

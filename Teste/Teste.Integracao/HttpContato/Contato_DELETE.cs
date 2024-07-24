@@ -48,10 +48,10 @@ namespace Testes.Integracao.HttpContato
         }
         private Contato BuscarPrimeiroContatoDoBanco()
         {
-            Contato contato = app.Context.Contato.FirstOrDefault();
+            Contato contato = app.Context.Contato.OrderBy(e => e.Id).FirstOrDefault();
             if (contato is null)
             {
-                Regiao regiao = app.Context.Regiao.FirstOrDefault();
+                Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
                 if (regiao is null)
                 {
                     regiao = new Regiao()
