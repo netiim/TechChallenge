@@ -1,0 +1,45 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Wait for SQL Server to be ready
+      run: |
+        for i in {1..60}; do
+          if /opt/mssql-tools/bin/sqlcmd -S localhost,1435 -U sa -P StrongPassword!123 -Q "SELECT 1" &> /dev/null; then
+            echo "SQL Server is up!"
+            break
+          fi
+          echo "Waiting for SQL Server to be ready..."
+          sleep 1
+        done
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Run integration tests
+      run: dotnet test --no-build --filter "Categoria=integração"
+
+
+
+
+
+
+
