@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using Testcontainers.MsSql;
 
 namespace Testes
 {
@@ -30,9 +29,9 @@ namespace Testes
         public TechChallengeWebApplicationFactory()
         {
             this.scope = Services.CreateScope();
-            _connectionString = $"Server=localhost,1435;Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
-            Context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();  
-            _dockerClient = new DockerClientConfiguration(new Uri(GetUri())).CreateClient();       
+            _connectionString = GetConnectionString();
+            Context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            _dockerClient = new DockerClientConfiguration(new Uri(GetUri())).CreateClient();
         }
 
         private static string GetUri()
@@ -42,6 +41,23 @@ namespace Testes
             var dockerUri = isWindows ? "npipe://./pipe/docker_engine" : "unix:///var/run/docker.sock";
 
             return dockerUri;
+        }
+
+        private static bool IsRunningInGitHubActions()
+        {
+            return Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true";
+        }
+
+        private string GetConnectionString()
+        {
+            if (IsRunningInGitHubActions())
+            {
+                return "Server=localhost,1435;Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
+            }
+            else
+            {
+                return $"Server=localhost,{HostPort};Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
+            }
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -61,6 +77,7 @@ namespace Testes
 
             base.ConfigureWebHost(builder);
         }
+
         public async Task<HttpClient> GetClientWithAccessTokenAsync()
         {
             var client = this.CreateClient();
@@ -80,60 +97,64 @@ namespace Testes
 
         public async Task InitializeAsync()
         {
-            lock (Lock)
+            if (!IsRunningInGitHubActions())
             {
-                try
+                lock (Lock)
                 {
-                    var containers = _dockerClient.Containers.ListContainersAsync(new ContainersListParameters { All = true }).GetAwaiter().GetResult();
-                    var existingContainer = containers.FirstOrDefault(c => c.Names.Contains("/" + ContainerName));
-
-                    if (existingContainer == null)
+                    try
                     {
-                        _sqlServerContainer = new ContainerBuilder()
-                            .WithImage("mcr.microsoft.com/mssql/server:latest")
-                            .WithName(ContainerName)
-                            .WithEnvironment("ACCEPT_EULA", "Y")
-                            .WithEnvironment("SA_PASSWORD", "StrongPassword!123")
-                            .WithPortBinding(HostPort, ContainerPort)
-                            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(ContainerPort))
-                            .Build();
+                        var containers = _dockerClient.Containers.ListContainersAsync(new ContainersListParameters { All = true }).GetAwaiter().GetResult();
+                        var existingContainer = containers.FirstOrDefault(c => c.Names.Contains("/" + ContainerName));
 
-                        _sqlServerContainer.StartAsync().GetAwaiter().GetResult();
+                        if (existingContainer == null)
+                        {
+                            _sqlServerContainer = new ContainerBuilder()
+                                .WithImage("mcr.microsoft.com/mssql/server:latest")
+                                .WithName(ContainerName)
+                                .WithEnvironment("ACCEPT_EULA", "Y")
+                                .WithEnvironment("SA_PASSWORD", "StrongPassword!123")
+                                .WithPortBinding(HostPort, ContainerPort)
+                                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(ContainerPort))
+                                .Build();
+
+                            _sqlServerContainer.StartAsync().GetAwaiter().GetResult();
+                        }
+                        else
+                        {
+                            _dockerClient.Containers.StartContainerAsync(existingContainer.ID, new ContainerStartParameters()).GetAwaiter().GetResult();
+                        }
+                        Thread.Sleep(10000);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        _dockerClient.Containers.StartContainerAsync(existingContainer.ID, new ContainerStartParameters()).GetAwaiter().GetResult();
+                        throw new InvalidOperationException("Failed to initialize Docker container", ex);
                     }
-                    Thread.Sleep(10000);
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Failed to initialize Docker container", ex);
                 }
             }
 
-            _connectionString = $"Server=localhost,{HostPort};Database=TestTechChallenge;User Id=sa;Password=StrongPassword!123;Encrypt=False;TrustServerCertificate=True;";
-            
             await ApplyMigrationsAsync();
         }
 
         public async Task DisposeAsync()
         {
-            lock (Lock)
+            if (!IsRunningInGitHubActions())
             {
-                if (_sqlServerContainer != null)
+                lock (Lock)
                 {
-                    _sqlServerContainer.StopAsync().GetAwaiter().GetResult();
-                    _sqlServerContainer.DisposeAsync().GetAwaiter().GetResult();
-                }
-                else
-                {
-                    var containers = _dockerClient?.Containers.ListContainersAsync(new ContainersListParameters { All = true }).GetAwaiter().GetResult();
-                    var existingContainer = containers?.FirstOrDefault(c => c.Names.Contains("/" + ContainerName));
-
-                    if (existingContainer != null)
+                    if (_sqlServerContainer != null)
                     {
-                        _dockerClient?.Containers.StopContainerAsync(existingContainer.ID, new ContainerStopParameters()).GetAwaiter().GetResult();
+                        _sqlServerContainer.StopAsync().GetAwaiter().GetResult();
+                        _sqlServerContainer.DisposeAsync().GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        var containers = _dockerClient?.Containers.ListContainersAsync(new ContainersListParameters { All = true }).GetAwaiter().GetResult();
+                        var existingContainer = containers?.FirstOrDefault(c => c.Names.Contains("/" + ContainerName));
+
+                        if (existingContainer != null)
+                        {
+                            _dockerClient?.Containers.StopContainerAsync(existingContainer.ID, new ContainerStopParameters()).GetAwaiter().GetResult();
+                        }
                     }
                 }
             }
