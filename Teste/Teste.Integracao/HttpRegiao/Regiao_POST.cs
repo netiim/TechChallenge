@@ -50,7 +50,7 @@ namespace Testes.Integracao.HttpRegiao
             "application/json"
                             );
             List<Estado> list = ObterEstadosDoBrasil();
-            app.Context.AddRange(list);
+            app.Context.Estado.AddRange(list);
             app.Context.SaveChanges();
 
             //Action

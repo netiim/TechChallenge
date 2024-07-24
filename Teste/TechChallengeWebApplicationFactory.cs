@@ -146,7 +146,6 @@ namespace Testes
                 .Options;
 
             using var context = new ApplicationDbContext(options);
-            await context.Database.EnsureDeletedAsync();
             await context.Database.MigrateAsync();
         }
     }
