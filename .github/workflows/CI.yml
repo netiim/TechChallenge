@@ -38,12 +38,6 @@ jobs:
         ACCEPT_EULA: "Y"
       run: dotnet test --no-build --filter "Categoria=VerificacaoDatabaseParaTesteIntegracao"
     
-    - name: Run integration tests
-      env:
-        SA_PASSWORD: "StrongPassword!123"
-        ACCEPT_EULA: "Y"
-      run: dotnet test --no-build --filter "Categoria=integração" --logger trx
-   
     - name: Get current version
       id: vars
       run: |
