@@ -11,8 +11,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: StrongPassword!123
+        ports:
+          - 1435:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 10s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
@@ -36,10 +49,3 @@ jobs:
       run: dotnet build --no-restore
     - name: Run integration tests
       run: dotnet test --no-build --filter "Categoria=integração"
-
-
-
-
-
-
-
