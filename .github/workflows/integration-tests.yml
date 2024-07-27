@@ -12,37 +12,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    services:
-      sqlserver:
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: StrongPassword!123
-        ports:
-          - 1435:1433
-        options: >-
-          --health-cmd "exit 0"
-          --health-interval 10s
-          --health-timeout 10s
-          --health-retries 5
-
+   
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    - name: Wait for SQL Server to be ready
-      run: |
-        for i in {1..60}; do
-          if /opt/mssql-tools/bin/sqlcmd -S localhost,1435 -U sa -P StrongPassword!123 -Q "SELECT 1" &> /dev/null; then
-            echo "SQL Server is up!"
-            break
-          fi
-          echo "Waiting for SQL Server to be ready..."
-          sleep 1
-        done
+        dotnet-version: 8.0.x    
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
