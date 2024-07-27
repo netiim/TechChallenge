@@ -49,12 +49,20 @@ namespace Testes.Integracao.HttpRegiao
                                 Encoding.UTF8,
             "application/json"
                             );
-            List<Estado> list = ObterEstadosDoBrasil();
-            app.Context.Estado.AddRange(list);
-            app.Context.SaveChanges();
+            try
+            {
+                List<Estado> list = ObterEstadosDoBrasil();
+                app.Context.Estado.AddRange(list);
+                await app.Context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Erro: {e.Message}, {e.StackTrace}");
+            }
+
 
             //Action
-            var resultado = await client.PostAsync("/Regiao", content);
+            var resultado = await client.PostAsync("/Regiao", null);
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);

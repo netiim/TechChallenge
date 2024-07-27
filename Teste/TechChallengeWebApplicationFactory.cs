@@ -10,18 +10,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Data.SqlClient;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.Sockets;
 
 namespace Testes
 {
     public class TechChallengeWebApplicationFactory : WebApplicationFactory<Program>
     {
         public ApplicationDbContext Context { get; }
-        private  string ContainerName = $"sql_server_test_container{DateTime.Now.Second.ToString()}";
-        private const int HostPort = 1435;
+        private string ContainerName = $"sql_server_test_container{DateTime.Now.Second.ToString()}";
+        private readonly int HostPort;
         private const int ContainerPort = 1433;
-        private string _databaseName;
         private string _connectionString;
         private DockerClient _dockerClient;
         private static readonly object Lock = new();
@@ -32,11 +33,20 @@ namespace Testes
             lock (Lock)
             {
                 IServiceScope Scope = Services.CreateScope();
+                HostPort = GetAvailablePort();
                 _connectionString = GetConnectionString();
                 Context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); ;
                 _dockerClient = new DockerClientConfiguration(new Uri(GetUri())).CreateClient();
                 StartSqlServerContainer().Wait();
             }
+        }
+        private int GetAvailablePort()
+        {
+            var listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+            var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            listener.Stop();
+            return port;
         }
         private async Task StartSqlServerContainer()
         {
