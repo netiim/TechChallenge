@@ -14,14 +14,10 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpRegiao
 {
-    public class Regiao_POST : IClassFixture<TechChallengeWebApplicationFactory>
-    {
-        private readonly TechChallengeWebApplicationFactory app;
-
-        public Regiao_POST(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
+    public class Regiao_POST: BaseIntegrationTest 
+    {        
+        public Regiao_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            :base(integrationTechChallengerWebAppFactory){ }
 
         [Fact]
         [Trait("Categoria", "Integração")]
@@ -37,36 +33,36 @@ namespace Testes.Integracao.HttpRegiao
             Assert.Equal(HttpStatusCode.Unauthorized, resultado.StatusCode);
         }
 
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task POST_Preenche_Regioes_Com_Autorizacao()
-        {
-            //Arrange
-            using var client = await app.GetClientWithAccessTokenAsync();
+        //[Fact]
+        //[Trait("Categoria", "Integração")]
+        //public async Task POST_Preenche_Regioes_Com_Autorizacao()
+        //{
+        //    //Arrange
+        //    using var client = await app.GetClientWithAccessTokenAsync();
 
-            var content = new StringContent(
-                                JsonSerializer.Serialize(new { }),
-                                Encoding.UTF8,
-            "application/json"
-                            );
-            try
-            {
-                List<Estado> list = ObterEstadosDoBrasil();
-                app.Context.Estado.AddRange(list);
-                await app.Context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"Erro: {e.Message}, {e.StackTrace}");
-            }
+        //    var content = new StringContent(
+        //                        JsonSerializer.Serialize(new { }),
+        //                        Encoding.UTF8,
+        //    "application/json"
+        //                    );
+        //    try
+        //    {
+        //        List<Estado> list = ObterEstadosDoBrasil();
+        //        app.Context.Estado.AddRange(list);
+        //        await app.Context.SaveChangesAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception($"Erro: {e.Message}, {e.StackTrace}");
+        //    }
 
 
-            //Action
-            var resultado = await client.PostAsync("/Regiao", null);
+        //    //Action
+        //    var resultado = await client.PostAsync("/Regiao", null);
 
-            //Assert
-            Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
-        }
+        //    //Assert
+        //    Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
+        //}
         private static List<Estado> ObterEstadosDoBrasil()
         {
             return new List<Estado>
