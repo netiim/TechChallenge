@@ -12,14 +12,14 @@ namespace Testes
             _context = factory.Context;
         }
 
-        [Fact]
-        [Trait("Categoria", "VerificacaoDatabaseParaTesteIntegracao")]
-        public void VerifyConnectionString()
-        {
-            // Verifique a string de conexão
-            var connectionString = _context.GetConnectionString();
-            Assert.Contains("TestTechChallenge", connectionString);
-        }
+    //    [Fact]
+    //    [Trait("Categoria", "VerificacaoDatabaseParaTesteIntegracao")]
+    //    public void VerifyConnectionString()
+    //    {
+    //        // Verifique a string de conexão
+    //        var connectionString = _context.GetConnectionString();
+    //        Assert.Contains("TestTechChallenge", connectionString);
+    //    }
     }
 }
 

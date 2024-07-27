@@ -46,6 +46,7 @@ namespace Testes.Integracao.HttpContato
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
+
         private Contato BuscarPrimeiroContatoDoBanco()
         {
             Contato contato = app.Context.Contato.OrderBy(e => e.Id).FirstOrDefault();
