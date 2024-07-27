@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: .NET
 
 on:
@@ -12,7 +9,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-   
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+          - 1433:1433
+        env:
+          SA_PASSWORD: "Your_password123"
+          ACCEPT_EULA: "Y"
+    
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -23,5 +29,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: List all tests
+      run: dotnet test --no-build --filter "Categoria=integração" --list-tests
     - name: Run integration tests
-      run: dotnet test --no-build --filter "Categoria=integração"
+      run: dotnet test --no-build --filter "Categoria=integração" --logger "console;verbosity=detailed" --blame-hang-timeout 5m
