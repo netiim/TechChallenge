@@ -14,20 +14,17 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpRegiao
 {
-    public class Regiao_GET : IClassFixture<TechChallengeWebApplicationFactory>
+    public class Regiao_GET : BaseIntegrationTest
     {
-        private readonly TechChallengeWebApplicationFactory app;
+        public Regiao_GET(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            : base(integrationTechChallengerWebAppFactory) { }
 
-        public Regiao_GET(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
         [Fact]
         [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             // Verifique se as regiões foram inseridas
-            Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
+            Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
             if (regiao is null)
             {
                 regiao = new Regiao()
@@ -37,8 +34,8 @@ namespace Testes.Integracao.HttpRegiao
                     Estado = new Estado() {Nome = "São Paulo", siglaEstado = "SP" }
                 };
 
-                app.Context.Regiao.Add(regiao);
-                app.Context.SaveChanges();
+                _context.Regiao.Add(regiao);
+                _context.SaveChanges();
             }
 
             using var client = app.CreateClient();

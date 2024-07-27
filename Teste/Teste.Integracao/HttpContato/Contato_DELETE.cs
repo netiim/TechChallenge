@@ -9,14 +9,11 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpContato
 {
-    public class Contato_DELETE : IClassFixture<TechChallengeWebApplicationFactory>
+    public class Contato_DELETE : BaseIntegrationTest
     {
-        private readonly TechChallengeWebApplicationFactory app;
+        public Contato_DELETE(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            : base(integrationTechChallengerWebAppFactory) { }
 
-        public Contato_DELETE(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
         [Fact]
         [Trait("Categoria", "Integração")]
         public async Task DELETE_Contato_PorId_Com_Sucesso()
@@ -49,10 +46,10 @@ namespace Testes.Integracao.HttpContato
 
         private Contato BuscarPrimeiroContatoDoBanco()
         {
-            Contato contato = app.Context.Contato.OrderBy(e => e.Id).FirstOrDefault();
+            Contato contato = _context.Contato.OrderBy(e => e.Id).FirstOrDefault();
             if (contato is null)
             {
-                Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
+                Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
                 if (regiao is null)
                 {
                     regiao = new Regiao()
@@ -61,8 +58,8 @@ namespace Testes.Integracao.HttpContato
                         EstadoId = 15,
                         Estado = new Estado() { Nome = "Minas Gerais", siglaEstado = "MG" }
                     };
-                    app.Context.Regiao.Add(regiao);
-                    app.Context.SaveChanges();
+                    _context.Regiao.Add(regiao);
+                    _context.SaveChanges();
 
                     regiao = new Regiao()
                     {
@@ -70,8 +67,8 @@ namespace Testes.Integracao.HttpContato
                         EstadoId = 20,
                         Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" }
                     };
-                    app.Context.Regiao.Add(regiao);
-                    app.Context.SaveChanges();
+                    _context.Regiao.Add(regiao);
+                    _context.SaveChanges();
                 }
 
                 contato = new Contato()
@@ -82,8 +79,8 @@ namespace Testes.Integracao.HttpContato
                     RegiaoId = regiao.Id
                 };
 
-                app.Context.Contato.Add(contato);
-                app.Context.SaveChanges();
+                _context.Contato.Add(contato);
+                _context.SaveChanges();
             }
 
             return contato;

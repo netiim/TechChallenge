@@ -14,14 +14,10 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpRegiao
 {
-    public class Regiao_POST : IClassFixture<TechChallengeWebApplicationFactory>
-    {
-        private readonly TechChallengeWebApplicationFactory app;
-
-        public Regiao_POST(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
+    public class Regiao_POST: BaseIntegrationTest 
+    {        
+        public Regiao_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            :base(integrationTechChallengerWebAppFactory){ }
 
         [Fact]
         [Trait("Categoria", "Integração")]
@@ -52,8 +48,8 @@ namespace Testes.Integracao.HttpRegiao
             try
             {
                 List<Estado> list = ObterEstadosDoBrasil();
-                app.Context.Estado.AddRange(list);
-                await app.Context.SaveChangesAsync();
+                _context.Estado.AddRange(list);
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {

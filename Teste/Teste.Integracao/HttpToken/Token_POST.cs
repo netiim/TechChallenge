@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpToken
 {
-    public class Token_POST : IClassFixture<TechChallengeWebApplicationFactory>
+    public class Token_POST : BaseIntegrationTest
     {
-        private readonly TechChallengeWebApplicationFactory app;
-
-        public Token_POST(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
+        public Token_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
         [Trait("Categoria", "Integração")]

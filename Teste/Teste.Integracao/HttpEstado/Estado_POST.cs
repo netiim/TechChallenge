@@ -4,14 +4,10 @@ using System.Text.Json;
 
 namespace Testes.Integracao.HttpEstado
 {
-    public class Estado_POST : IClassFixture<TechChallengeWebApplicationFactory>
+    public class Estado_POST : BaseIntegrationTest
     {
-        private readonly TechChallengeWebApplicationFactory app;
-
-        public Estado_POST(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
+        public Estado_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
         [Trait("Categoria", "Integração")]

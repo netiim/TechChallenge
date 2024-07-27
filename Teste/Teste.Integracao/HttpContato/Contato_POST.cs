@@ -10,14 +10,10 @@ using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpContato
 {
-    public class Contato_POST : IClassFixture<TechChallengeWebApplicationFactory>
+    public class Contato_POST : BaseIntegrationTest
     {
-        private readonly TechChallengeWebApplicationFactory app;
-
-        public Contato_POST(TechChallengeWebApplicationFactory app)
-        {
-            this.app = app;
-        }
+        public Contato_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
+            : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
         [Trait("Categoria", "Integração")]
@@ -44,7 +40,7 @@ namespace Testes.Integracao.HttpContato
         public async Task POST_Preenche_Regioes_Com_Autorizacao()
         {
             //Arrange
-            Regiao regiao = app.Context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
+            Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
             if (regiao is null)
             {
                 regiao = new Regiao()
@@ -53,8 +49,8 @@ namespace Testes.Integracao.HttpContato
                     EstadoId = 20,
                     Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" }
                 };
-                app.Context.Regiao.Add(regiao);
-                app.Context.SaveChanges();
+                _context.Regiao.Add(regiao);
+                _context.SaveChanges();
             }
 
             CreateContatoDTO contato = new CreateContatoDTO()
