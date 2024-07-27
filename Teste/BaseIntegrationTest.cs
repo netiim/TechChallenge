@@ -1,4 +1,5 @@
 ﻿using Infraestrutura.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Testes
             _scope = factory.Services.CreateScope();
             app = factory;
             _context = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            _context.Database.MigrateAsync().Wait();
         }
     }
 }

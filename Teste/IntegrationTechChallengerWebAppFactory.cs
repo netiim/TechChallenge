@@ -1,4 +1,5 @@
-﻿using DotNet.Testcontainers.Builders;
+﻿using Core.DTOs.UsuarioDTO;
+using DotNet.Testcontainers.Builders;
 using Infraestrutura.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -7,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Testcontainers.MsSql;
@@ -20,15 +23,12 @@ namespace Testes
         private readonly MsSqlContainer _dbContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:latest")
             .WithEnvironment("ACCEPT_EULA", "Y")
-            .WithEnvironment("SA_PASSWORD", "StrongPassword!123")
             .Build();
 
         public Task InitializeAsync()
         {
-            Console.WriteLine(_dbContainer.GetConnectionString());
             return _dbContainer.StartAsync();
         }
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureTestServices(services =>
@@ -52,10 +52,19 @@ namespace Testes
 
             base.ConfigureWebHost(builder);
         }
-
+        public async Task<HttpClient> GetClientWithAccessTokenAsync()
+        {
+            var client = CreateClient();
+            var user = new UsuarioTokenDTO { Username = "netim", Password = "123456" };
+            var resultado = await client.PostAsJsonAsync("/api/Token", user);
+            resultado.EnsureSuccessStatusCode();
+            var result = await resultado.Content.ReadAsStringAsync();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result);
+            return client;
+        }
         public new Task DisposeAsync()
         {
-           return _dbContainer.StopAsync();
+            return _dbContainer.StopAsync();
         }
     }
 }
