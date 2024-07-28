@@ -9,15 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    services:
-      sqlserver:
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        ports:
-          - 1433:1433
-        env:
-          SA_PASSWORD: "Your_password123"
-          ACCEPT_EULA: "Y"
     
     steps:
     - uses: actions/checkout@v4
@@ -31,5 +22,5 @@ jobs:
       run: dotnet build --no-restore
     - name: List all tests
       run: dotnet test --no-build --filter "Categoria=integração" --list-tests
-    - name: Run integration tests
-      run: dotnet test --no-build --filter "Categoria=integração" --logger "console;verbosity=detailed" --blame-hang-timeout 5m
+    - name: Run Tests
+      run: dotnet cake --target=Tests --test-filter=${{ startsWith(matrix.os, 'ubuntu') && 'FullyQualifiedName~Testcontainers' || 'DockerPlatform=Windows' }}
