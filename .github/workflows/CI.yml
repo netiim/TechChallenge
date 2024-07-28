@@ -32,11 +32,8 @@ jobs:
     - name: Run unit tests
       run: dotnet test --no-build --filter "Categoria=Unidade"
 
-    - name: Run validação banco para teste integração
-      env:
-        SA_PASSWORD: "StrongPassword!123"
-        ACCEPT_EULA: "Y"
-      run: dotnet test --no-build --filter "Categoria=VerificacaoDatabaseParaTesteIntegracao"
+    - name: Test with dotnet
+      run: dotnet test --filter "Categoria=IntegraçãoGit" --verbosity detailed --logger "console;verbosity=detailed" --diag:log.txt
     
     - name: Get current version
       id: vars
