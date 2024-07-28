@@ -28,13 +28,13 @@ namespace Testes.Integracao.HttpToken
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
         }
         [Fact]
-        [Trait("Categoria", "IntegraçãoGit")]
+        [Trait("Categoria", "Integração")]
         public async Task POST_Gera_Token_Usuario_InValido()
         {
             //Arrange
             var user = new UsuarioTokenDTO { Username = "netiim", Password = "123456" };
             using var client = app.CreateClient();
-
+             
             //Action
             var resultado = await client.PostAsJsonAsync("/api/Token", user);
 
