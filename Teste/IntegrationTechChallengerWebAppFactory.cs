@@ -23,6 +23,7 @@ namespace Testes
         private readonly MsSqlContainer _dbContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:latest")
             .WithEnvironment("ACCEPT_EULA", "Y")
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
             .Build();
 
         public Task InitializeAsync()
