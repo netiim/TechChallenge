@@ -28,8 +28,10 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTechChallen
         {
             try
             {
+                Console.WriteLine($"Attempting to connect to the database, try {i + 1} of {retries}...");
                 await context.Database.OpenConnectionAsync();
                 connected = true;
+                Console.WriteLine("Database connection successful.");
                 break;
             }
             catch (Exception ex)
