@@ -3,7 +3,7 @@ version: "3.9"
 services:  
   # Serviço da Aplicação .NET
   api:
-    image: netiim/api-tech-challenge:1.0
+    image: netiim/api-tech-challenge:lastest
     container_name: api-tech-challenge
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
