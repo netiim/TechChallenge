@@ -22,5 +22,5 @@ jobs:
       run: dotnet build --no-restore
     - name: List all tests
       run: dotnet test --no-build --filter "Categoria=IntegraçãoGit" --list-tests
- - name: Test with dotnet
+    - name: Test with dotnet
       run: dotnet test --filter "Categoria=IntegraçãoGit" --verbosity detailed --logger "console;verbosity=detailed" --diag:log.txt
