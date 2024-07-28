@@ -143,7 +143,7 @@ namespace ContatoAPI.Controllers
         }
 
         /// <summary>
-        /// Atualiza um contato existente.
+        /// Atualiza um contato existente no banco de dados.
         /// </summary>
         /// <param name="id">O ID do contato a ser atualizado.</param>
         /// <param name="contatoDTO">Os dados atualizados do contato.</param>
