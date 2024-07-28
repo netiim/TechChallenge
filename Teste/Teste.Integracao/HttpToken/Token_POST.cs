@@ -28,7 +28,7 @@ namespace Testes.Integracao.HttpToken
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegraçãoGit")]
         public async Task POST_Gera_Token_Usuario_InValido()
         {
             //Arrange
