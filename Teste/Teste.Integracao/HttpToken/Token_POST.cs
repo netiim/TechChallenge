@@ -34,7 +34,7 @@ namespace Testes.Integracao.HttpToken
             //Arrange
             var user = new UsuarioTokenDTO { Username = "netiim", Password = "123456" };
             using var client = app.CreateClient();
-
+             
             //Action
             var resultado = await client.PostAsJsonAsync("/api/Token", user);
 
