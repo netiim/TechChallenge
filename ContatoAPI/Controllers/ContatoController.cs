@@ -36,7 +36,7 @@ namespace ContatoAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém todos os contatos.
+        /// Obtém todos os contatos do banco.
         /// </summary>
         /// <returns>Uma lista de contatos.</returns>
         /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de contatos.</response>
