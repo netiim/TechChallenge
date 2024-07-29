@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<RequestDelayMiddleware>(10000);
+//app.UseMiddleware<RequestDelayMiddleware>(10000);
 
 app.UseHttpMetrics();
 
