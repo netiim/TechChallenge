@@ -5,5 +5,6 @@ namespace Core.Interfaces.Services;
 
 public interface ITokenService
 {
-    string GetToken(UsuarioTokenDTO usuario);
+    Task<string> GetToken(UsuarioTokenDTO usuario);
+    Task CriarUsuario(Usuario usuario);
 }

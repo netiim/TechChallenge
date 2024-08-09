@@ -17,6 +17,7 @@ namespace Infraestrutura.Data
         public DbSet<Contato> Contato { get; set; }
         public DbSet<Regiao> Regiao { get; set; }
         public DbSet<Estado> Estado { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

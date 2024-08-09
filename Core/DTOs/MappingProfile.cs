@@ -2,6 +2,7 @@
 using Core.DTOs.ContatoDTO;
 using Core.DTOs.EstadoDTO;
 using Core.DTOs.RegiaoDTO;
+using Core.DTOs.UsuarioDTO;
 using Core.Entidades;
 
 namespace Core.DTOs
@@ -17,6 +18,10 @@ namespace Core.DTOs
             CreateMap<Regiao, ReadRegiaoDTO>()
                 .ReverseMap();    
             CreateMap<Estado, ReadEstadoDTO>()
+                .ReverseMap();   
+            CreateMap<Usuario, CreateUsuarioDTO>()
+                .ReverseMap();    
+            CreateMap<Usuario, UsuarioTokenDTO>()
                 .ReverseMap();           
         }
     }

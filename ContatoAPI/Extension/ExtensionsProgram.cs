@@ -27,6 +27,7 @@ public static class ExtensionsProgram
         services.AddScoped<IRegiaoRepository, RegiaoRepository>();
         services.AddScoped<IContatoRepository, ContatoRepository>();
         services.AddScoped<IContatoService, ContatoService>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
 
         return services;
     }

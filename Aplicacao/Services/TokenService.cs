@@ -1,5 +1,6 @@
 ﻿using Core.DTOs.UsuarioDTO;
 using Core.Entidades;
+using Core.Interfaces.Repository;
 using Core.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,19 +14,26 @@ namespace TemplateWebApiNet8.Services
     public class TokenService : ITokenService
     {
         private readonly IConfiguration configuration;
+        protected readonly ITokenRepository _tokenRepository;
         public List<Usuario> Usuarios = new List<Usuario>() { new Usuario() {Username = "netim", Password = "123456", Perfil = PerfilUsuario.Administrador }
         };
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration, ITokenRepository tokenRepository)
         {
             this.configuration = configuration;
+            _tokenRepository = tokenRepository;
         }
 
-        public string GetToken(UsuarioTokenDTO usuario)
+        public async Task CriarUsuario(Usuario usuario)
         {
-            Usuario? usuarioExiste = Usuarios
-                                .FirstOrDefault(usu => usu.Username.Equals(usuario.Username)
+            await _tokenRepository.Adicionar(usuario);
+        }
+
+        public async Task<string> GetToken(UsuarioTokenDTO usuario)
+        {
+            Usuario? usuarioExiste = _tokenRepository.ListarUsuarios().Result.ToList().FirstOrDefault(usu => usu.Username.Equals(usuario.Username)
                                 && usu.Password.Equals(usuario.Password));
+
             if (usuarioExiste == null)
                 throw new Exception("Usuário ou Senha inválidos");
 
