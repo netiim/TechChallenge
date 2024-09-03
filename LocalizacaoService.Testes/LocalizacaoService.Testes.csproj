@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Teste_Integracao</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -19,14 +18,6 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Integracao\HttpContato\" />
-    <Folder Include="Integracao\HttpEstado\" />
-    <Folder Include="Integracao\HttpRegiao\" />
-    <Folder Include="Integracao\HttpToken\" />
-    <Folder Include="Integracao\" />
   </ItemGroup>
 
 </Project>

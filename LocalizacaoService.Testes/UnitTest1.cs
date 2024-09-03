@@ -1,4 +1,4 @@
-namespace Teste_Integracao
+namespace LocalizacaoService.Testes
 {
     public class UnitTest1
     {

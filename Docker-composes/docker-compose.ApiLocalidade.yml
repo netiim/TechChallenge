@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:  
+  # Serviço da Aplicação .NET
+  api-localizacao:
+    image: netiim/localizacao-service:latest
+    container_name: localizacao-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db-localizacao
+    networks:
+      - tech-bridge
+    ports:
+      - "5003:8080"
+      - "5004:8081"
+
+  # Serviço do Banco de Dados
+  db-localizacao:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Giu130218
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - tech-bridge  
+
+volumes:
+  mongo-data:
+
+networks:
+  tech-bridge:
+    driver: bridge
