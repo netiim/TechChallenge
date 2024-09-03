@@ -1,7 +1,10 @@
 ﻿using Infraestrutura.Repositorios;
 using LocalizacaoService;
+using LocalizacaoService._02_Services;
 using LocalizacaoService.Interfaces.Repository;
 using LocalizacaoService.Interfaces.Services;
+using LocalizacaoService.Interfaces.Validators;
+using LocalizacaoService.Validators;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
@@ -14,6 +17,8 @@ public static class ExtensionsProgram
     {
         services.AddScoped<IRegiaoService, RegiaoService>();
         services.AddScoped<IRegiaoRepository, RegiaoRepository>();
+        services.AddScoped<IEstadoService, EstadoService>();
+        services.AddScoped<IRegiaoValidator, RegiaoValidator>();
 
         return services;
     }
