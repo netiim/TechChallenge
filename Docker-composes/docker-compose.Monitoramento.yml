@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:  
+  # Serviço do Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - tech-bridge
+    ports:
+      - "9090:9090"   
+
+  # Serviço do Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    networks:
+      - tech-bridge
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  grafana-storage:
+
+networks:
+  tech-bridge:
+    driver: bridge
