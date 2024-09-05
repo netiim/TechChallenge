@@ -29,9 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalizacaoService", "Local
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UsuarioService", "UsuarioService", "{1AD2F1CC-A812-4D31-AC0E-E7D4042A491C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalizacaoService.API", "LocalizacaoService\LocalizacaoService.API.csproj", "{0560B40E-01DD-41D9-993C-DFEB61F252AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalizacaoService.API", "LocalizacaoService\LocalizacaoService.API\LocalizacaoService.API.csproj", "{0560B40E-01DD-41D9-993C-DFEB61F252AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizacaoService.Testes", "LocalizacaoService.Testes\LocalizacaoService.Testes.csproj", "{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalizacaoService.Testes", "LocalizacaoService\LocalizacaoService.Testes\LocalizacaoService.Testes.csproj", "{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuteticacaoService.API", "AutenticacaoService\AuteticacaoService.API\AuteticacaoService.API.csproj", "{66DA7415-733A-487C-AAAB-49B99CEDB613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66DA7415-733A-487C-AAAB-49B99CEDB613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66DA7415-733A-487C-AAAB-49B99CEDB613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66DA7415-733A-487C-AAAB-49B99CEDB613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66DA7415-733A-487C-AAAB-49B99CEDB613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{3E10BB22-949A-45C6-B361-30CDE98F4CD0} = {B8D3A838-C4F2-45A4-9376-91C8543FC2B3}
 		{0560B40E-01DD-41D9-993C-DFEB61F252AB} = {4B564AC1-CCBB-418F-8705-4B2A7A89D14C}
 		{E1EE26EA-FCCE-4E9B-805D-F6370E65FF62} = {4B564AC1-CCBB-418F-8705-4B2A7A89D14C}
+		{66DA7415-733A-487C-AAAB-49B99CEDB613} = {1AD2F1CC-A812-4D31-AC0E-E7D4042A491C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE07AE9E-F42B-4431-A9A4-A131B7FDD376}
