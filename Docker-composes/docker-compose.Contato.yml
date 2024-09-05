@@ -7,7 +7,7 @@ services:
     container_name: api-tech-challenge
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
     networks:

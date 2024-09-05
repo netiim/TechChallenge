@@ -2,6 +2,7 @@ using ContatoAPI.Extension;
 using LocalizacaoService._03_Repositorys.Config;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,5 +41,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapMetrics();
+
+app.UseMetricServer();
 
 app.Run();

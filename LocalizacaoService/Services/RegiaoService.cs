@@ -51,15 +51,20 @@ public class RegiaoService : IRegiaoService
         List<int> DDDPosiveis = Enumerable.Range(11, 89).ToList();
         foreach (int ddd in DDDPosiveis)
         {
+            if (await _regiaorepository.GetByDDDAsync(ddd) != null)
+            {
+                continue;
+            }
+
             var response = await _httpClient.GetAsync($"{UrlAPI}{ddd}");
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                Core.DTOs.RegiaoDTO.RegiaoAPIDTO brasilApiDTO = JsonSerializer.Deserialize<Core.DTOs.RegiaoDTO.RegiaoAPIDTO>(content);
+                RegiaoAPIDTO brasilApiDTO = JsonSerializer.Deserialize<RegiaoAPIDTO>(content);
 
                 Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
-                await InserirRegiaoBancoDados(regiao);
+                await _regiaorepository.CreateAsync(regiao);
             }
             else
             {
@@ -83,13 +88,6 @@ public class RegiaoService : IRegiaoService
         {
             _logger.LogError(ex, $"Erro ao montar região para o DDD {ddd}");
             throw new Exception(ex.Message);
-        }
-    }
-    private async Task InserirRegiaoBancoDados(Regiao regiao)
-    {
-        if (await _regiaorepository.GetByDDDAsync(regiao.NumeroDDD) == null)
-        {
-            await _regiaorepository.CreateAsync(regiao);
         }
     }
 }
