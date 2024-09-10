@@ -23,10 +23,11 @@ namespace Infraestrutura.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                     .AddJsonFile("appsettings.json")
-                     .Build();
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(connectionString);
             }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using ContatoAPI.Extension;
 using Prometheus;
+using MassTransit;
+using Aplicacao.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,27 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString),
     ServiceLifetime.Scoped);
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<RegiaoConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMq:Host"], h =>
+        {
+            h.Username(builder.Configuration["RabbitMq:Username"]);
+            h.Password(builder.Configuration["RabbitMq:Password"]);
+        });
+
+        cfg.ReceiveEndpoint("regiao-queue", ep =>
+        {
+            ep.ConfigureConsumer<RegiaoConsumer>(context);
+        });
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
 
 byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT"));
 

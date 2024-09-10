@@ -14,6 +14,8 @@ namespace Core.Entidades
         /// </summary>
         public int EstadoId { get; set; }
 
+        public string IdLocalidadeAPI { get; set; }
+
         public virtual Estado Estado { get; set; }
 
         public virtual ICollection<Contato> Contatos { get; set; }

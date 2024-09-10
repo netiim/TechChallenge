@@ -16,7 +16,6 @@ namespace ContatoAPI.Controllers
     [Route("[controller]")]
     public class EstadoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IEstadoService _estadoService;
         private readonly IMapper _mapper;
         /// <summary>
@@ -25,9 +24,8 @@ namespace ContatoAPI.Controllers
         /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="estadoService">O serviço de Estado.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public EstadoController(ApplicationDbContext context, IEstadoService estadoService, IMapper mapper)
+        public EstadoController( IEstadoService estadoService, IMapper mapper)
         {
-            _context = context;
             _estadoService = estadoService;
             _mapper = mapper;
         }

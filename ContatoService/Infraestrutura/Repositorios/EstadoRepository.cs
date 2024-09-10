@@ -15,10 +15,11 @@ namespace Infraestrutura.Repositorios
             _context = context;
         }
 
-        public async Task AdicionarEstadosEmMassa(List<Estado> estados)
+        public async Task<Estado> AdicionarEstado(Estado estado)
         {
-            await _context.Estado.AddRangeAsync(estados);
+            await _context.Estado.AddAsync(estado);
             await _context.SaveChangesAsync();
+            return estado;
         }
 
         public async Task<List<Estado>> GetAll()
