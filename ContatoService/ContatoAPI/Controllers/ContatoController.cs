@@ -18,7 +18,6 @@ namespace ContatoAPI.Controllers
     [Route("[controller]")]
     public class ContatoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IContatoService _contatoService;
         private readonly IMapper _mapper;
 
@@ -28,9 +27,8 @@ namespace ContatoAPI.Controllers
         /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="contatoService">O serviço de Contato.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public ContatoController(ApplicationDbContext context, IContatoService contatoService, IMapper mapper)
+        public ContatoController(IContatoService contatoService, IMapper mapper)
         {
-            _context = context;
             _contatoService = contatoService;
             _mapper = mapper;
         }

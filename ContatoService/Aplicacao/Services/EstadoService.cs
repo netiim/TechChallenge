@@ -30,7 +30,7 @@ public class EstadoService : IEstadoService
                 siglaEstado = dto.sigla
             }).ToList();
 
-            await _repository.AdicionarEstadosEmMassa(estados);
+           // await _repository.AdicionarEstadosEmMassa(estados);
         }
         else
         {
