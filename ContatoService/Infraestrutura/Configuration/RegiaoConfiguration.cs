@@ -14,7 +14,7 @@ namespace Infraestrutura.Configuration
             builder.Property(p => p.DataCriacao).HasColumnName("DataCriacao").HasColumnType("DATETIME").IsRequired();
             builder.Property(p => p.NumeroDDD).HasColumnType("INT").IsRequired();
             builder.Property(p => p.EstadoId).HasColumnType("INT").IsRequired();
-            builder.Property(p => p.IdLocalidadeAPI).HasColumnType("INT").IsRequired();
+            builder.Property(p => p.IdLocalidadeAPI).HasColumnType("VARCHAR(MAX)").IsRequired();
 
             builder.HasOne(c => c.Estado)
                    .WithMany(e => e.Regioes)  
