@@ -42,7 +42,7 @@ namespace ContatoAPI.Controllers
                 _logger.LogInformation("Iniciando Função para preencher os DDDs");
 
                 await _service.CadastrarRegioesAsync();
-                return Ok();
+                return Created();
             }
             catch (Exception e)
             {
@@ -63,6 +63,25 @@ namespace ContatoAPI.Controllers
             {
                 var regiao = await _service.ObterTodosAsync();
                 return Ok(regiao);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }           
+        }
+        /// <summary>
+        /// Obtém todas as regiões.
+        /// </summary>
+        /// <returns>Uma lista de regiões.</returns>
+        /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de regiões.</response>
+        /// <response code="400">Se aconteceu algum problema com a operação.</response>
+        [HttpDelete]
+        public async Task<IActionResult> ExcluirTodos()
+        {
+            try
+            {
+                await _service.RemoverRegioesAsync();
+                return NoContent();
             }
             catch (Exception e)
             {

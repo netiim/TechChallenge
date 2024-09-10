@@ -6,4 +6,5 @@ public interface IRegiaoService
 {
     Task<IEnumerable<Regiao>> ObterTodosAsync();
     Task CadastrarRegioesAsync();
+    Task RemoverRegioesAsync();
 }

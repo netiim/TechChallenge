@@ -1,6 +1,7 @@
 using AuteticacaoService.API.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.MapMetrics();
+
+app.UseMetricServer();
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 var summaries = new[]

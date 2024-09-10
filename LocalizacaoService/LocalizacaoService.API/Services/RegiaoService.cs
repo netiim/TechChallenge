@@ -4,6 +4,8 @@ using Core.Entidades;
 using LocalizacaoService.Interfaces.Repository;
 using LocalizacaoService.Interfaces.Services;
 using LocalizacaoService.Interfaces.Validators;
+using MappingRabbitMq.Models;
+using MassTransit;
 using System.Text.Json;
 
 public class RegiaoService : IRegiaoService
@@ -12,6 +14,7 @@ public class RegiaoService : IRegiaoService
     private readonly IRegiaoRepository _regiaorepository;
     private readonly IEstadoService _estadoService;
     private readonly IRegiaoValidator _regiaoValidator;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly ILogger<RegiaoService> _logger;
     private readonly HttpClient _httpClient;
     private List<Estado> Estados;
@@ -21,17 +24,23 @@ public class RegiaoService : IRegiaoService
         IEstadoService estadoService,
         IRegiaoValidator regiaoValidator,
         ILogger<RegiaoService> logger,
-        HttpClient httpClient)
+        HttpClient httpClient,
+        IPublishEndpoint publishEndpoint)
     {
         _regiaorepository = repository;
         _estadoService = estadoService;
         _regiaoValidator = regiaoValidator;
         _logger = logger;
         _httpClient = httpClient;
+        _publishEndpoint = publishEndpoint;
     }
     public async Task<IEnumerable<Regiao>> ObterTodosAsync()
     {
         return await _regiaorepository.GetAllAsync();
+    }
+    public async Task RemoverRegioesAsync()
+    {
+        await _regiaorepository.DeleteManyAsync();
     }
     public async Task CadastrarRegioesAsync()
     {
@@ -43,7 +52,7 @@ public class RegiaoService : IRegiaoService
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Erro ao montar as regiões");
-            throw new Exception(ex.Message);
+            throw new Exception(ex.Message);   
         }
     }
     private async Task CriarRegioes()
@@ -65,6 +74,19 @@ public class RegiaoService : IRegiaoService
 
                 Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
                 await _regiaorepository.CreateAsync(regiao);
+                _logger.LogInformation($"Publicando mensagem da região: {regiao.Estado}");
+                RegiaoConsumerDTO reg = new RegiaoConsumerDTO()
+                {
+                    Id = regiao.Id,
+                    NumeroDDD = regiao.NumeroDDD,
+                    DataCriacao = regiao.DataCriacao,
+                    Estado = new ReadEstadoDTO()
+                    {
+                        Nome = regiao.Estado.Nome,
+                        siglaEstado = regiao.Estado.siglaEstado
+                    }
+                };
+                await _publishEndpoint.Publish(reg);
             }
             else
             {

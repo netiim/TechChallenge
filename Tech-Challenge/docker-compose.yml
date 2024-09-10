@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  api-localizacao:
+    extends:
+      file: ./Localizacao-Service/docker-compose.ApiLocalidade.yml
+      service: api-localizacao
+        
+  db-localizacao:
+    extends:
+      file: ./Localizacao-Service/docker-compose.ApiLocalidade.yml
+      service: db-localizacao
+
+  api-contato:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: api-contato      
+
+  api-autenticacao:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: api-autenticacao
+      
+  db:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: db
+
+  prometheus:
+    extends:
+      file: ./Monitoramento-Service/docker-compose.monitoramento.yml
+      service: prometheus
+
+  grafana:
+    extends:
+      file: ./Monitoramento-Service/docker-compose.monitoramento.yml
+      service: grafana
+
+  rabbitmq:
+    extends:
+      file: ./Monitoramento-Service/docker-compose.monitoramento.yml
+      service: rabbitmq
+
+volumes:
+  mongo-data:
+  grafana-storage:
+  
+networks:
+  tech-bridge:
+    driver: bridge

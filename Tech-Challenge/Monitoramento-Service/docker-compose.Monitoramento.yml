@@ -23,6 +23,18 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbit-mq
+    ports:
+      - "5672:5672"  # Porta de comunicação
+      - "15672:15672" # Porta do console de gerenciamento (opcional)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - tech-bridge
+      
 volumes:
   grafana-storage:
 

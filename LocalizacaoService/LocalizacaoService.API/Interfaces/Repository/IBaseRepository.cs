@@ -1,4 +1,6 @@
-﻿namespace LocalizacaoService.Interfaces.Repository
+﻿using MongoDB.Driver;
+
+namespace LocalizacaoService.Interfaces.Repository
 {
     public interface IBaseRepository<T> where T : IEntity
     {
@@ -6,5 +8,6 @@
         Task<T> GetByIdAsync(string id);
         Task CreateAsync(T entity);
         Task InsertManyAsync(IEnumerable<T> entities);
+        Task<DeleteResult> DeleteManyAsync(FilterDefinition<T> filter= null);
     }
 }

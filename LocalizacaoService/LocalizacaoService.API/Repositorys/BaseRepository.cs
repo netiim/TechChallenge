@@ -67,5 +67,21 @@ namespace LocalizacaoService._03_Repositorys
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<DeleteResult> DeleteManyAsync(FilterDefinition<T> filter = null)
+        {
+            try
+            {
+                if(filter == null)
+                {
+                    filter = Builders<T>.Filter.Empty;
+                }
+                var result = await _collection.DeleteManyAsync(filter);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao excluir documentos: " + ex.Message);
+            }
+        }
     }
 }
