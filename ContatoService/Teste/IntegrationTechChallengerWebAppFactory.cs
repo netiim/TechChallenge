@@ -52,7 +52,6 @@ namespace Testes
         {
             var client = CreateClient();
 
-            // Criar o usuário e receber o token diretamente
             CreateUsuarioDTO newUser = new()
             {
                 Username = "neto",
@@ -60,14 +59,12 @@ namespace Testes
                 Perfil = PerfilUsuario.Administrador  
             };
 
-            // Fazendo a requisição para criar o usuário e obter o token
             var response = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
+
             response.EnsureSuccessStatusCode();
 
-            // Obter o token da resposta
             var token = await response.Content.ReadAsStringAsync();
 
-            // Adicionar o token no cabeçalho de autorização para as requisições seguintes
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             return client;

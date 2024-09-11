@@ -28,22 +28,22 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTechChallen
         {
             try
             {
-                Console.WriteLine($"Attempting to connect to the database, try {i + 1} of {retries}...");
+                Console.WriteLine($"Tentando conectar ao banco de dados, tentativa {i + 1} de {retries}...");
                 await context.Database.OpenConnectionAsync();
                 connected = true;
-                Console.WriteLine("Database connection successful.");
+                Console.WriteLine("Conexão com o banco de dados bem-sucedida.");
                 break;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Database connection attempt {i + 1} failed: {ex.Message}");
+                Console.WriteLine($"Tentativa de conexão com o banco de dados {i + 1} falhou: {ex.Message}");
                 await Task.Delay(delay);
             }
         }
 
         if (!connected)
         {
-            throw new Exception("Unable to connect to the database after multiple attempts.");
+            throw new Exception("Não foi possível conectar ao banco de dados após várias tentativas.");
         }
     }
 }

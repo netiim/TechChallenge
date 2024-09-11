@@ -1,11 +1,12 @@
 ﻿using LocalizacaoService._03_Repositorys.Config;
+using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System.Net.Http.Headers;
 using Testcontainers.MongoDb;
 
 namespace Testes
@@ -15,21 +16,15 @@ namespace Testes
 
         private readonly MongoDbContainer _mongoDbContainer = new MongoDbBuilder()
         .WithImage("mongo:latest")
-        .WithPortBinding(27017, true) // Porta padrão do MongoDB
+        .WithPortBinding(27017, true)
         .Build();
         public async Task InitializeAsync()
         {
-            // Startar o container do MongoDB
             await _mongoDbContainer.StartAsync();
-
-            // Configurar a string de conexão do MongoDB nos testes
             Environment.SetEnvironmentVariable("MONGO_DB_CONNECTION_STRING", _mongoDbContainer.GetConnectionString());
         }
-
-        // Limpeza após os testes
         public new async Task DisposeAsync()
         {
-            // Parar o container após a execução dos testes
             await _mongoDbContainer.DisposeAsync();
         }
 
@@ -37,20 +32,18 @@ namespace Testes
         {
             builder.ConfigureServices(services =>
             {
-                // Configurar as opções do MongoDB para testes
                 services.Configure<MongoDbSettings>(options =>
                 {
                     options.ConnectionString = _mongoDbContainer.GetConnectionString();
+                    options.DatabaseName = "TestDatabase";
                 });
 
-                // Injetar o MongoClient como Singleton
                 services.AddSingleton<IMongoClient, MongoClient>(sp =>
                 {
                     var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
                     return new MongoClient(settings.ConnectionString);
                 });
 
-                // Injetar o IMongoDatabase como Scoped
                 services.AddScoped(sp =>
                 {
                     var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
@@ -58,34 +51,25 @@ namespace Testes
                     return client.GetDatabase(settings.DatabaseName);
                 });
 
-                // Registrar outras dependências conforme necessário
-            });
+                var descriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(IBus));
+                if (descriptor != null)
+                {
+                    services.Remove(descriptor);
+                }
 
+                services.AddMassTransit(x =>
+                {
+                    x.UsingInMemory((context, cfg) =>
+                    {
+                        cfg.ConfigureEndpoints(context);
+                    });
+                });
+
+                services.RemoveAll(typeof(IHostedService));
+            });
+            
             base.ConfigureWebHost(builder);
         }
-        //public async Task<HttpClient> GetClientWithAccessTokenAsync()
-        //{
-        //    var client = CreateClient();
-
-        //    // Criar o usuário e receber o token diretamente
-        //    CreateUsuarioDTO newUser = new()
-        //    {
-        //        Username = "neto",
-        //        Password = "123456",
-        //        Perfil = PerfilUsuario.Administrador  
-        //    };                                                                                                   
-
-        //    // Fazendo a requisição para criar o usuário e obter o token
-        //    var response = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
-        //    response.EnsureSuccessStatusCode();
-
-        //    // Obter o token da resposta
-        //    var token = await response.Content.ReadAsStringAsync();
-
-        //    // Adicionar o token no cabeçalho de autorização para as requisições seguintes
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //    return client;
-        //}
     }
 }

@@ -15,9 +15,7 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTechChallen
         app = factory;
 
         var client = _scope.ServiceProvider.GetRequiredService<IMongoClient>();
-        _database = client.GetDatabase("TestDatabase");  // Nome do banco de dados que você configurou
-
-        // Esperar até que o MongoDB esteja pronto
+        _database = client.GetDatabase("TestDatabase");  
         WaitForDatabase(_database).Wait();
     }
 
@@ -31,7 +29,6 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTechChallen
         {
             try
             {
-                // Testar a conexão com o MongoDB
                 var command = new BsonDocument("ping", 1);
                 await database.RunCommandAsync<BsonDocument>(command);
 

@@ -1,12 +1,10 @@
-﻿using Core.DTOs.EstadoDTO;
-using Core.DTOs.RegiaoDTO;
+﻿using Core.DTOs.RegiaoDTO;
 using Core.Entidades;
 using LocalizacaoService.Interfaces.Repository;
 using LocalizacaoService.Interfaces.Services;
 using LocalizacaoService.Interfaces.Validators;
 using MappingRabbitMq.Models;
 using MassTransit;
-using System.Linq;
 using System.Text.Json;
 
 public class RegiaoService : IRegiaoService

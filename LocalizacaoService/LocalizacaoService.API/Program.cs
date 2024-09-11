@@ -29,7 +29,8 @@ builder.Services.AddScoped(sp =>
     var client = sp.GetRequiredService<IMongoClient>();
     return client.GetDatabase(settings.DatabaseName);
 });
-
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
@@ -45,7 +46,7 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddMassTransitHostedService();
+builder.Services.AddMassTransitHostedService(); 
 
 
 var app = builder.Build();

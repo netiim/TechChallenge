@@ -70,7 +70,7 @@ namespace ContatoAPI.Controllers
             }           
         }
         /// <summary>
-        /// Obtém todas as regiões.
+        /// Excluir todas as regiões.
         /// </summary>
         /// <returns>Uma lista de regiões.</returns>
         /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de regiões.</response>
