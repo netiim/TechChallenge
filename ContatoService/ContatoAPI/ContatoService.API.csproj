@@ -29,9 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MapeamentoRabbitMq\MapeamentoRabbitMq.csproj" />
-    <ProjectReference Include="..\Aplicacao\Aplicacao.csproj" />
-    <ProjectReference Include="..\Infraestrutura\Infraestrutura.csproj" />
+    <ProjectReference Include="..\Aplicacao\ContatoService.Aplicacao.csproj" />
+    <ProjectReference Include="..\Infraestrutura\ContatoService.Infraestrutura.csproj" />
   </ItemGroup>
 
 </Project>

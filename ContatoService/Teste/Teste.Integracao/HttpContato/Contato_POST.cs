@@ -26,7 +26,7 @@ namespace Testes.Integracao.HttpContato
                 Email = "paulo@gmail.com",
                 Telefone = "11995878310",
             };
-            using var client = app.CreateClient();
+            var client = app.CreateClient();
 
             //Action
             var resultado = await client.PostAsJsonAsync("/Contato", contato);
@@ -40,18 +40,17 @@ namespace Testes.Integracao.HttpContato
         public async Task POST_Preenche_Regioes_Com_Autorizacao()
         {
             //Arrange
-            Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
-            if (regiao is null)
+
+            Regiao regiao = new Regiao()
             {
-                regiao = new Regiao()
-                {
-                    NumeroDDD = 11,
-                    EstadoId = 20,
-                    Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" }
-                };
-                _context.Regiao.Add(regiao);
-                _context.SaveChanges();
-            }
+                NumeroDDD = 11,
+                EstadoId = 20,
+                Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
+                IdLocalidadeAPI = Guid.NewGuid().ToString()
+            };
+            _context.Regiao.Add(regiao);
+            await _context.SaveChangesAsync();
+
 
             CreateContatoDTO contato = new CreateContatoDTO()
             {
@@ -60,7 +59,7 @@ namespace Testes.Integracao.HttpContato
                 Telefone = $"{regiao.NumeroDDD}995878310",
             };
 
-            using var client = await app.GetClientWithAccessTokenAsync();
+            var client = await app.GetClientWithAccessTokenAsync();
 
             //Action
             var resultado = await client.PostAsJsonAsync("/Contato", contato);

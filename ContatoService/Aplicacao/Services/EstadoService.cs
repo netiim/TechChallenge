@@ -16,28 +16,6 @@ public class EstadoService : IEstadoService
         _httpClient = httpClient;
     }
 
-    public async Task PreencherTabelaComEstadosBrasil()
-    {
-        var response = await _httpClient.GetAsync(UrlAPI);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            List<EstadoAPIDTO> estadosDTO = JsonSerializer.Deserialize<List<EstadoAPIDTO>>(content);
-            List<Estado> estados = estadosDTO.Select(dto => new Estado
-            {
-                Nome = dto.nome,
-                siglaEstado = dto.sigla
-            }).ToList();
-
-           // await _repository.AdicionarEstadosEmMassa(estados);
-        }
-        else
-        {
-            throw new Exception($"Falha ao obter os estados. Código de status: {response.StatusCode}");
-        }
-    }
-
     public async Task<IEnumerable<Estado>> ObterTodos(){
 
         return await _repository.GetAll();

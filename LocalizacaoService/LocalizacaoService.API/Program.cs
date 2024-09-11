@@ -1,6 +1,6 @@
 using ContatoAPI.Extension;
-using Core.Entidades;
 using LocalizacaoService._03_Repositorys.Config;
+using MappingRabbitMq.Models;
 using MassTransit;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -40,7 +40,8 @@ builder.Services.AddMassTransit(x =>
             h.Password(builder.Configuration["RabbitMq:Password"]);
         });
 
-        cfg.Message<Regiao>(configTopology => { });
+        cfg.Message<RegiaoConsumerDTO>(configTopology => { });
+        cfg.Message<ReadEstadoDTO>(configTopology => { });
     });
 });
 
@@ -66,3 +67,5 @@ app.MapMetrics();
 app.UseMetricServer();
 
 app.Run();
+
+public partial class Program { }

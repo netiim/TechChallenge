@@ -1,4 +1,5 @@
-﻿using Core.Entidades;
+﻿using Castle.Core.Logging;
+using Core.Entidades;
 using Core.Interfaces.Repository;
 using MappingRabbitMq.Models;
 using MassTransit;
@@ -22,32 +23,31 @@ namespace Aplicacao.Consumers
         {
             try
             {
-                _logger.LogInformation($"Chegou no consumer");
                 var regiao = context.Message;
-                _logger.LogInformation($"Processando mensagem da região: {regiao.Estado}");
 
-                Estado e = new Estado()
-                {
-                    siglaEstado = regiao.Estado.siglaEstado,
-                    Nome = regiao.Estado.Nome
-                };
 
-                e = await _estadoRepository.AdicionarEstado(e);
+                Estado estadoExistente = await _estadoRepository.BuscarEstadoPorSigla(regiao.siglaEstado);
 
+
+                if (estadoExistente is null)
+                    throw new ArgumentNullException("Não existe um estado para essa região");
+
+
+                _logger.LogInformation($"Adicionou o estado");
                 Regiao r = new Regiao()
                 {
                     NumeroDDD = regiao.NumeroDDD,
-                    EstadoId = e.Id,                   
+                    EstadoId = estadoExistente.Id,                   
                     IdLocalidadeAPI = regiao.Id
                 };
 
                 await _regiaoRepository.Adicionar(r);
-
+                _logger.LogInformation($"Adicionou o regiao");
                 await Task.CompletedTask;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao processar a mensagem");
+                _logger.LogError(ex, $"Erro ao processar a mensagem");
                 throw;  
             }
         }

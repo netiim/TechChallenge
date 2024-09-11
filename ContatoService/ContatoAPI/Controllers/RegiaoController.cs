@@ -34,30 +34,6 @@ namespace ContatoAPI.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Popula a tabela de regiões com os DDDs.
-        /// </summary>
-        /// <returns>Um IActionResult indicando o resultado da operação.</returns>
-        /// <response code="200">Se a operação foi bem-sucedida.</response>
-        /// <response code="401">Se o usuário não está autenticado.</response>
-        /// <response code="403">Se o usuário não tem permissão para executar esta ação.</response>
-        [HttpPost]
-        [Authorize(Roles = Roles.Administrador)]
-        public async Task<IActionResult> PreencherCidadesComDDD()
-        {
-            try
-            {
-                _logger.LogInformation("Iniciando Função para preencher os DDDs");
-
-                await _service.PreencherRegioesComDDD();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-            
-        }
-        /// <summary>
         /// Obtém todas as regiões.
         /// </summary>
         /// <returns>Uma lista de regiões.</returns>

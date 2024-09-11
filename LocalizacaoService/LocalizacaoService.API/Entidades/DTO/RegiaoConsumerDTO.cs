@@ -1,5 +1,4 @@
-﻿using Core.DTOs.EstadoDTO;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MappingRabbitMq.Models
 {
@@ -12,7 +11,9 @@ namespace MappingRabbitMq.Models
         /// </summary>
         [Range(minimum: 11, maximum: 99, MinimumIsExclusive = true, MaximumIsExclusive = true, ErrorMessage = "O número deve estar entre 11 e 99")]
         public int NumeroDDD { get; set; }
-        [Required]
-        public ReadEstadoDTO Estado { get; set; }
+
+        public string siglaEstado { get; set; }
     }
 }
+
+

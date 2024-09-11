@@ -1,6 +1,7 @@
 ﻿using Core.DTOs.EstadoDTO;
 using Core.Entidades;
 using LocalizacaoService.Interfaces.Services;
+using MappingRabbitMq.Models;
 using System.Text.Json;
 
 namespace LocalizacaoService._02_Services;
@@ -15,7 +16,7 @@ public class EstadoService : IEstadoService
         _httpClient = httpClient;
     }
 
-    public async Task<List<Estado>> BuscarEstadosBrasilAsync()
+    public async Task<List<ReadEstadoDTO>> BuscarEstadosBrasilAsync()
     {
         var response = await _httpClient.GetAsync(UrlAPIEstado);
 
@@ -23,7 +24,8 @@ public class EstadoService : IEstadoService
         {
             var content = await response.Content.ReadAsStringAsync();
             List<EstadoAPIDTO> estadosDTO = JsonSerializer.Deserialize<List<EstadoAPIDTO>>(content);
-            return estadosDTO.Select(dto => new Estado
+
+            return estadosDTO.Select(dto => new ReadEstadoDTO
             {
                 Nome = dto.nome,
                 siglaEstado = dto.sigla

@@ -56,7 +56,8 @@ namespace Testes.Integracao.HttpContato
                     {
                         NumeroDDD = 31,
                         EstadoId = 15,
-                        Estado = new Estado() { Nome = "Minas Gerais", siglaEstado = "MG" }
+                        Estado = new Estado() { Nome = "Minas Gerais", siglaEstado = "MG" },
+                        IdLocalidadeAPI = Guid.NewGuid().ToString()
                     };
                     _context.Regiao.Add(regiao);
                     _context.SaveChanges();
@@ -65,7 +66,8 @@ namespace Testes.Integracao.HttpContato
                     {
                         NumeroDDD = 11,
                         EstadoId = 20,
-                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" }
+                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
+                        IdLocalidadeAPI = Guid.NewGuid().ToString()
                     };
                     _context.Regiao.Add(regiao);
                     _context.SaveChanges();

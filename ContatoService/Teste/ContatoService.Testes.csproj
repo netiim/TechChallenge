@@ -41,10 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aplicacao\Aplicacao.csproj" />
-    <ProjectReference Include="..\ContatoAPI\ContatoAPI.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Infraestrutura\Infraestrutura.csproj" />
+    <ProjectReference Include="..\Aplicacao\ContatoService.Aplicacao.csproj" />
+    <ProjectReference Include="..\ContatoAPI\ContatoService.API.csproj" />
+    <ProjectReference Include="..\Core\ContatoService.Core.csproj" />
+    <ProjectReference Include="..\Infraestrutura\ContatoService.Infraestrutura.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,6 +6,7 @@ using LocalizacaoService.Interfaces.Services;
 using LocalizacaoService.Interfaces.Validators;
 using MappingRabbitMq.Models;
 using MassTransit;
+using System.Linq;
 using System.Text.Json;
 
 public class RegiaoService : IRegiaoService
@@ -17,7 +18,7 @@ public class RegiaoService : IRegiaoService
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly ILogger<RegiaoService> _logger;
     private readonly HttpClient _httpClient;
-    private List<Estado> Estados;
+    private List<ReadEstadoDTO> Estados;
 
     public RegiaoService(
         IRegiaoRepository repository,
@@ -47,14 +48,24 @@ public class RegiaoService : IRegiaoService
         try
         {
             Estados = await _estadoService.BuscarEstadosBrasilAsync();
+            await PublicarEstados();
             await CriarRegioes();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Erro ao montar as regiões");
-            throw new Exception(ex.Message);   
+            throw new Exception(ex.Message);
         }
     }
+
+    private async Task PublicarEstados()
+    {
+        foreach (var estado in Estados)
+        {
+            await _publishEndpoint.Publish(estado);
+        }
+    }
+
     private async Task CriarRegioes()
     {
         List<int> DDDPosiveis = Enumerable.Range(11, 89).ToList();
@@ -75,16 +86,19 @@ public class RegiaoService : IRegiaoService
                 Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
                 await _regiaorepository.CreateAsync(regiao);
                 _logger.LogInformation($"Publicando mensagem da região: {regiao.Estado}");
+
+                ReadEstadoDTO estado = new ReadEstadoDTO()
+                {
+                    Nome = regiao.Estado.Nome,
+                    siglaEstado = regiao.Estado.siglaEstado
+                };
+
                 RegiaoConsumerDTO reg = new RegiaoConsumerDTO()
                 {
                     Id = regiao.Id,
                     NumeroDDD = regiao.NumeroDDD,
                     DataCriacao = regiao.DataCriacao,
-                    Estado = new ReadEstadoDTO()
-                    {
-                        Nome = regiao.Estado.Nome,
-                        siglaEstado = regiao.Estado.siglaEstado
-                    }
+                    siglaEstado = regiao.Estado.siglaEstado
                 };
                 await _publishEndpoint.Publish(reg);
             }
@@ -99,11 +113,15 @@ public class RegiaoService : IRegiaoService
         try
         {
             _regiaoValidator.Validar(regiaoApiDTO, Estados);
-
+            ReadEstadoDTO readEstado = Estados.FirstOrDefault(x => x.siglaEstado.Equals(regiaoApiDTO.state));
             return new Regiao()
             {
                 NumeroDDD = ddd,
-                Estado = Estados.FirstOrDefault(x => x.siglaEstado.Equals(regiaoApiDTO.state))
+                Estado = new Estado()
+                {
+                    Nome = readEstado.Nome,
+                    siglaEstado = readEstado.siglaEstado
+                }
             };
         }
         catch (Exception ex)

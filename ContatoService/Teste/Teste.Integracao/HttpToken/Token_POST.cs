@@ -1,10 +1,13 @@
 ﻿using Core.DTOs.UsuarioDTO;
+using Core.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static Core.Entidades.Usuario;
 
 namespace Testes.Integracao.HttpToken
 {
@@ -18,11 +21,26 @@ namespace Testes.Integracao.HttpToken
         public async Task POST_Gera_Token_Usuario_Valido()
         {
             //Arrange
-            var user = new UsuarioTokenDTO { Username = "netim", Password = "123456" };
+            Usuario newUser = new()
+            {
+                Username = "neto",
+                Password = "123456",
+                Perfil = PerfilUsuario.Administrador
+            };
+            try
+            {
+                _context.Usuario.Add(newUser);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Erro: {e.Message}, {e.StackTrace}");
+            }
+            var user = new UsuarioTokenDTO { Username = "neto", Password = "123456" };
             using var client = app.CreateClient();
-            
+
             //Action
-            var resultado = await client.PostAsJsonAsync("/api/Token", user);
+            var resultado = await client.PostAsJsonAsync("/api/Token/CriarToken", user);
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
@@ -32,14 +50,49 @@ namespace Testes.Integracao.HttpToken
         public async Task POST_Gera_Token_Usuario_InValido()
         {
             //Arrange
-            var user = new UsuarioTokenDTO { Username = "netiim", Password = "123456" };
+            Usuario newUser = new()
+            {
+                Username = "neto",
+                Password = "123456",
+                Perfil = PerfilUsuario.Administrador
+            };
+            try
+            {
+                _context.Usuario.Add(newUser);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Erro: {e.Message}, {e.StackTrace}");
+            }
+            var user = new UsuarioTokenDTO { Username = "neto", Password = "1234567" };
             using var client = app.CreateClient();
              
             //Action
-            var resultado = await client.PostAsJsonAsync("/api/Token", user);
+            var resultado = await client.PostAsJsonAsync("/api/Token/CriarToken", user);
 
             //Assert
             Assert.Equal(HttpStatusCode.Unauthorized, resultado.StatusCode);
         }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task POST_Criar_Usuario_Valido()
+        {
+            //Arrange
+            CreateUsuarioDTO newUser = new()
+            {
+                Username = "neto",
+                Password = "123456",
+                Perfil = PerfilUsuario.Administrador
+            };
+            using var client = app.CreateClient();
+
+            //Action
+            var resultado = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
+        }
+
     }
 }

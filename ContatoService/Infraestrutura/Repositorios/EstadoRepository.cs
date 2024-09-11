@@ -27,5 +27,11 @@ namespace Infraestrutura.Repositorios
             List<Estado> estados = await _context.Estado.ToListAsync();
             return estados;
         }
+
+        public async Task<Estado> BuscarEstadoPorSigla(string siglaEstado)
+        {
+            Estado estado = await _context.Estado.FirstOrDefaultAsync(x => x.siglaEstado.Equals(siglaEstado));
+            return estado;
+        }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using Core.DTOs.RegiaoDTO;
 using Core.Entidades;
 using LocalizacaoService.Interfaces.Validators;
+using MappingRabbitMq.Models;
 
 namespace LocalizacaoService.Validators;
 
 public class RegiaoValidator : IRegiaoValidator
 {
-    public void Validar(RegiaoAPIDTO regiaoApiDTO, List<Estado> estados)
+    public void Validar(RegiaoAPIDTO regiaoApiDTO, List<ReadEstadoDTO> estados)
     {
         ValidaNullidadeObjetoAPI(regiaoApiDTO);
         ValidaSiglaExisteNaTabelaEstado(regiaoApiDTO, estados);
     }
 
-    private void ValidaSiglaExisteNaTabelaEstado(RegiaoAPIDTO regiaoApiDTO, List<Estado> estados)
+    private void ValidaSiglaExisteNaTabelaEstado(RegiaoAPIDTO regiaoApiDTO, List<ReadEstadoDTO> estados)
     {
         if (estados.FirstOrDefault(x => x.siglaEstado.Equals(regiaoApiDTO.state)) == null)
         {
