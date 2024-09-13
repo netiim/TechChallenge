@@ -61,38 +61,6 @@ public static class ExtensionsProgram
         });
 
         return services;
-    }
-
-    public static IServiceCollection AddFluentValidation(this IServiceCollection services)
-    {
-        //services.AddValidatorsFromAssemblyContaining<ContatoValidator>();
-        //services.AddFluentValidationAutoValidation();
-        return services;
-    }
-
-    public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
-    {
-        //byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT"));
-
-        //services.AddAuthentication(x =>
-        //{
-        //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //})
-        //.AddJwtBearer(x =>
-        //{
-        //    x.RequireHttpsMetadata = false;
-        //    x.SaveToken = true;
-        //    x.TokenValidationParameters = new TokenValidationParameters()
-        //    {
-        //        ValidateIssuerSigningKey = true,
-        //        IssuerSigningKey = new SymmetricSecurityKey(key),
-        //        ValidateIssuer = false,
-        //        ValidateAudience = false
-        //    };
-        //});
-
-        return services;
-    }
+    }   
 
 }

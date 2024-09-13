@@ -34,8 +34,7 @@ namespace Aplicacao.Consumers
 
                 await _estadoRepository.AdicionarEstado(estado);
 
-                await Task.CompletedTask;
-
+                await context.ConsumeCompleted;
             }
             catch (Exception ex)
             {

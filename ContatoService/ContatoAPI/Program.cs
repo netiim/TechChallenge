@@ -40,6 +40,8 @@ builder.Services.AddMassTransit(x =>
             h.Password(builder.Configuration["RabbitMq:Password"]);
         });
 
+        cfg.UsePrometheusMetrics(serviceName: "contato_service");
+
         cfg.ReceiveEndpoint("regiao-queue", ep =>
         {
             ep.ConfigureConsumer<RegiaoConsumer>(context);
@@ -51,8 +53,6 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
-
-builder.Services.AddMassTransitHostedService();
 
 byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT"));
 

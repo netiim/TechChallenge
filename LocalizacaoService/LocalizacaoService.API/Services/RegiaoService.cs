@@ -16,7 +16,7 @@ public class RegiaoService : IRegiaoService
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly ILogger<RegiaoService> _logger;
     private readonly HttpClient _httpClient;
-    private List<ReadEstadoDTO> Estados;
+    private List<ReadEstadoDTO>? Estados;
 
     public RegiaoService(
         IRegiaoRepository repository,
@@ -79,7 +79,7 @@ public class RegiaoService : IRegiaoService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                RegiaoAPIDTO brasilApiDTO = JsonSerializer.Deserialize<RegiaoAPIDTO>(content);
+                RegiaoAPIDTO? brasilApiDTO = JsonSerializer.Deserialize<RegiaoAPIDTO>(content);
 
                 Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
                 await _regiaorepository.CreateAsync(regiao);
@@ -106,12 +106,12 @@ public class RegiaoService : IRegiaoService
             }
         }
     }
-    private Regiao MontaRegiaoComRetornoAPI(int ddd, RegiaoAPIDTO regiaoApiDTO)
+    private Regiao MontaRegiaoComRetornoAPI(int ddd, RegiaoAPIDTO? regiaoApiDTO)
     {
         try
         {
             _regiaoValidator.Validar(regiaoApiDTO, Estados);
-            ReadEstadoDTO readEstado = Estados.FirstOrDefault(x => x.siglaEstado.Equals(regiaoApiDTO.state));
+            ReadEstadoDTO? readEstado = Estados?.FirstOrDefault(x => x.siglaEstado.Equals(regiaoApiDTO.state));
             return new Regiao()
             {
                 NumeroDDD = ddd,

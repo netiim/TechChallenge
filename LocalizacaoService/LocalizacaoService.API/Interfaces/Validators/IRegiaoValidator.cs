@@ -5,5 +5,5 @@ namespace LocalizacaoService.Interfaces.Validators;
 
 public interface IRegiaoValidator
 {
-    void Validar(RegiaoAPIDTO regiaoApiDTO, List<ReadEstadoDTO> estados);
+    void Validar(RegiaoAPIDTO? regiaoApiDTO, List<ReadEstadoDTO>? estados);
 }

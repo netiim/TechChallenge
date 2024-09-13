@@ -40,14 +40,11 @@ builder.Services.AddMassTransit(x =>
             h.Username(builder.Configuration["RabbitMq:Username"]);
             h.Password(builder.Configuration["RabbitMq:Password"]);
         });
-
+        cfg.UsePrometheusMetrics(serviceName: "localizacao_service");
         cfg.Message<RegiaoConsumerDTO>(configTopology => { });
         cfg.Message<ReadEstadoDTO>(configTopology => { });
     });
 });
-
-builder.Services.AddMassTransitHostedService(); 
-
 
 var app = builder.Build();
 

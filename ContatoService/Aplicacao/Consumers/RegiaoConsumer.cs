@@ -43,7 +43,7 @@ namespace Aplicacao.Consumers
 
                 await _regiaoRepository.Adicionar(r);
                 _logger.LogInformation($"Adicionou o regiao");
-                await Task.CompletedTask;
+                await context.ConsumeCompleted;
             }
             catch (Exception ex)
             {
