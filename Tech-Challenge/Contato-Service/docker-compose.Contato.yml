@@ -16,13 +16,11 @@ services:
       - "5001:8080"
       - "5002:8081"
       
-# Serviço da Aplicação .NET
-  api-autenticacao:
-    image: netiim/autenticacao-service:latest
-    container_name: autenticacao-service
+  api-contato-post:
+    image: netiim/contato-post:latest
+    container_name: contato-post
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=Autenticacao;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
     networks:
@@ -30,6 +28,33 @@ services:
     ports:
       - "5005:8080"
       - "5006:8081"
+      
+  api-contato-delete:
+    image: netiim/contato-delete:latest
+    container_name: contato-delete
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
+    depends_on:
+      - db
+    networks:
+      - tech-bridge
+    ports:
+      - "5007:8080"
+      - "5008:8081"   
+      
+  api-contato-put:
+    image: netiim/contato-put:latest
+    container_name: contato-put
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
+    depends_on:
+      - db
+    networks:
+      - tech-bridge
+    ports:
+      - "5009:8080"
+      - "5010:8081"
+
 
   # Serviço do Banco de Dados
   db:

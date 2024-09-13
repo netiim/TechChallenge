@@ -13,6 +13,8 @@ namespace Core.DTOs
         {
             CreateMap<Contato, CreateContatoDTO>()
                 .ReverseMap();
+            CreateMap<Contato, PutContatoDTO>()
+                .ReverseMap();
             CreateMap<Contato, ReadContatoDTO>()
                 .ReverseMap();  
             CreateMap<Regiao, ReadRegiaoDTO>()

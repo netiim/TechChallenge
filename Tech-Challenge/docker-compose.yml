@@ -14,12 +14,22 @@ services:
   api-contato:
     extends:
       file: ./Contato-Service/docker-compose.contato.yml
-      service: api-contato      
-
-  api-autenticacao:
+      service: api-contato    
+      
+  api-contato-post:
     extends:
       file: ./Contato-Service/docker-compose.contato.yml
-      service: api-autenticacao
+      service: api-contato-post  
+      
+  api-contato-delete:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: api-contato-delete   
+      
+  api-contato-put:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: api-contato-put   
       
   db:
     extends:

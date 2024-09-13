@@ -1,0 +1,27 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+USER app
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["Workers/ContatoWorker.Post/ContatoWorker.Post.csproj", "Workers/ContatoWorker.Post/"]
+COPY ["ContatoService/Aplicacao/ContatoService.Aplicacao.csproj", "ContatoService/Aplicacao/"]
+COPY ["ContatoService/Infraestrutura/ContatoService.Infraestrutura.csproj", "ContatoService/Infraestrutura/"]
+COPY ["ContatoService/Core/ContatoService.Core.csproj", "ContatoService/Core/"]
+COPY ["ContatoService/ContatoAPI/ContatoService.API.csproj", "ContatoService/ContatoAPI/"]
+RUN dotnet restore "./Workers/ContatoWorker.Post/ContatoWorker.Post.csproj"
+COPY . .
+WORKDIR "/src/Workers/ContatoWorker.Post"
+RUN dotnet build "./ContatoWorker.Post.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./ContatoWorker.Post.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ContatoWorker.Post.dll"]
