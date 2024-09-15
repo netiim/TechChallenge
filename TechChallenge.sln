@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContatoService.Testes", "Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContatosService", "ContatosService", "{F5A3A1E6-02ED-437F-BF2E-9513EEE560F5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contato", "Contato", "{4B564AC1-CCBB-418F-8705-4B2A7A89D14C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contatos", "Contatos", "{4B564AC1-CCBB-418F-8705-4B2A7A89D14C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalizacaoService.API", "Localizacao\LocalizacaoService.API\LocalizacaoService.API.csproj", "{0560B40E-01DD-41D9-993C-DFEB61F252AB}"
 EndProject

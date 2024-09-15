@@ -22,11 +22,16 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\ContatoAplicacao\Contato.Aplicacao.csproj" />
     <ProjectReference Include="..\..\ContatoCore\Contato.Core.csproj" />
     <ProjectReference Include="..\..\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Consumers\" />
   </ItemGroup>
 </Project>

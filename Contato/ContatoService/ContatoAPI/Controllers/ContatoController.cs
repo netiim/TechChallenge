@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Core.Contratos;
+using Core.Contratos.Contatos;
 using Core.DTOs.ContatoDTO;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +18,7 @@ namespace ContatoAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly IRequestClient<GetContatosRequest> _requestClient;
+        private readonly IRequestClient<GetContatosRequest> _requestGetClient;
         private readonly ILogger<ContatoController> logger;
 
         /// <summary>
@@ -29,7 +31,7 @@ namespace ContatoAPI.Controllers
         {
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
-            _requestClient = requestClient;
+            _requestGetClient = requestClient;
             this.logger = logger;
         }
 
@@ -42,25 +44,16 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarTodosContatos")]
         public async Task<IActionResult> ObterTodos()
         {
-            try
-            {
-                logger.LogInformation("Iniciando");
-                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest(), timeout: TimeSpan.FromSeconds(30));
+            var response = await _requestGetClient.GetResponse<ContatosResponse, ContatoErroResponse>(new GetContatosRequest(), timeout: TimeSpan.FromSeconds(30));
 
-                return Ok(response.Message);
-                logger.LogInformation($"Ele retorna coma lista? {response.Message.Contatos.Count}");
-                if (response.Message != null)
-                {
-                    return Ok(response.Message.Contatos);
-                }
-
-                return NotFound();
-            }
-            catch (Exception e)
+            if (response.Is(out Response<ContatoErroResponse> erro))
             {
-                return BadRequest(e.Message);
+                return BadRequest(erro.Message.MensagemErro);
             }
 
+            response.Is(out Response<ContatosResponse> result);
+
+            return Ok(result.Message.Contatos);
         }
 
         /// <summary>
@@ -73,17 +66,21 @@ namespace ContatoAPI.Controllers
         [HttpGet("BuscarPorDDD")]
         public async Task<IActionResult> ObterPorDdd(int ddd)
         {
-            try
-            {
-                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest { NumeroDDD = ddd}, timeout: TimeSpan.FromSeconds(30));
+            var response = await _requestGetClient.GetResponse<ContatosResponse, ContatoErroResponse, ContatoNotFound>(new GetContatosRequest { NumeroDDD = ddd }, timeout: TimeSpan.FromSeconds(30));
 
-                return Ok(response.Message);
-            }
-            catch (Exception e)
+            if (!response.Is(out Response<ContatosResponse> result))
             {
-                return BadRequest(e.Message);
+                if (response.Is(out Response<ContatoNotFound> notFound))
+                {
+                    return NotFound(notFound.Message.Mensagem);
+                }
+                else if (response.Is(out Response<ContatoErroResponse> erro))
+                {
+                    return BadRequest(erro.Message.MensagemErro);
+                }
             }
 
+            return Ok(result.Message.Contatos);
         }
 
         /// <summary>
@@ -97,18 +94,21 @@ namespace ContatoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterPorId(int id)
         {
-            try
+            var response = await _requestGetClient.GetResponse<ContatosResponse, ContatoErroResponse, ContatoNotFound>(new GetContatosRequest { ContatoId = id }, timeout: TimeSpan.FromSeconds(30));
+
+            if (!response.Is(out Response<ContatosResponse> result))
             {
-                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest { ContatoId = id }, timeout: TimeSpan.FromSeconds(30));
-
-                return Ok(response.Message);
+                if (response.Is(out Response<ContatoNotFound> notFound))
+                {
+                    return NotFound(notFound.Message.Mensagem);
+                }
+                else if (response.Is(out Response<ContatoErroResponse> erro))
+                {
+                    return BadRequest(erro.Message.MensagemErro);
+                }
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
 
-
+            return Ok(result.Message.Contatos);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace ContatoAPI.Controllers
         /// <response code="401">Se o usuário não está autenticado.</response>
         /// <response code="403">Se o usuário não tem permissão para executar esta ação.</response>
         [HttpPost]
-        [Authorize(Roles = Roles.Administrador)]
+        //[Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Adicionar([FromBody] CreateContatoDTO contatoDTO)
         {
             try
@@ -185,7 +185,7 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                DeleteContatoDTO contatoDTO =  new DeleteContatoDTO() { Id = id };
+                DeleteContatoDTO contatoDTO = new DeleteContatoDTO() { Id = id };
 
                 await _publishEndpoint.Publish(contatoDTO);
 

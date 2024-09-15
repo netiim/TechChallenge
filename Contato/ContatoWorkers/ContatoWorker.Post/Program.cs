@@ -40,7 +40,6 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddMassTransitHostedService();
-
 var host = builder.Build();
+
 host.Run();
