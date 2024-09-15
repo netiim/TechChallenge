@@ -30,6 +30,11 @@ services:
     extends:
       file: ./Contato-Service/docker-compose.contato.yml
       service: api-contato-put   
+
+  api-contato-get:
+    extends:
+      file: ./Contato-Service/docker-compose.contato.yml
+      service: api-contato-get  
       
   db:
     extends:

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Extensions;
+using System.Threading;
 using static Core.Entidades.Usuario;
 
 namespace ContatoAPI.Controllers
@@ -22,6 +23,8 @@ namespace ContatoAPI.Controllers
         private readonly IContatoService _contatoService;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IRequestClient<GetContatosRequest> _requestClient;
+        private readonly ILogger<ContatoController> logger;
 
         /// <summary>
         /// Construtor do ContatoController.
@@ -29,11 +32,13 @@ namespace ContatoAPI.Controllers
         /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="contatoService">O serviço de Contato.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public ContatoController(IContatoService contatoService, IMapper mapper, IPublishEndpoint publishEndpoint)
+        public ContatoController(IContatoService contatoService, IMapper mapper, IPublishEndpoint publishEndpoint, IRequestClient<GetContatosRequest> requestClient, ILogger<ContatoController> logger)
         {
             _contatoService = contatoService;
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
+            _requestClient = requestClient;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -47,9 +52,17 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                var contatos = await _contatoService.ObterTodosAsync();
-                List<ReadContatoDTO> result = _mapper.Map<List<ReadContatoDTO>>(contatos);
-                return Ok(result);
+                logger.LogInformation("Iniciando");
+                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest(), timeout: TimeSpan.FromSeconds(30));
+
+                return Ok(response.Message);
+                logger.LogInformation($"Ele retorna coma lista? {response.Message.Contatos.Count}");
+                if (response.Message != null)
+                {
+                    return Ok(response.Message.Contatos);
+                }
+
+                return NotFound();
             }
             catch (Exception e)
             {
@@ -70,9 +83,9 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                List<Contato> contatos = (List<Contato>)await _contatoService.FindAsync(c => c.Regiao.NumeroDDD == ddd);
-                List<ReadContatoDTO> contatoDTO = _mapper.Map<List<ReadContatoDTO>>(contatos);
-                return Ok(contatoDTO);
+                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest { NumeroDDD = ddd}, timeout: TimeSpan.FromSeconds(30));
+
+                return Ok(response.Message);
             }
             catch (Exception e)
             {
@@ -94,14 +107,9 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                var contato = await _contatoService.ObterPorIdAsync(id);
-                if (contato == null)
-                {
-                    return NotFound();
-                }
+                var response = await _requestClient.GetResponse<ContatosResponse>(new GetContatosRequest { ContatoId = id }, timeout: TimeSpan.FromSeconds(30));
 
-                ReadContatoDTO contatoDTO = _mapper.Map<ReadContatoDTO>(contato);
-                return Ok(contatoDTO);
+                return Ok(response.Message);
             }
             catch (Exception e)
             {

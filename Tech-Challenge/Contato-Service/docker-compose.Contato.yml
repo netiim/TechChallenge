@@ -54,6 +54,19 @@ services:
     ports:
       - "5009:8080"
       - "5010:8081"
+      
+  api-contato-get:
+    image: netiim/contato-get:latest
+    container_name: contato-get
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
+    depends_on:
+      - db
+    networks:
+      - tech-bridge
+    ports:
+      - "5011:8080"
+      - "5012:8081"
 
 
   # Serviço do Banco de Dados
