@@ -1,3 +1,5 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
@@ -7,13 +9,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Contato/ContatoService/ContatoAPI/ContatoService.API.csproj", "Contato/ContatoService/ContatoAPI/"]
-COPY ["Contato/ContatoAplicacao/Contato.Aplicacao.csproj", "Contato/ContatoAplicacao/"]
-COPY ["Contato/ContatoInfraestrutura/Contato.Infraestrutura.csproj", "Contato/ContatoInfraestrutura/"]
-COPY ["Contato/ContatoCore/Contato.Core.csproj", "Contato/ContatoCore/"]
-RUN dotnet restore "./Contato/ContatoService/ContatoAPI/ContatoService.API.csproj"
+COPY "ContatoService/ContatoAPI/ContatoService.API.csproj" .
+COPY ["ContatoAplicacao/Contato.Aplicacao.csproj", "ContatoAplicacao/"]
+COPY ["ContatoInfraestrutura/Contato.Infraestrutura.csproj", "ContatoInfraestrutura/"]
+COPY ["ContatoCore/Contato.Core.csproj", "ContatoCore/"]
+RUN dotnet restore "./ContatoService.API.csproj"
 COPY . .
-WORKDIR "/src/Contato/ContatoService/ContatoAPI"
+WORKDIR "/src"
 RUN dotnet build "./ContatoService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

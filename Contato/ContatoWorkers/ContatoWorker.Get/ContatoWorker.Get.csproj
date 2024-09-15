@@ -4,13 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-ContatoWorker.DELETE-c7403328-326a-4a59-a37e-a0197b7ccaea</UserSecretsId>
+    <UserSecretsId>dotnet-ContatoWorker.Get-332bc1fd-26fd-49cc-8d10-a75797604590</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.2.5" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
     <PackageReference Include="MassTransit.Prometheus" Version="8.1.3" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
@@ -28,8 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ContatoService\Aplicacao\ContatoService.Aplicacao.csproj" />
-    <ProjectReference Include="..\..\ContatoService\Core\ContatoService.Core.csproj" />
-    <ProjectReference Include="..\..\ContatoService\Infraestrutura\ContatoService.Infraestrutura.csproj" />
+    <Folder Include="Consumers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ContatoAplicacao\Contato.Aplicacao.csproj" />
+    <ProjectReference Include="..\..\ContatoCore\Contato.Core.csproj" />
+    <ProjectReference Include="..\..\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
   </ItemGroup>
 </Project>

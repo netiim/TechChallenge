@@ -31,8 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\ContatoService.Core.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\ContatoCore\Contato.Core.csproj" />
   </ItemGroup>
 
 </Project>

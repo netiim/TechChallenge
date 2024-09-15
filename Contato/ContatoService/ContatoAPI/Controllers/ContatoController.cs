@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using Core.DTOs.ContatoDTO;
-using Core.Entidades;
-using Core.Interfaces.Services;
-using Infraestrutura.Data;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Extensions;
-using System.Threading;
 using static Core.Entidades.Usuario;
 
 namespace ContatoAPI.Controllers
@@ -20,7 +14,6 @@ namespace ContatoAPI.Controllers
     [Route("[controller]")]
     public class ContatoController : ControllerBase
     {
-        private readonly IContatoService _contatoService;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IRequestClient<GetContatosRequest> _requestClient;
@@ -32,9 +25,8 @@ namespace ContatoAPI.Controllers
         /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="contatoService">O serviço de Contato.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public ContatoController(IContatoService contatoService, IMapper mapper, IPublishEndpoint publishEndpoint, IRequestClient<GetContatosRequest> requestClient, ILogger<ContatoController> logger)
+        public ContatoController(IMapper mapper, IPublishEndpoint publishEndpoint, IRequestClient<GetContatosRequest> requestClient, ILogger<ContatoController> logger)
         {
-            _contatoService = contatoService;
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
             _requestClient = requestClient;

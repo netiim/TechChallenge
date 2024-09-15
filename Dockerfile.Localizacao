@@ -9,7 +9,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["LocalizacaoService/LocalizacaoService.API/LocalizacaoService.API.csproj", "LocalizacaoService/LocalizacaoService.API/"]
+COPY ["Localizacao/LocalizacaoService.API/LocalizacaoService.API.csproj", "LocalizacaoService/LocalizacaoService.API/"]
 RUN dotnet restore "./LocalizacaoService/LocalizacaoService.API/LocalizacaoService.API.csproj"
 COPY . .
 WORKDIR "/src/LocalizacaoService/LocalizacaoService.API"

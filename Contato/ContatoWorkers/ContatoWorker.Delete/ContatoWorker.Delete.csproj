@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-ContatoWorker.Put-0861bac2-6ece-436b-a413-aefab7384cd7</UserSecretsId>
+    <UserSecretsId>dotnet-ContatoWorker.DELETE-c7403328-326a-4a59-a37e-a0197b7ccaea</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ContatoService\Aplicacao\ContatoService.Aplicacao.csproj" />
-    <ProjectReference Include="..\..\ContatoService\Core\ContatoService.Core.csproj" />
-    <ProjectReference Include="..\..\ContatoService\Infraestrutura\ContatoService.Infraestrutura.csproj" />
+    <ProjectReference Include="..\..\ContatoAplicacao\Contato.Aplicacao.csproj" />
+    <ProjectReference Include="..\..\ContatoCore\Contato.Core.csproj" />
+    <ProjectReference Include="..\..\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
   </ItemGroup>
 </Project>

@@ -38,14 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\Contato\ContatoAplicacao\Contato.Aplicacao.csproj" />
+    <ProjectReference Include="..\Contato\ContatoCore\Contato.Core.csproj" />
+    <ProjectReference Include="..\Contato\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
+    <ProjectReference Include="..\Contato\ContatoService\ContatoAPI\ContatoService.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aplicacao\ContatoService.Aplicacao.csproj" />
-    <ProjectReference Include="..\ContatoAPI\ContatoService.API.csproj" />
-    <ProjectReference Include="..\Core\ContatoService.Core.csproj" />
-    <ProjectReference Include="..\Infraestrutura\ContatoService.Infraestrutura.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
