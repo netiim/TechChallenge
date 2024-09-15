@@ -1,6 +1,7 @@
 ﻿using Core.Entidades;
 using Core.Interfaces.Repository;
 using Infraestrutura.Data;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace Infraestrutura.Repositorios
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            _dbSet.Update(entity);
+            _dbSet.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 

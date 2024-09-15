@@ -22,23 +22,28 @@ namespace Testes.Integracao.HttpRegiao
         [Fact]
         [Trait("Categoria", "Integração")]
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
-        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-            // Verifique se as regiões foram inseridas
-            Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
-            if (regiao is null)
+        {
+            //Arrange
+            Estado estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" };
+            await _context.Estado.AddAsync(estado);
+            await _context.SaveChangesAsync();
+
+            estado = _context.Estado.FirstOrDefault();
+            if (estado is not null)
             {
-                regiao = new Regiao()
+                Regiao regiao = new Regiao()
                 {
                     NumeroDDD = 11,
-                    EstadoId = 20,
-                    Estado = new Estado() {Nome = "São Paulo", siglaEstado = "SP" }
+                    EstadoId = estado.Id,
+                    Estado = estado,
+                    IdLocalidadeAPI = Guid.NewGuid().ToString()
                 };
 
-                _context.Regiao.Add(regiao);
-                _context.SaveChanges();
+                await _context.Regiao.AddAsync(regiao);
+                await _context.SaveChangesAsync();
             }
 
-            using var client = app.CreateClient();
+            var client = app.CreateClient();
 
             //Action
             var resultado = await client.GetFromJsonAsync<List<ReadRegiaoDTO>>("/Regiao");

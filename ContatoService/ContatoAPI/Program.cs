@@ -6,7 +6,8 @@ using ContatoAPI.Extension;
 using Prometheus;
 using MassTransit;
 using Aplicacao.Consumers;
-
+using Core.DTOs.ContatoDTO;
+using ContatoWorker.Get.Consumers;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -30,6 +31,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<RegiaoConsumer>();
+    x.AddConsumer<EstadoConsumer>();
+
+    x.AddConsumer<GetContatosConsumer>()
+        .Endpoint(e => e.Name = "contato-get");
+
+    x.AddRequestClient<GetContatosRequest>(new Uri("exchange:contato-get"));
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -37,16 +44,23 @@ builder.Services.AddMassTransit(x =>
         {
             h.Username(builder.Configuration["RabbitMq:Username"]);
             h.Password(builder.Configuration["RabbitMq:Password"]);
-        });
+        });        
+
+        cfg.UsePrometheusMetrics(serviceName: "contato_service");
 
         cfg.ReceiveEndpoint("regiao-queue", ep =>
         {
             ep.ConfigureConsumer<RegiaoConsumer>(context);
         });
+
+        cfg.ReceiveEndpoint("estado-queue", ep =>
+        {
+            ep.ConfigureConsumer<EstadoConsumer>(context);
+        });
+
+        cfg.ConfigureEndpoints(context);
     });
 });
-
-builder.Services.AddMassTransitHostedService();
 
 byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT"));
 

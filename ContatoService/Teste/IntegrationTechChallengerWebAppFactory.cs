@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using Testcontainers.MsSql;
+using static Core.Entidades.Usuario;
 
 namespace Testes
 {
@@ -56,13 +51,25 @@ namespace Testes
         public async Task<HttpClient> GetClientWithAccessTokenAsync()
         {
             var client = CreateClient();
-            var user = new UsuarioTokenDTO { Username = "netim", Password = "123456" };
-            var resultado = await client.PostAsJsonAsync("/api/Token", user);
-            resultado.EnsureSuccessStatusCode();
-            var result = await resultado.Content.ReadAsStringAsync();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result);
+
+            CreateUsuarioDTO newUser = new()
+            {
+                Username = "neto",
+                Password = "123456",
+                Perfil = PerfilUsuario.Administrador  
+            };
+
+            var response = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
+
+            response.EnsureSuccessStatusCode();
+
+            var token = await response.Content.ReadAsStringAsync();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             return client;
         }
+
         public new Task DisposeAsync()
         {
             return _dbContainer.StopAsync();

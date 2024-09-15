@@ -1,6 +1,6 @@
 using ContatoAPI.Extension;
-using Core.Entidades;
 using LocalizacaoService._03_Repositorys.Config;
+using MappingRabbitMq.Models;
 using MassTransit;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -29,7 +29,8 @@ builder.Services.AddScoped(sp =>
     var client = sp.GetRequiredService<IMongoClient>();
     return client.GetDatabase(settings.DatabaseName);
 });
-
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
@@ -39,13 +40,11 @@ builder.Services.AddMassTransit(x =>
             h.Username(builder.Configuration["RabbitMq:Username"]);
             h.Password(builder.Configuration["RabbitMq:Password"]);
         });
-
-        cfg.Message<Regiao>(configTopology => { });
+        cfg.UsePrometheusMetrics(serviceName: "localizacao_service");
+        cfg.Message<RegiaoConsumerDTO>(configTopology => { });
+        cfg.Message<ReadEstadoDTO>(configTopology => { });
     });
 });
-
-builder.Services.AddMassTransitHostedService();
-
 
 var app = builder.Build();
 
@@ -66,3 +65,5 @@ app.MapMetrics();
 app.UseMetricServer();
 
 app.Run();
+
+public partial class Program { }

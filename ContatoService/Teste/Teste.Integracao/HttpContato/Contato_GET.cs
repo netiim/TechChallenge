@@ -75,7 +75,8 @@ namespace Testes.Integracao.HttpContato
                     {
                         NumeroDDD = 11,
                         EstadoId = 20,
-                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" }
+                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
+                        IdLocalidadeAPI = Guid.NewGuid().ToString()
                     };
                     _context.Regiao.Add(regiao);
                     _context.SaveChanges();

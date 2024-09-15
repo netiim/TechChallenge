@@ -1,9 +1,9 @@
 ﻿using Core.DTOs.RegiaoDTO;
-using Core.Entidades;
+using MappingRabbitMq.Models;
 
 namespace LocalizacaoService.Interfaces.Validators;
 
 public interface IRegiaoValidator
 {
-    void Validar(RegiaoAPIDTO regiaoApiDTO, List<Estado> estados);
+    void Validar(RegiaoAPIDTO? regiaoApiDTO, List<ReadEstadoDTO>? estados);
 }

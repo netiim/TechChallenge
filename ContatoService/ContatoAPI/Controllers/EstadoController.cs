@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using Core.DTOs.RegiaoDTO;
+using Core.DTOs.EstadoDTO;
 using Core.Interfaces.Services;
-using Infraestrutura.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using static Core.Entidades.Usuario;
 
 namespace ContatoAPI.Controllers
 {
@@ -21,7 +17,6 @@ namespace ContatoAPI.Controllers
         /// <summary>
         /// Construtor do EstadoController.
         /// </summary>
-        /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="estadoService">O serviço de Estado.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
         public EstadoController( IEstadoService estadoService, IMapper mapper)
@@ -29,28 +24,6 @@ namespace ContatoAPI.Controllers
             _estadoService = estadoService;
             _mapper = mapper;
         }
-        /// <summary>
-        /// Popula a tabela de estados do Brasil.
-        /// </summary>
-        /// <returns>Um IActionResult indicando o resultado da operação.</returns>
-        /// <response code="200">Se a operação foi bem-sucedida.</response>
-        /// <response code="401">Se o usuário não está autenticado.</response>
-        /// <response code="403">Se o usuário não tem permissão para executar esta ação.</response>
-        [HttpPost]
-        [Authorize(Roles = Roles.Administrador)]
-        public async Task<IActionResult> PreencherTabelaComEstadosBrasil()
-        {
-            try
-            {
-                await _estadoService.PreencherTabelaComEstadosBrasil();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
 
         /// <summary>
         /// Obtém todos os estados.
@@ -64,7 +37,7 @@ namespace ContatoAPI.Controllers
             try
             {
                 var regiao = await _estadoService.ObterTodos();
-                List<ReadRegiaoDTO> regiaoDTO = _mapper.Map<List<ReadRegiaoDTO>>(regiao);
+                List<ReadEstadoDTO> regiaoDTO = _mapper.Map<List<ReadEstadoDTO>>(regiao);
                 return Ok(regiaoDTO);
             }
             catch (Exception e)

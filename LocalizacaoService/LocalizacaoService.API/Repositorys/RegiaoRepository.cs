@@ -21,6 +21,5 @@ namespace Infraestrutura.Repositorios
                 throw new Exception(ex.Message);
             }
         }
-
     }
 }
