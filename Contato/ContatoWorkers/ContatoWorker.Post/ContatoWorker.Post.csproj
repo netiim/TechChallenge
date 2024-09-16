@@ -30,8 +30,4 @@
     <ProjectReference Include="..\..\ContatoCore\Contato.Core.csproj" />
     <ProjectReference Include="..\..\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Consumers\" />
-  </ItemGroup>
 </Project>

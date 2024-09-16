@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Core.Contratos;
 using Core.Contratos.Contatos;
+using Core.Contratos.Request;
+using Core.Contratos.Response;
 using Core.DTOs.ContatoDTO;
 using MassTransit;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Core.Entidades.Usuario;
+using Prometheus;
 
 namespace ContatoAPI.Controllers
 {
@@ -19,20 +19,33 @@ namespace ContatoAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IRequestClient<GetContatosRequest> _requestGetClient;
+        private readonly IRequestClient<PostContatosRequest> _requestPostClient;
+        private readonly IRequestClient<DeleteContatoRequest> _requestDeleteClient;
+        private readonly IRequestClient<PutContatoRequest> _requestUpdateClient;
         private readonly ILogger<ContatoController> logger;
-
+        public static readonly Counter publishFaultCounter = Metrics.CreateCounter(
+    "mt_publish_fault_total",
+    "Total number of publish faults",
+    new CounterConfiguration
+    {
+        LabelNames = new[] { "message_type" }
+    }
+);
         /// <summary>
         /// Construtor do ContatoController.
         /// </summary>
         /// <param name="context">O contexto do banco de dados.</param>
         /// <param name="contatoService">O serviço de Contato.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public ContatoController(IMapper mapper, IPublishEndpoint publishEndpoint, IRequestClient<GetContatosRequest> requestClient, ILogger<ContatoController> logger)
+        public ContatoController(IMapper mapper, IPublishEndpoint publishEndpoint, IRequestClient<GetContatosRequest> requestClient, ILogger<ContatoController> logger, IRequestClient<PostContatosRequest> requestPostClient, IRequestClient<DeleteContatoRequest> requestDeleteClient, IRequestClient<PutContatoRequest> requestUpdateClient)
         {
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
             _requestGetClient = requestClient;
             this.logger = logger;
+            _requestPostClient = requestPostClient;
+            _requestDeleteClient = requestDeleteClient;
+            _requestUpdateClient = requestUpdateClient;
         }
 
         /// <summary>
@@ -95,8 +108,7 @@ namespace ContatoAPI.Controllers
         public async Task<IActionResult> ObterPorId(int id)
         {
             var response = await _requestGetClient.GetResponse<ContatosResponse, ContatoErroResponse, ContatoNotFound>(new GetContatosRequest { ContatoId = id }, timeout: TimeSpan.FromSeconds(30));
-
-            if (!response.Is(out Response<ContatosResponse> result))
+            try
             {
                 if (response.Is(out Response<ContatoNotFound> notFound))
                 {
@@ -104,11 +116,17 @@ namespace ContatoAPI.Controllers
                 }
                 else if (response.Is(out Response<ContatoErroResponse> erro))
                 {
-                    return BadRequest(erro.Message.MensagemErro);
+                    throw new Exception(erro.Message.MensagemErro);
                 }
+
+                response.Is(out Response<ContatosResponse> result);
+                return Ok(result.Message.Contatos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
 
-            return Ok(result.Message.Contatos);
         }
 
         /// <summary>
@@ -124,20 +142,26 @@ namespace ContatoAPI.Controllers
         //[Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Adicionar([FromBody] CreateContatoDTO contatoDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
-                if (!ModelState.IsValid)
+                var response = await _requestPostClient.GetResponse<ContatoResponse, ContatoErroResponse>(new PostContatosRequest { CreateContatoDTO = contatoDTO }, timeout: TimeSpan.FromSeconds(30));
+
+                if (response.Is(out Response<ContatoErroResponse> erro))
                 {
-                    return BadRequest(ModelState);
+                    throw new Exception(erro.Message.MensagemErro);
                 }
+                response.Is(out Response<ContatoResponse> result);
 
-                await _publishEndpoint.Publish(contatoDTO);
-
-                return Accepted();
+                return Ok(result.Message.Contato);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
+                publishFaultCounter.WithLabels("ContatoErroResponse").Inc();
+                return BadRequest(e.Message);
             }
 
         }
@@ -161,10 +185,18 @@ namespace ContatoAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
+                var response = await _requestUpdateClient.GetResponse<ContatoResponse, ContatoNotFound, ContatoErroResponse>(new PutContatoRequest { ContatoDTO = contatoDTO }, timeout: TimeSpan.FromSeconds(30));
 
-                await _publishEndpoint.Publish(contatoDTO);
-
-                return Accepted();
+                if (response.Is(out Response<ContatoNotFound> notFound))
+                {
+                    return NotFound(notFound.Message.Mensagem);
+                }
+                else if (response.Is(out Response<ContatoErroResponse> erro))
+                {
+                    throw new Exception(erro.Message.MensagemErro);
+                }
+                response.Is(out Response<ContatoResponse> result);
+                return Ok(result.Message.Contato);
             }
             catch (Exception e)
             {
@@ -185,9 +217,16 @@ namespace ContatoAPI.Controllers
         {
             try
             {
-                DeleteContatoDTO contatoDTO = new DeleteContatoDTO() { Id = id };
+                var response = await _requestDeleteClient.GetResponse<ContatoSucessResponse, ContatoNotFound, ContatoErroResponse>(new DeleteContatoRequest { Id = id }, timeout: TimeSpan.FromSeconds(30));
 
-                await _publishEndpoint.Publish(contatoDTO);
+                if (response.Is(out Response<ContatoNotFound> notFound))
+                {
+                    return NotFound(notFound.Message.Mensagem);
+                }
+                else if (response.Is(out Response<ContatoErroResponse> erro))
+                {
+                    throw new Exception(erro.Message.MensagemErro);
+                }
 
                 return NoContent();
             }

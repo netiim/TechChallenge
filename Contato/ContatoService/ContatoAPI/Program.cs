@@ -8,6 +8,10 @@ using MassTransit;
 using Aplicacao.Consumers;
 using Core.DTOs.ContatoDTO;
 using ContatoWorker.Get.Consumers;
+using ContatoWorker.Post.Consumers;
+using Core.Contratos.Request;
+using ContatoWorker.Delete.Consumers;
+using ContatoWorker.Put.Consumers;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -33,10 +37,16 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<RegiaoConsumer>();
     x.AddConsumer<EstadoConsumer>();
 
-    x.AddConsumer<GetContatosConsumer>()
-        .Endpoint(e => e.Name = "contato-get");
+    //x.AddConsumer<GetContatosConsumer>()
+    //    .Endpoint(e => e.Name = "contato-get");
 
     x.AddRequestClient<GetContatosRequest>(new Uri("exchange:contato-get"));
+
+    x.AddRequestClient<PostContatosRequest>(new Uri("exchange:contato-post"));
+
+    x.AddRequestClient<DeleteContatoRequest>(new Uri("exchange:contato-delete"));
+
+    x.AddRequestClient<PutContatoRequest>(new Uri("exchange:contato-put"));
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -57,8 +67,6 @@ builder.Services.AddMassTransit(x =>
         {
             ep.ConfigureConsumer<EstadoConsumer>(context);
         });
-
-        cfg.ConfigureEndpoints(context);
     });
 });
 

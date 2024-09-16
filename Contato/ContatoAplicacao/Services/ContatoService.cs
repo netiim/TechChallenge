@@ -43,6 +43,7 @@ public class ContatoService : BaseService<Contato>, IContatoService
         var list = await _regiaoRepository.FindAsync(r => r.NumeroDDD.ToString() == ddd);
 
         entity.RegiaoId = (int)list.FirstOrDefault()?.Id;
+        entity.Regiao = list.FirstOrDefault();
 
         await _contatoRepository.AtualizarAsync(entity);
     }

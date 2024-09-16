@@ -22,7 +22,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<GetContatosConsumer>();
+    x.AddConsumer<GetContatosConsumer>()
+        .Endpoint(e => e.Name = "contato-get"); 
+
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(builder.Configuration["RabbitMq:Host"], h =>
@@ -33,10 +35,7 @@ builder.Services.AddMassTransit(x =>
 
         cfg.UsePrometheusMetrics(serviceName: "contato-get");
 
-        cfg.ReceiveEndpoint("contato-get-queue", ep =>
-        {
-            ep.ConfigureConsumer<GetContatosConsumer>(context);
-        });
+        cfg.ConfigureEndpoints(context);
     });
 });
 

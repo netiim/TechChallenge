@@ -1,47 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS_(METRICS)",
-      "label": "Prometheus (Metrics)",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.3.1"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -65,10 +22,12 @@
       }
     ]
   },
+  "description": "MassTransit is a message-based distributed application framework for .NET http://masstransit-project.com.\r\n\r\nMassTransit supports Prometheus metric capture, which provides useful observability into the bus, endpoints, consumers, and messages.\r\n\r\nThis dashboard shows the messages published and sent using MassTransit framework.",
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": 17680,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -86,7 +45,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Events are objects published and broadcasted to be picked up by all consumers that are listening to that event type. It means that something has happened. (e.g.: UserUpdated)",
       "fieldConfig": {
@@ -96,7 +55,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -124,7 +85,9 @@
       },
       "id": 55,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -134,12 +97,12 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -201,7 +164,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Commands are objects sent direct to an endpoint and will be picked up by the first consumer that implements it. It means that something must be performed after receiving that message.",
       "fieldConfig": {
@@ -211,7 +174,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -239,7 +204,9 @@
       },
       "id": 66,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -249,12 +216,12 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -317,7 +284,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Number of bus instances",
       "fieldConfig": {
@@ -353,12 +320,12 @@
         "y": 11
       },
       "id": 52,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -366,14 +333,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(mt_bus{env=\"$environment\",app=~\"$application\"})",
@@ -387,7 +356,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of messages consumed",
       "fieldConfig": {
@@ -397,7 +366,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -425,7 +396,9 @@
       },
       "id": 56,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -434,12 +407,12 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -523,7 +496,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of messages consumed (one to many events)",
       "fieldConfig": {
@@ -562,12 +535,12 @@
         "y": 22
       },
       "id": 43,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -575,14 +548,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_publish_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -596,7 +571,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -635,25 +610,27 @@
         "y": 22
       },
       "id": 64,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_publish_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -667,7 +644,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of message publish faults",
       "fieldConfig": {
@@ -706,25 +683,27 @@
         "y": 22
       },
       "id": 48,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_publish_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -738,7 +717,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -777,25 +756,27 @@
         "y": 22
       },
       "id": 63,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_publish_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -809,7 +790,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of messages sent (one to one commands)",
       "fieldConfig": {
@@ -832,7 +813,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           },
@@ -847,25 +829,27 @@
         "y": 30
       },
       "id": 44,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_send_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -879,7 +863,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -902,7 +886,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           },
@@ -917,25 +902,27 @@
         "y": 30
       },
       "id": 61,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_send_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -949,7 +936,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of message send faults",
       "fieldConfig": {
@@ -972,7 +959,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               }
             ]
           },
@@ -987,25 +975,27 @@
         "y": 30
       },
       "id": 50,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_send_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -1019,7 +1009,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -1042,7 +1032,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               }
             ]
           },
@@ -1057,25 +1048,27 @@
         "y": 30
       },
       "id": 62,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_send_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -1115,7 +1108,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of messages consumed",
       "fieldConfig": {
@@ -1150,12 +1143,12 @@
         "y": 39
       },
       "id": 31,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -1163,14 +1156,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_consume_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -1184,7 +1179,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -1219,25 +1214,27 @@
         "y": 39
       },
       "id": 65,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_consume_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -1251,7 +1248,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of message consume faults",
       "fieldConfig": {
@@ -1286,12 +1283,12 @@
         "y": 39
       },
       "id": 38,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1299,14 +1296,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_consume_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -1320,7 +1319,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -1355,25 +1354,27 @@
         "y": 39
       },
       "id": 60,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_consume_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -1387,7 +1388,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Number of receive endpoint instances.",
       "fieldConfig": {
@@ -1422,12 +1423,12 @@
         "y": 47
       },
       "id": 47,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -1435,14 +1436,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(mt_endpoint{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"})",
@@ -1456,7 +1459,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Number of consumers in progress",
       "fieldConfig": {
@@ -1491,12 +1494,12 @@
         "y": 47
       },
       "id": 39,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -1504,14 +1507,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_consumer_in_progress{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -1525,7 +1530,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Total number of message consume retries",
       "fieldConfig": {
@@ -1560,12 +1565,12 @@
         "y": 47
       },
       "id": 42,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -1573,14 +1578,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(increase(mt_consume_retry_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
@@ -1594,7 +1601,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "",
       "fieldConfig": {
@@ -1629,12 +1636,12 @@
         "y": 47
       },
       "id": 59,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -1642,14 +1649,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "sum(rate(mt_consume_retry_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
@@ -1698,7 +1707,7 @@
       },
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Elapsed time spent consuming a message, in seconds.",
       "fieldConfig": {
@@ -1707,6 +1716,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1720,6 +1730,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1778,7 +1789,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.95, sum(rate(mt_consume_duration_seconds_bucket{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval])) by (message_type,le))  ",
@@ -1828,7 +1839,7 @@
       },
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS_(METRICS)}"
+        "uid": "ddxzxo073gy68c"
       },
       "description": "Elapsed time between when the message was sent and when it was consumed, in seconds.",
       "fieldConfig": {
@@ -1837,6 +1848,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1850,6 +1862,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1908,7 +1921,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS_(METRICS)}"
+            "uid": "ddxzxo073gy68c"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.95, sum(rate(mt_delivery_duration_seconds_bucket{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval])) by (message_type,le))",
@@ -1922,8 +1935,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 37,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [
     "MassTransit",
     "Event Driven Architecture"
@@ -1933,8 +1945,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus (Metrics)",
-          "value": "Prometheus (Metrics)"
+          "text": "prometheus",
+          "value": "ddxzxo073gy68c"
         },
         "hide": 2,
         "includeAll": false,
@@ -1948,10 +1960,15 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(env)",
         "hide": 0,
@@ -1972,10 +1989,14 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(domain)",
         "hide": 0,
@@ -1996,10 +2017,14 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(app)",
         "hide": 0,
@@ -2020,10 +2045,14 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(message_type)",
         "hide": 0,
@@ -2047,10 +2076,14 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(consumer_type)",
         "hide": 0,
@@ -2073,10 +2106,14 @@
         "useTags": false
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(mt_publish_total,message_type)",
         "hide": 2,
@@ -2100,10 +2137,14 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(mt_send_total,message_type)",
         "hide": 2,
@@ -2126,10 +2167,14 @@
         "useTags": false
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(mt_saga_in_progress,consumer_type)",
         "hide": 2,
@@ -2151,10 +2196,14 @@
         "useTags": false
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS_(METRICS)}"
+          "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(mt_saga_in_progress,message_type)",
         "hide": 2,
@@ -2198,8 +2247,6 @@
   "timezone": "",
   "title": "MassTransit - Messages Monitoring",
   "uid": "vOtk-UjWz-2",
-  "version": 6,
-  "weekStart": "",
-  "gnetId": 17680,
-  "description": "MassTransit is a message-based distributed application framework for .NET http://masstransit-project.com.\r\n\r\nMassTransit supports Prometheus metric capture, which provides useful observability into the bus, endpoints, consumers, and messages.\r\n\r\nThis dashboard shows the messages published and sent using MassTransit framework."
+  "version": 3,
+  "weekStart": ""
 }

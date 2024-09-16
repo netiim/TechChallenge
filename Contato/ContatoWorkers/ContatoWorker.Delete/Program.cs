@@ -21,7 +21,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<DeleteContatoConsumer>();
+    x.AddConsumer<DeleteContatoConsumer>()
+        .Endpoint(e => e.Name = "contato-delete");
+
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(builder.Configuration["RabbitMq:Host"], h =>
@@ -32,10 +34,7 @@ builder.Services.AddMassTransit(x =>
 
         cfg.UsePrometheusMetrics(serviceName: "contato-delete");
 
-        cfg.ReceiveEndpoint("contato-delete-queue", ep =>
-        {
-            ep.ConfigureConsumer<DeleteContatoConsumer>(context);
-        });
+        cfg.ConfigureEndpoints(context);
     });
 });
 
