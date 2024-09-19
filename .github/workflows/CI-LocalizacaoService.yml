@@ -2,9 +2,9 @@ name: CI-LocalizacaoService
 
 on:
   push:
-    branches: [ "developer" ]
+    branches: [ "dev-localizacao" ]
   pull_request:
-    branches: [ "developer" ]
+    branches: [ "dev-localizacao" ]
 env:
   REGISTRY: netiim
   IMAGE_NAME: localizacao-service
