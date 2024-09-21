@@ -5,13 +5,13 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Workers/ContatoWorker.Get/ContatoWorker.Get.csproj", "Workers/ContatoWorker.Get/"]
-COPY ["ContatoService/Aplicacao/ContatoService.Aplicacao.csproj", "ContatoService/Aplicacao/"]
-COPY ["ContatoService/Infraestrutura/ContatoService.Infraestrutura.csproj", "ContatoService/Infraestrutura/"]
-COPY ["ContatoService/Core/ContatoService.Core.csproj", "ContatoService/Core/"]
-RUN dotnet restore "./Workers/ContatoWorker.Get/ContatoWorker.Get.csproj"
+COPY ["Contato/ContatoWorkers/ContatoWorker.Get/ContatoWorker.Get.csproj", "Contato/ContatoWorkers/ContatoWorker.Get/"]
+COPY ["Contato/ContatoAplicacao/Contato.Aplicacao.csproj", "Contato/ContatoAplicacao/"]
+COPY ["Contato/ContatoInfraestrutura/Contato.Infraestrutura.csproj", "Contato/ContatoInfraestrutura/"]
+COPY ["Contato/ContatoCore/Contato.Core.csproj", "ContatoCore/"]
+RUN dotnet restore "./Contato/ContatoWorkers/ContatoWorker.Get/ContatoWorker.Get.csproj"
 COPY . .
-WORKDIR "/src/Workers/ContatoWorker.Get"
+WORKDIR "/src/Contato/ContatoWorkers/ContatoWorker.Get"
 RUN dotnet build "./ContatoWorker.Get.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
