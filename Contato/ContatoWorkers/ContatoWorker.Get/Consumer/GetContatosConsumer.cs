@@ -4,6 +4,7 @@ using Core.Contratos.Contatos;
 using Core.DTOs.ContatoDTO;
 using Core.Entidades;
 using Core.Interfaces.Repository;
+using Core.Interfaces.Services;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -12,14 +13,12 @@ namespace ContatoWorker.Get.Consumers
 {
     public class GetContatosConsumer : IConsumer<GetContatosRequest>
     {
-        private readonly IContatoRepository _contatoRepository;
-        private readonly ILogger<GetContatosConsumer> _logger;
+        private readonly IContatoService _contatoService;
         private readonly IMapper _mapper;
 
-        public GetContatosConsumer(IContatoRepository contatoRepository, ILogger<GetContatosConsumer> logger, IMapper mapper)
+        public GetContatosConsumer(IContatoService contatoService, IMapper mapper)
         {
-            _contatoRepository = contatoRepository;
-            _logger = logger;
+            _contatoService = contatoService;
             _mapper = mapper;
         }
 
@@ -27,8 +26,6 @@ namespace ContatoWorker.Get.Consumers
         {
             try
             {
-                _logger.LogInformation("Recebida requisição para obter contatos.");
-
                 List<Contato> contatos = new List<Contato>();
 
                 if (context.Message.ContatoId > 0)
@@ -41,13 +38,12 @@ namespace ContatoWorker.Get.Consumers
                 }
                 else
                 {
-                    contatos = (await _contatoRepository.ObterTodosAsync()).ToList();
+                    contatos = (await _contatoService.ObterTodosAsync()).ToList();
                     await EnviarMensagemContatoResponse(context, contatos);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao processar a requisição de obter contatos.");
                 await context.RespondAsync<ContatoErroResponse>(new ContatoErroResponse { MensagemErro = $"{ex.Message}" });
                 throw;
             }
@@ -55,7 +51,7 @@ namespace ContatoWorker.Get.Consumers
 
         private async Task BuscarContatoPorDDD(ConsumeContext<GetContatosRequest> context, List<Contato> contatos)
         {
-            contatos = (await _contatoRepository.FindAsync(c => c.Regiao.NumeroDDD == context.Message.NumeroDDD)).ToList();
+            contatos = (await _contatoService.FindAsync(c => c.Regiao.NumeroDDD == context.Message.NumeroDDD)).ToList();
             await RetornarMensagem(context, contatos);
         }
 
@@ -84,7 +80,7 @@ namespace ContatoWorker.Get.Consumers
 
         private async Task BuscarContatoPorId(ConsumeContext<GetContatosRequest> context, List<Contato> contatos)
         {
-            Contato contato = await _contatoRepository.ObterPorIdAsync(context.Message.ContatoId);
+            Contato contato = await _contatoService.ObterPorIdAsync(context.Message.ContatoId);
             if (contato != null)
                 contatos.Add(contato);
 

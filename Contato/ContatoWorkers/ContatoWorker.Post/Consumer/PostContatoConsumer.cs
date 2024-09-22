@@ -7,36 +7,35 @@ using Core.Entidades;
 using Core.Interfaces.Services;
 using MassTransit;
 
-namespace ContatoWorker.Post.Consumers
+namespace ContatoWorker.Post.Consumers;
+
+public class PostContatoConsumer : IConsumer<PostContatosRequest>
 {
-    public class PostContatoConsumer : IConsumer<PostContatosRequest>
+    private readonly IContatoService _contatoService;
+    private readonly IMapper _mapper;
+
+    public PostContatoConsumer(IContatoService contatoService, IMapper mapper)
     {
-        private readonly IContatoService _contatoService;
-        private readonly IMapper _mapper;
+        _contatoService = contatoService;
+        _mapper = mapper;
+    }
 
-        public PostContatoConsumer(IContatoService contatoService, IMapper mapper)
+    public async Task Consume(ConsumeContext<PostContatosRequest> context)
+    {
+        try
         {
-            _contatoService = contatoService;
-            _mapper = mapper;
-        }
+            var contatoDTO = context.Message.CreateContatoDTO;
+            Contato contato = _mapper.Map<Contato>(contatoDTO);
 
-        public async Task Consume(ConsumeContext<PostContatosRequest> context)
+            await _contatoService.AdicionarAsync(contato);
+
+            await context.RespondAsync<ContatoResponse>(new ContatoResponse { Contato = _mapper.Map<ReadContatoDTO>(contato) });
+        }
+        catch (Exception e)
         {
-            try
-            {
-                var contatoDTO = context.Message.CreateContatoDTO;
-                Contato contato = _mapper.Map<Contato>(contatoDTO);
-
-                await _contatoService.AdicionarAsync(contato);
-
-                await context.RespondAsync<ContatoResponse>(new ContatoResponse { Contato = _mapper.Map<ReadContatoDTO>(contato) });
-            }
-            catch (Exception e)
-            {
-                await context.RespondAsync<ContatoErroResponse>(new ContatoErroResponse { MensagemErro = $"{e.Message}" });
-                throw;
-            }
-            
+            await context.RespondAsync<ContatoErroResponse>(new ContatoErroResponse { MensagemErro = $"{e.Message}" });
+            throw;
         }
+        
     }
 }
