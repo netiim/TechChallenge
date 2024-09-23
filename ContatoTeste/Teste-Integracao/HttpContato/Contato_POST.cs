@@ -25,7 +25,6 @@ namespace Testes.Integracao.HttpContato
         [Trait("Categoria", "Integração")]
         public async Task POST_Contato_Com_Sucesso()
         {
-            //Arange
             using (var scope = _factory.Services.CreateScope())
             {
                 //Arange
@@ -34,7 +33,6 @@ namespace Testes.Integracao.HttpContato
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
                 using var client = await app.GetClientWithAccessTokenAsync();
 
                 var serviceProvider = app.Services;
@@ -67,10 +65,10 @@ namespace Testes.Integracao.HttpContato
         [Fact]
         [Trait("Categoria", "Integração")]
         public async Task POST_Contato_Com_ErroDDDInvalido()
-        {
-            //Arange
+        {            
             using (var scope = _factory.Services.CreateScope())
             {
+                //Arange
                 var scopedServices = scope.ServiceProvider;
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
