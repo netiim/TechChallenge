@@ -32,6 +32,9 @@ jobs:
     - name: Executando teste unitários
       run: dotnet test --no-build --filter "Categoria=Unidade"
 
+    - name: Executando teste integração
+      run: dotnet test --no-build --filter "Categoria=IntegracaoContato"
+
     - name: Login no docker hub
       uses: docker/login-action@v3
       with:
@@ -60,7 +63,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./Dockerfile
+        file: ./Dockerfile.Contato
         push: true        
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}

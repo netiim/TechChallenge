@@ -22,7 +22,7 @@ namespace LocalizacaoService.Testes.Teste.Integracao.RegiaoController
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoLocalizacao")]
         public async Task DELETE_Todas_Regioes_Sucesso()
         {
             //Assert

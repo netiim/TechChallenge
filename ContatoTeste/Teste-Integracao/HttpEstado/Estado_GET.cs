@@ -14,7 +14,7 @@ namespace Testes.Integracao.HttpEstado
             : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Buscar_Estados_Sem_Autorizacao()
         {
             //Arrange
@@ -28,7 +28,7 @@ namespace Testes.Integracao.HttpEstado
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Buscar_Estados_Com_Autorizacao()
         {
             //Arrange

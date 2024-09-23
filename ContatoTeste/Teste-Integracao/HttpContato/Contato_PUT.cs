@@ -2,19 +2,11 @@
 using ContatoWorker.Put.Consumers;
 using Core.Contratos.Contatos;
 using Core.Contratos.Request;
-using Core.Contratos.Response;
 using Core.DTOs.ContatoDTO;
-using Core.Entidades;
 using Core.Interfaces.Services;
 using MassTransit.Testing;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpContato
 {
@@ -30,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Put")]
         public async Task PUT_Contatos_Com_Sucesso()
         {
             //Arange
@@ -73,7 +65,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Put")]
         public async Task PUT_Contatos_Nao_Econtrado()
         {
             //Arange
@@ -116,7 +108,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Put")]
         public async Task PUT_Contatos_Com_Erro()
         {
             //Arange
