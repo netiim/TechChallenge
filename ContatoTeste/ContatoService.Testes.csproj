@@ -42,6 +42,10 @@
     <ProjectReference Include="..\Contato\ContatoCore\Contato.Core.csproj" />
     <ProjectReference Include="..\Contato\ContatoInfraestrutura\Contato.Infraestrutura.csproj" />
     <ProjectReference Include="..\Contato\ContatoService\ContatoAPI\ContatoService.API.csproj" />
+    <ProjectReference Include="..\Contato\ContatoWorkers\ContatoWorker.Delete\ContatoWorker.Delete.csproj" />
+    <ProjectReference Include="..\Contato\ContatoWorkers\ContatoWorker.Get\ContatoWorker.Get.csproj" />
+    <ProjectReference Include="..\Contato\ContatoWorkers\ContatoWorker.Post\ContatoWorker.Post.csproj" />
+    <ProjectReference Include="..\Contato\ContatoWorkers\ContatoWorker.Put\ContatoWorker.Put.csproj" />
   </ItemGroup>
 
   <ItemGroup>

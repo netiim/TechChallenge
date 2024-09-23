@@ -1,100 +1,170 @@
-﻿using Azure;
+﻿using AutoMapper;
+using ContatoWorker.Get.Consumers;
+using Core.Contratos.Contatos;
+using Core.Contratos.Request;
 using Core.DTOs.ContatoDTO;
-using Core.DTOs.RegiaoDTO;
 using Core.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Core.Interfaces.Services;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Testes.Integracao.HttpContato
 {
     public class Contato_GET : BaseIntegrationTest
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly ConfiguracaoBD config;
         public Contato_GET(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
-
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task GET_Obtem_Todos_Contatos_Com_Sucesso()
+            : base(integrationTechChallengerWebAppFactory)
         {
-            // Verifica se existe um contato
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = app.CreateClient();
-
-            //Action
-            var resultado = await client.GetFromJsonAsync<List<ReadContatoDTO>>("/Contato/BuscarTodosContatos");
-
-            //Assert
-            Assert.NotNull(resultado);
-        }      
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task GET_Obtem_Contatos_Por_DDD_Com_Sucesso()
-        {
-            // Verifica se existe um contato
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = app.CreateClient();
-
-            //Action
-            var resultado = await client.GetFromJsonAsync<List<ReadContatoDTO>>("/Contato/BuscarPorDDD?ddd=" + contato.Regiao.NumeroDDD);
-
-            //Assert
-            Assert.NotNull(resultado);
-
-        }     
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task GET_Obtem_Contatos_Por_Id_Com_Sucesso()
-        {
-            // Verifica se existe um contato
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = app.CreateClient();
-
-            //Action
-            var resultado = await client.GetFromJsonAsync<ReadContatoDTO>("/Contato/" + contato.Id);
-
-            //Assert
-            Assert.NotNull(resultado);
-            Assert.Equal(contato.Nome, resultado.Nome);
-            Assert.Equal(contato.Telefone, resultado.Telefone);
-            Assert.Equal(contato.Email, resultado.Email);
+            _factory = integrationTechChallengerWebAppFactory;
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
         }
 
-        private Contato BuscarPrimeiroContatoDoBanco()
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task GET_Contatos_Com_Sucesso()
         {
-            Contato contato = _context.Contato.OrderBy(e => e.Id).FirstOrDefault();
-            if (contato is null)
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
             {
-                Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
-                if (regiao is null)
-                {
-                    regiao = new Regiao()
-                    {
-                        NumeroDDD = 11,
-                        EstadoId = 20,
-                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
-                        IdLocalidadeAPI = Guid.NewGuid().ToString()
-                    };
-                    _context.Regiao.Add(regiao);
-                    _context.SaveChanges();
-                }
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                contato = new Contato()
-                {
-                    Nome = "Paulo",
-                    Email = "paulo@gmail.com",
-                    Telefone = "11995878310",
-                    RegiaoId = regiao.Id
-                };
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
 
-                _context.Contato.Add(contato);
-                _context.SaveChanges();
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new GetContatosConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new GetContatosRequest
+                {
+                    ContatoId = 0,
+                    NumeroDDD = 0
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatosResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.Contatos);
             }
+        }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task GET_Contato_PorId_Com_Sucesso()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
 
-            return contato;
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new GetContatosConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new GetContatosRequest
+                {
+                    ContatoId = 1,
+                    NumeroDDD = 0
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatosResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.Contatos);
+            }
+        }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task GET_Contato_PorDDD_Com_Sucesso()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new GetContatosConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new GetContatosRequest
+                {
+                    ContatoId = 0,
+                    NumeroDDD = 11
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatosResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.Contatos);
+            }
+        }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task GET_Contatos_Buscar_Nao_Encontrado()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new GetContatosConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new GetContatosRequest
+                {
+                    ContatoId = 15,
+                    NumeroDDD = 31
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoNotFound>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.Mensagem);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using Moq;
-using MassTransit;
 using MassTransit.Testing;
 using ContatoWorker.Post.Consumers;
 using Core.Contratos.Request;
@@ -9,7 +8,7 @@ using Core.DTOs.ContatoDTO;
 using Core.Entidades;
 using Core.Contratos.Contatos;
 
-namespace Testes.Unidade.PostContatoConsumers;
+namespace Testes.Workers.PostContatoConsumers;
 public class PostContatoConsumerTests
 {
     private readonly Mock<IContatoService> _contatoServiceMock;

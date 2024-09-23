@@ -6,10 +6,9 @@ using Core.Entidades;
 using Core.Interfaces.Services;
 using MassTransit.Testing;
 using Moq;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Testes.Unidade.GetContatoConsumers;
+namespace Testes.Workers.GetContatoConsumers;
 
 public class GetContatoConsumerTests
 {

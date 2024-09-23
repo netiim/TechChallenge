@@ -1,5 +1,14 @@
-﻿using Core.DTOs.ContatoDTO;
+﻿using AutoMapper;
+using ContatoWorker.Delete.Consumers;
+using Core.Contratos.Contatos;
+using Core.Contratos.Request;
+using Core.Contratos.Response;
+using Core.DTOs.ContatoDTO;
 using Core.Entidades;
+using Core.Interfaces.Services;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,81 +20,86 @@ namespace Testes.Integracao.HttpContato
 {
     public class Contato_DELETE : BaseIntegrationTest
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly ConfiguracaoBD config;
         public Contato_DELETE(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
+            : base(integrationTechChallengerWebAppFactory)
+        {
+            _factory = integrationTechChallengerWebAppFactory;
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
+        }
 
         [Fact]
         [Trait("Categoria", "Integração")]
-        public async Task DELETE_Contato_PorId_Com_Sucesso()
+        public async Task DELETE_Contatos_Com_Sucesso()
         {
             //Arange
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            //Action
-            var response = await client.DeleteAsync("/Contato/" + contato.Id);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-        }
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task DELETE_Contato_PorId_Contato_Inexistente()
-        {
-            //Arange
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            //Action
-            var response = await client.DeleteAsync("/Contato/" + -1);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        }
-
-        private Contato BuscarPrimeiroContatoDoBanco()
-        {
-            Contato contato = _context.Contato.OrderBy(e => e.Id).FirstOrDefault();
-            if (contato is null)
+            using (var scope = _factory.Services.CreateScope())
             {
-                Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
-                if (regiao is null)
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new DeleteContatoConsumer(contatoService));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new DeleteContatoRequest
                 {
-                    regiao = new Regiao()
-                    {
-                        NumeroDDD = 31,
-                        EstadoId = 15,
-                        Estado = new Estado() { Nome = "Minas Gerais", siglaEstado = "MG" },
-                        IdLocalidadeAPI = Guid.NewGuid().ToString()
-                    };
-                    _context.Regiao.Add(regiao);
-                    _context.SaveChanges();
+                    Id = 1
+                });
 
-                    regiao = new Regiao()
-                    {
-                        NumeroDDD = 11,
-                        EstadoId = 20,
-                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
-                        IdLocalidadeAPI = Guid.NewGuid().ToString()
-                    };
-                    _context.Regiao.Add(regiao);
-                    _context.SaveChanges();
-                }
+                // Assert
+                var response = harness.Published.Select<ContatoSucessResponse>().FirstOrDefault();
 
-                contato = new Contato()
-                {
-                    Nome = "Paulo",
-                    Email = "paulo@gmail.com",
-                    Telefone = "11995878310",
-                    RegiaoId = regiao.Id
-                };
-
-                _context.Contato.Add(contato);
-                _context.SaveChanges();
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message);
             }
-
-            return contato;
         }
+
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task DELETE_Contato_Nao_Encontrado()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new DeleteContatoConsumer(contatoService));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new DeleteContatoRequest
+                {
+                    Id = 0
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoNotFound>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message);
+            }
+        }
+
     }
 }

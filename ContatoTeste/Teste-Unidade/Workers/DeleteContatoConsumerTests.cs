@@ -1,32 +1,29 @@
 using Moq;
-using MassTransit;
 using MassTransit.Testing;
-using ContatoWorker.Put.Consumers;
 using Core.Contratos.Request;
 using Core.Interfaces.Services;
-using AutoMapper;
 using Core.DTOs.ContatoDTO;
 using Core.Entidades;
 using Core.Contratos.Contatos;
 using Core.Contratos.Response;
+using ContatoWorker.Delete.Consumers;
 
-namespace Testes.Unidade.PutContatoConsumers;
-public class PutContatoConsumerTests
+namespace Testes.Workers.DeleteContatoConsumers;
+public class DeleteContatoConsumerTests
 {
     private readonly Mock<IContatoService> _contatoServiceMock;
-    private readonly Mock<IMapper> _mapperMock;
 
-    public PutContatoConsumerTests()
+    public DeleteContatoConsumerTests()
     {
         _contatoServiceMock = new Mock<IContatoService>();
-        _mapperMock = new Mock<IMapper>();
     }
+
     [Fact]
     public async Task Deve_ResponderComSucessoAposAdicionarContato()
     {
         // Arrange
         var harness = new InMemoryTestHarness();
-        var consumerHarness = harness.Consumer(() => new PutContatoConsumer(_contatoServiceMock.Object, _mapperMock.Object));
+        var consumerHarness = harness.Consumer(() => new DeleteContatoConsumer(_contatoServiceMock.Object));
 
         await harness.Start();
 
@@ -39,25 +36,27 @@ public class PutContatoConsumerTests
                 Email = "neto@gmail.com",
                 Telefone = "31995878341"
             };
-            var contatoDTO = new PutContatoDTO
+            var contatoDTO = new ReadContatoDTO
             {
-                Id = 1,
                 Nome = "paulo neto",
                 Email = "neto@gmail.com",
                 Telefone = "31995878341"
             };
+
             _contatoServiceMock.Setup(s => s.ObterPorIdAsync(It.IsAny<int>())).ReturnsAsync(contato);
 
             // Configura o mock para simular a remoção com sucesso
-            _contatoServiceMock.Setup(s => s.AtualizarAsync(It.IsAny<Contato>())).Returns(Task.CompletedTask);
+            _contatoServiceMock.Setup(s => s.RemoverAsync(contato.Id)).Returns(Task.CompletedTask);
+
 
             // Act
-            await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+            await harness.InputQueueSendEndpoint.Send(new DeleteContatoRequest
             {
-                ContatoDTO = contatoDTO    // Simule um ID de contato
+                Id = 1
             });
+
             // Assert
-            var response = harness.Published.Select<ContatoResponse>().FirstOrDefault();
+            var response = harness.Published.Select<ContatoSucessResponse>().FirstOrDefault();
 
             Assert.NotNull(response);
             Assert.NotNull(response.Context.Message);
@@ -73,36 +72,21 @@ public class PutContatoConsumerTests
     {
         // Arrange
         var harness = new InMemoryTestHarness();
-        var consumerHarness = harness.Consumer(() => new PutContatoConsumer(_contatoServiceMock.Object, _mapperMock.Object));
+        var consumerHarness = harness.Consumer(() => new DeleteContatoConsumer(_contatoServiceMock.Object));
 
         await harness.Start();
 
         try
         {
-            var contato = new Contato
-            {
-                Id = 1,
-                Nome = "paulo neto",
-                Email = "neto@gmail.com",
-                Telefone = "31995878341"
-            };
-            var contatoDTO = new PutContatoDTO
-            {
-                Id = 1,
-                Nome = "paulo neto",
-                Email = "neto@gmail.com",
-                Telefone = "31995878341"
-            };
+            // Configura o mock para retornar null (contato não encontrado)
             _contatoServiceMock.Setup(s => s.ObterPorIdAsync(It.IsAny<int>())).ReturnsAsync((Contato)null);
 
-            // Configura o mock para simular a remoção com sucesso
-            _contatoServiceMock.Setup(s => s.AtualizarAsync(It.IsAny<Contato>())).Returns(Task.CompletedTask);
-
             // Act
-            await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+            await harness.InputQueueSendEndpoint.Send(new DeleteContatoRequest
             {
-                ContatoDTO = contatoDTO    // Simule um ID de contato
+                Id = 1  // Simule um ID de contato
             });
+
             // Assert
             var response = harness.Published.Select<ContatoNotFound>().FirstOrDefault();
             Assert.NotNull(response);  // Verifica se uma resposta foi publicada
@@ -119,7 +103,7 @@ public class PutContatoConsumerTests
     {
         // Arrange
         var harness = new InMemoryTestHarness();
-        var consumerHarness = harness.Consumer(() => new PutContatoConsumer(_contatoServiceMock.Object, _mapperMock.Object));
+        var consumerHarness = harness.Consumer(() => new DeleteContatoConsumer(_contatoServiceMock.Object));
 
         await harness.Start();
 
@@ -132,22 +116,16 @@ public class PutContatoConsumerTests
                 Email = "neto@gmail.com",
                 Telefone = "31995878341"
             };
-            var contatoDTO = new PutContatoDTO
-            {
-                Id = 1,
-                Nome = "paulo neto",
-                Email = "neto@gmail.com",
-                Telefone = "31995878341"
-            };
+
             _contatoServiceMock.Setup(s => s.ObterPorIdAsync(It.IsAny<int>())).ReturnsAsync(contato);
 
             // Configura o mock para simular a remoção com sucesso
-            _contatoServiceMock.Setup(s => s.AtualizarAsync(contato)).ThrowsAsync(new Exception("Erro ao remover contato"));
+            _contatoServiceMock.Setup(s => s.RemoverAsync(contato.Id)).ThrowsAsync(new Exception("Erro ao remover contato"));
 
             // Act
-            await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+            await harness.InputQueueSendEndpoint.Send(new DeleteContatoRequest
             {
-                ContatoDTO = contatoDTO    // Simule um ID de contato
+                Id = 1    // Simule um ID de contato
             });
 
             // Assert

@@ -1,72 +1,109 @@
-﻿using Core.DTOs.ContatoDTO;
-using Core.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using ContatoWorker.Post.Consumers;
+using Core.Contratos.Contatos;
+using Core.Contratos.Request;
+using Core.DTOs.ContatoDTO;
+using Core.Interfaces.Services;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Testes.Integracao.HttpContato
 {
     public class Contato_POST : BaseIntegrationTest
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly ConfiguracaoBD config;
         public Contato_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
-
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task POST_Preenche_Regioes_Sem_Autorizacao()
+            : base(integrationTechChallengerWebAppFactory)
         {
-            //Arrange
-            CreateContatoDTO contato = new CreateContatoDTO()
-            {
-                Nome = "Paulo",
-                Email = "paulo@gmail.com",
-                Telefone = "11995878310",
-            };
-            var client = app.CreateClient();
-
-            //Action
-            var resultado = await client.PostAsJsonAsync("/Contato", contato);
-
-            //Assert
-            Assert.Equal(HttpStatusCode.Unauthorized, resultado.StatusCode);
+            _factory = integrationTechChallengerWebAppFactory;
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
         }
 
         [Fact]
         [Trait("Categoria", "Integração")]
-        public async Task POST_Preenche_Regioes_Com_Autorizacao()
+        public async Task POST_Contato_Com_Sucesso()
         {
-            //Arrange
-
-            Regiao regiao = new Regiao()
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
             {
-                NumeroDDD = 11,
-                EstadoId = 20,
-                Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
-                IdLocalidadeAPI = Guid.NewGuid().ToString()
-            };
-            _context.Regiao.Add(regiao);
-            await _context.SaveChangesAsync();
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+                var contatoDTO = new CreateContatoDTO
+                {
+                    Nome = "paulo neto",
+                    Email = "neto@gmail.com",
+                    Telefone = "31995878341"
+                };
 
 
-            CreateContatoDTO contato = new CreateContatoDTO()
-            {
-                Nome = "Paulo",
-                Email = "paulo@gmail.com",
-                Telefone = $"{regiao.NumeroDDD}995878310",
-            };
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new PostContatoConsumer(contatoService, mapper));
 
-            var client = await app.GetClientWithAccessTokenAsync();
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new PostContatosRequest
+                {
+                    CreateContatoDTO = contatoDTO
+                });
 
-            //Action
-            var resultado = await client.PostAsJsonAsync("/Contato", contato);
+                // Assert
+                var response = harness.Published.Select<ContatoResponse>().FirstOrDefault();
 
-            //Assert
-            Assert.Equal(HttpStatusCode.Created, resultado.StatusCode);
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.Contato);
+            }
         }
+
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task POST_Contato_Com_ErroDDDInvalido()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var serviceProvider = app.Services;
+                var contatoDTO = new CreateContatoDTO
+                {
+                    Nome = "paulo neto",
+                    Email = "neto@gmail.com",
+                    Telefone = "20995878341"
+                };
+
+
+                var harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new PostContatoConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new PostContatosRequest
+                {
+                    CreateContatoDTO = contatoDTO
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoErroResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message.MensagemErro);
+            }
+        }
+        
     }
 
 }

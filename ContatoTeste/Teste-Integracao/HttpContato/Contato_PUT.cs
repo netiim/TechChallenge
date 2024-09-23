@@ -1,5 +1,14 @@
-﻿using Core.DTOs.ContatoDTO;
+﻿using AutoMapper;
+using ContatoWorker.Put.Consumers;
+using Core.Contratos.Contatos;
+using Core.Contratos.Request;
+using Core.Contratos.Response;
+using Core.DTOs.ContatoDTO;
 using Core.Entidades;
+using Core.Interfaces.Services;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,118 +20,143 @@ namespace Testes.Integracao.HttpContato
 {
     public class Contato_PUT : BaseIntegrationTest
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly ConfiguracaoBD config;
         public Contato_PUT(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
-
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task PUT_Contato_PorId_Com_Sucesso()
+            : base(integrationTechChallengerWebAppFactory)
         {
-            //Arange
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            CreateContatoDTO createContatoDTO = new CreateContatoDTO()
-            {
-                Nome = "José",
-                Telefone = "31995878310",
-                Email = "jose@gmail.com"
-            };
-
-            //Action
-            var response = await client.PutAsJsonAsync("/Contato/" + contato.Id, createContatoDTO);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            _factory = integrationTechChallengerWebAppFactory;
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
         }
 
         [Fact]
         [Trait("Categoria", "Integração")]
-        public async Task PUT_Contato_PorId_Informacoes_Invalidas()
+        public async Task PUT_Contatos_Com_Sucesso()
         {
             //Arange
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            CreateContatoDTO createContatoDTO = new CreateContatoDTO()
+            using (var scope = _factory.Services.CreateScope())
             {
-                Nome = "José",
-                Telefone = "10995878310",
-                Email = "jose@gmail.com"
-            };
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
 
-            //Action
-            var response = await client.PutAsJsonAsync("/Contato/" + contato.Id, createContatoDTO);
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
 
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task PUT_Contato_PorId_Contato_Inexistente()
-        {
-            //Arange
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            CreateContatoDTO createContatoDTO = new CreateContatoDTO()
-            {
-                Nome = "José",
-                Telefone = "10995878310",
-                Email = "jose@gmail.com"
-            };
-
-            //Action
-            var response = await client.PutAsJsonAsync("/Contato/" + -1, createContatoDTO);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        }
-        private Contato BuscarPrimeiroContatoDoBanco()
-        {
-            Contato contato = _context.Contato.OrderBy(e => e.Id).FirstOrDefault();
-            if (contato is null)
-            {
-                Regiao regiao = _context.Regiao.OrderBy(e => e.Id).FirstOrDefault();
-                if (regiao is null)
+                var contatoDTO = new PutContatoDTO
                 {
-                    regiao = new Regiao()
-                    {
-                        NumeroDDD = 31,
-                        EstadoId = 15,
-                        Estado = new Estado() { Nome = "Minas Gerais", siglaEstado = "MG" },
-                        IdLocalidadeAPI = Guid.NewGuid().ToString()
-                    };
-                    _context.Regiao.Add(regiao);
-                    _context.SaveChanges();
-
-                    regiao = new Regiao()
-                    {
-                        NumeroDDD = 11,
-                        EstadoId = 20,
-                        Estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" },
-                        IdLocalidadeAPI = Guid.NewGuid().ToString()
-                    };
-                    _context.Regiao.Add(regiao);
-                    _context.SaveChanges();
-                }
-
-                contato = new Contato()
-                {
-                    Nome = "Paulo",
-                    Email = "paulo@gmail.com",
-                    Telefone = "11995878310",
-                    RegiaoId = regiao.Id
+                    Id = 1,
+                    Nome = "paulo neto",
+                    Email = "neto@gmail.com",
+                    Telefone = "31995878341"
                 };
 
-                _context.Contato.Add(contato);
-                _context.SaveChanges();
-            }
+                var serviceProvider = app.Services;
 
-            return contato;
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new PutContatoConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+                {
+                    ContatoDTO = contatoDTO
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message);
+            }
+        }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task PUT_Contatos_Nao_Econtrado()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var contatoDTO = new PutContatoDTO
+                {
+                    Id = 3,
+                    Nome = "paulo neto",
+                    Email = "neto@gmail.com",
+                    Telefone = "31995878341"
+                };
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new PutContatoConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+                {
+                    ContatoDTO = contatoDTO
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoNotFound>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message);
+            }
+        }
+        [Fact]
+        [Trait("Categoria", "Integração")]
+        public async Task PUT_Contatos_Com_Erro()
+        {
+            //Arange
+            using (var scope = _factory.Services.CreateScope())
+            {
+                //Arange
+                config.AdicionarContatoAoBancodDados();
+                var scopedServices = scope.ServiceProvider;
+                var contatoService = scopedServices.GetRequiredService<IContatoService>();
+                var mapper = scopedServices.GetRequiredService<IMapper>();
+
+                // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
+                using var client = await app.GetClientWithAccessTokenAsync();
+
+                var contatoDTO = new PutContatoDTO
+                {
+                    Id = 1,
+                    Nome = "paulo neto",
+                    Email = "neto@gmail.com",
+                    Telefone = "20995878341"
+                };
+
+                var serviceProvider = app.Services;
+
+                InMemoryTestHarness harness = new InMemoryTestHarness();
+                var consumerHarness = harness.Consumer(() => new PutContatoConsumer(contatoService, mapper));
+
+                await harness.Start();
+                //Action
+                await harness.InputQueueSendEndpoint.Send(new PutContatoRequest
+                {
+                    ContatoDTO = contatoDTO
+                });
+
+                // Assert
+                var response = harness.Published.Select<ContatoErroResponse>().FirstOrDefault();
+
+                Assert.NotNull(response);
+                Assert.NotNull(response.Context.Message);
+            }
         }
     }
 }
