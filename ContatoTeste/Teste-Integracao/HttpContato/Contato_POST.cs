@@ -22,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Post")]
         public async Task POST_Contato_Com_Sucesso()
         {
             using (var scope = _factory.Services.CreateScope())
@@ -63,7 +63,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Post")]
         public async Task POST_Contato_Com_ErroDDDInvalido()
         {            
             using (var scope = _factory.Services.CreateScope())

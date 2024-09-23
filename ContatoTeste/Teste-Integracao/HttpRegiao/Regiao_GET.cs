@@ -20,7 +20,7 @@ namespace Testes.Integracao.HttpRegiao
             : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
         {
             //Arrange

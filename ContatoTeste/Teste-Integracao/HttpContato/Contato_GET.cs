@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using ContatoWorker.Get.Consumers;
 using Core.Contratos.Contatos;
-using Core.Contratos.Request;
 using Core.DTOs.ContatoDTO;
-using Core.Entidades;
 using Core.Interfaces.Services;
 using MassTransit.Testing;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http.Json;
 
 namespace Testes.Integracao.HttpContato
 {
@@ -24,7 +21,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Get")]
         public async Task GET_Contatos_Com_Sucesso()
         {
             //Arange
@@ -60,7 +57,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Get")]
         public async Task GET_Contato_PorId_Com_Sucesso()
         {
             //Arange
@@ -96,7 +93,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Get")]
         public async Task GET_Contato_PorDDD_Com_Sucesso()
         {
             //Arange
@@ -132,7 +129,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato-Get")]
         public async Task GET_Contatos_Buscar_Nao_Encontrado()
         {
             //Arange

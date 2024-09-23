@@ -21,7 +21,7 @@ public class Regiao_POST : BaseIntegrationTest
     }
 
     [Fact]
-    [Trait("Categoria", "Integração")]
+    [Trait("Categoria", "IntegracaoLocalizacao")]
     public async Task POST_Preenhcer_Todas_Regioes_Sucesso()
     {
         //Assert

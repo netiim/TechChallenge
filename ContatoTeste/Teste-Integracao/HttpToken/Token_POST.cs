@@ -1,12 +1,6 @@
 ﻿using Core.DTOs.UsuarioDTO;
 using Core.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.Entidades.Usuario;
 
 namespace Testes.Integracao.HttpToken
@@ -17,7 +11,7 @@ namespace Testes.Integracao.HttpToken
             : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task POST_Gera_Token_Usuario_Valido()
         {
             //Arrange
@@ -46,7 +40,7 @@ namespace Testes.Integracao.HttpToken
             Assert.Equal(HttpStatusCode.OK, resultado.StatusCode);
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task POST_Gera_Token_Usuario_InValido()
         {
             //Arrange
@@ -75,7 +69,7 @@ namespace Testes.Integracao.HttpToken
             Assert.Equal(HttpStatusCode.Unauthorized, resultado.StatusCode);
         }
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task POST_Criar_Usuario_Valido()
         {
             //Arrange
