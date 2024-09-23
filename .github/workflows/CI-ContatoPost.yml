@@ -1,13 +1,13 @@
-name: CI
+name: CI-ContatoPost
 
 on:
   push:
-    branches: [ "developer" ]
+    branches: [ "dev-worker-post" ]
   pull_request:
-    branches: [ "developer" ]
+    branches: [ "dev-worker-post" ]
 env:
   REGISTRY: netiim
-  IMAGE_NAME: api-tech-challenge
+  IMAGE_NAME: contato-post
   
 jobs:
   CI:
@@ -60,7 +60,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./Dockerfile.Contato
+        file: ./Dockerfile.Contato.Post
         push: true        
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}

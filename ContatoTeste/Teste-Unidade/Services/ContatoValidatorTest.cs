@@ -26,7 +26,7 @@ namespace Testes.Services.Contatos.Validators
         }
 
         [Theory]
-        [Trait("Categoria", "Unidade")]
+        [Trait("Categoria", "Unidade-ContatoService")]
         [InlineData("11999999999")] 
         [InlineData("21999999999")] 
         [InlineData("31999999999")] 
@@ -43,7 +43,7 @@ namespace Testes.Services.Contatos.Validators
         }
 
         [Theory]
-        [Trait("Categoria", "Unidade")]
+        [Trait("Categoria", "Unidade-ContatoService")]
         [InlineData("1199999999")] 
         [InlineData("119999999999")] 
         public async Task ValidarDDD_ComprimentoIncorreto_DeveFalhar(string telefone)
@@ -60,7 +60,7 @@ namespace Testes.Services.Contatos.Validators
         }
 
         [Theory]
-        [Trait("Categoria", "Unidade")]
+        [Trait("Categoria", "Unidade-ContatoService")]
         [InlineData("20999999999")] 
         [InlineData("50999999999")] 
         public async Task ValidarDDD_Invalido_DeveFalhar(string telefone)

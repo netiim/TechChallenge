@@ -1,50 +1,17 @@
-﻿using Core.DTOs.ContatoDTO;
-using Core.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace Testes.Integracao.HttpContato
 {
-    public class Contato_DELETE : BaseIntegrationTest
+    public class ConfiguracaoBD:BaseIntegrationTest
     {
-        public Contato_DELETE(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
+        private IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory;
 
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task DELETE_Contato_PorId_Com_Sucesso()
+        public ConfiguracaoBD(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory):base(integrationTechChallengerWebAppFactory)
         {
-            //Arange
-            Contato contato = BuscarPrimeiroContatoDoBanco();
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            //Action
-            var response = await client.DeleteAsync("/Contato/" + contato.Id);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            this.integrationTechChallengerWebAppFactory = integrationTechChallengerWebAppFactory;
         }
-        [Fact]
-        [Trait("Categoria", "Integração")]
-        public async Task DELETE_Contato_PorId_Contato_Inexistente()
-        {
-            //Arange
-            using var client = await app.GetClientWithAccessTokenAsync();
-
-            //Action
-            var response = await client.DeleteAsync("/Contato/" + -1);
-
-            //Assert
-            Assert.NotNull(response);
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        }
-
-        private Contato BuscarPrimeiroContatoDoBanco()
+        public Contato AdicionarContatoAoBancodDados()
         {
             Contato contato = _context.Contato.OrderBy(e => e.Id).FirstOrDefault();
             if (contato is null)

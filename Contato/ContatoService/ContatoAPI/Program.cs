@@ -7,11 +7,7 @@ using Prometheus;
 using MassTransit;
 using Aplicacao.Consumers;
 using Core.DTOs.ContatoDTO;
-using ContatoWorker.Get.Consumers;
-using ContatoWorker.Post.Consumers;
 using Core.Contratos.Request;
-using ContatoWorker.Delete.Consumers;
-using ContatoWorker.Put.Consumers;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

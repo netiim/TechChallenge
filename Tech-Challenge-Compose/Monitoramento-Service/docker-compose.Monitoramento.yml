@@ -28,6 +28,7 @@ services:
     container_name: rabbit-mq
     ports:
       - "5672:5672"  # Porta de comunicação
+      - "15692:15692" # Expondo a porta do Prometheus
       - "15672:15672" # Porta do console de gerenciamento (opcional)
     environment:
       RABBITMQ_DEFAULT_USER: guest
