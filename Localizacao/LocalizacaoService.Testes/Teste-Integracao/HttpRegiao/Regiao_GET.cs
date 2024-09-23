@@ -15,7 +15,7 @@ namespace LocalizacaoService.Testes.Teste.Integracao.RegiaoController
             : base(integrationTechChallengerWebAppFactory) { }
 
         [Fact]
-        [Trait("Categoria", "Integração")]
+        [Trait("Categoria", "IntegracaoLocalizacao")]
         public async Task GET_Obtem_Todas_Regioes_Sucesso()
         {
             var client = app.CreateClient();
