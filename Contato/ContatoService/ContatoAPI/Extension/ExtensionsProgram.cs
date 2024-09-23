@@ -13,6 +13,12 @@ using System.Reflection;
 using System.Text;
 using TemplateWebApiNet8.Logging;
 using TemplateWebApiNet8.Services;
+using MassTransit;
+using Aplicacao.Consumers;
+using Core.DTOs.ContatoDTO;
+using Core.Contratos.Request;
+using Infraestrutura.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContatoAPI.Extension;
 
@@ -71,7 +77,47 @@ public static class ExtensionsProgram
 
         return services;
     }
+    public static void AddMassTransitWithRabbitMq(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<RegiaoConsumer>();
+            x.AddConsumer<EstadoConsumer>();
 
+            x.AddRequestClient<GetContatosRequest>(new Uri("exchange:contato-get"));
+            x.AddRequestClient<PostContatosRequest>(new Uri("exchange:contato-post"));
+            x.AddRequestClient<DeleteContatoRequest>(new Uri("exchange:contato-delete"));
+            x.AddRequestClient<PutContatoRequest>(new Uri("exchange:contato-put"));
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["RabbitMq:Host"], h =>
+                {
+                    h.Username(configuration["RabbitMq:Username"]);
+                    h.Password(configuration["RabbitMq:Password"]);
+                });
+
+                cfg.UsePrometheusMetrics(serviceName: "contato_service");
+
+                cfg.ReceiveEndpoint("regiao-queue", ep =>
+                {
+                    ep.ConfigureConsumer<RegiaoConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("estado-queue", ep =>
+                {
+                    ep.ConfigureConsumer<EstadoConsumer>(context);
+                });
+            });
+        });
+    }
+    public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(connectionString),
+            ServiceLifetime.Scoped);
+    }
     public static IServiceCollection AddAutoMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(MappingProfile));
