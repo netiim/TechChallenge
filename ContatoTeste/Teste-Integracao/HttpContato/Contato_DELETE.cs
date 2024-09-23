@@ -22,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Delete")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task DELETE_Contatos_Com_Sucesso()
         {
             //Arange
@@ -58,7 +58,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Delete")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task DELETE_Contato_Nao_Encontrado()
         {
             //Arange
