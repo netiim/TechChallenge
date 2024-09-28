@@ -18,7 +18,7 @@ Além das funcionalidades principais, este projeto oferece uma funcionalidade ad
 
 ## Tecnologias Utilizadas
 
-- **.NET Core 3.1**: Plataforma de desenvolvimento rápida, moderna e multiplataforma para construção de aplicativos.
+- **.NET 8**: Plataforma de desenvolvimento rápida, moderna e multiplataforma para construção de aplicativos.
 - **Entity Framework Core**: ORM (Object-Relational Mapping) para mapear objetos .NET para um banco de dados relacional.
 - **Fluent Validation**: Biblioteca para validação de modelos .NET de forma elegante e extensível.
 - **JWT (JSON Web Tokens)**: Mecanismo de autenticação JSON compacto e seguro para autenticação de APIs.
