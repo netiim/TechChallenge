@@ -22,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Com_Sucesso()
         {
             //Arange
@@ -65,7 +65,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Nao_Econtrado()
         {
             //Arange
@@ -108,7 +108,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Com_Erro()
         {
             //Arange
