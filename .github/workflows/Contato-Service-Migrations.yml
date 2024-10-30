@@ -10,7 +10,7 @@ on:
     branches: [ "master" ]
 env:
   REGISTRY: netiim
-  IMAGE_NAME: api-tech-challenge
+  IMAGE_NAME: contato-service-migrations
   
 jobs:
   CI:
