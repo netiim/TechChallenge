@@ -7,25 +7,23 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copie os arquivos do projeto
+# Copia os arquivos do projeto
 COPY ["Contato/ContatoService/ContatoAPI/ContatoService.API.csproj", "Contato/ContatoService/ContatoAPI/"]
 COPY ["Contato/ContatoAplicacao/Contato.Aplicacao.csproj", "Contato/ContatoAplicacao/"]
 COPY ["Contato/ContatoInfraestrutura/Contato.Infraestrutura.csproj", "Contato/ContatoInfraestrutura/"]
 COPY ["Contato/ContatoCore/Contato.Core.csproj", "Contato/ContatoCore/"]
-
-# Restore
 RUN dotnet restore "./Contato/ContatoService/ContatoAPI/ContatoService.API.csproj"
 
-# Instale o dotnet-ef CLI globalmente
-RUN dotnet tool install --global dotnet-ef
+# Instala o dotnet-ef CLI globalmente
+RUN dotnet tool install -g dotnet-ef
 
-# Adicione o caminho global do dotnet tools ao PATH
+# Adiciona o caminho global do dotnet tools ao PATH
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-# Copie o restante dos arquivos
+# Copia o restante dos arquivos
 COPY . .
 
-# Build
+# Compilação
 WORKDIR "/src/Contato/ContatoService/ContatoAPI"
 RUN dotnet build "./ContatoService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
@@ -36,4 +34,6 @@ RUN dotnet publish "./ContatoService.API.csproj" -c $BUILD_CONFIGURATION -o /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ContatoService.API.dll", "ef", "database", "update"]
+
+# Comando para rodar a migração
+ENTRYPOINT ["dotnet", "ef", "database", "update"]
