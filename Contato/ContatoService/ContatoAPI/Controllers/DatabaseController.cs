@@ -1,5 +1,7 @@
 ﻿using Contatos.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Core.Entidades.Usuario;
 
 namespace ContatosService.API.Controllers;
 
@@ -14,7 +16,10 @@ public class DatabaseController : ControllerBase
         _databaseService = databaseService;
     }
 
+    [ProducesResponseType(200)]
+    [ProducesResponseType(500)]
     [HttpPost("ExecutarMigracaoBanco")]
+    [Authorize(Roles = Roles.Administrador)]
     public IActionResult Migrate()
     {
         try

@@ -25,7 +25,7 @@ namespace TemplateWebApiNet8.Controllers
         }
 
         /// <summary>
-        /// Criar um token para um usuário com base no seu Username e senha
+        /// Criar um token para um usuário caso exista um usuário e senha com esses valores no banco
         /// </summary>
         /// <param name="usuario">Recebe um objeto do tipo UsuarioTemplate</param>
         /// <remarks>
@@ -73,6 +73,7 @@ namespace TemplateWebApiNet8.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [HttpPost("criar-usuario")]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Criausuario([FromBody] CreateUsuarioDTO usuarioDTO)
         {
             try
