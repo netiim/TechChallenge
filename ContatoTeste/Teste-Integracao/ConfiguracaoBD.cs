@@ -60,7 +60,7 @@ namespace Testes.Integracao.HttpContato
         {
             Usuario newUser = new()
             {
-                Username = "neto",
+                Username = "netoo",
                 Password = "123456",
                 Perfil = PerfilUsuario.Administrador
             };
