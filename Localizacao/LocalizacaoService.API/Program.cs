@@ -40,7 +40,9 @@ builder.Services.AddMassTransit(x =>
             h.Username(builder.Configuration["RabbitMq:Username"]);
             h.Password(builder.Configuration["RabbitMq:Password"]);
         });
+
         cfg.UsePrometheusMetrics(serviceName: "localizacao_service");
+
         cfg.Message<RegiaoConsumerDTO>(configTopology => { });
         cfg.Message<ReadEstadoDTO>(configTopology => { });
     });
@@ -48,11 +50,11 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Localização API");
+});
 
 app.UseHttpsRedirection();
 

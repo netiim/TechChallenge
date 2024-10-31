@@ -78,26 +78,7 @@ public class RegiaoService : IRegiaoService
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                RegiaoAPIDTO? brasilApiDTO = JsonSerializer.Deserialize<RegiaoAPIDTO>(content);
-
-                Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
-                await _regiaorepository.CreateAsync(regiao);
-                _logger.LogInformation($"Publicando mensagem da região: {regiao.Estado}");
-
-                ReadEstadoDTO estado = new ReadEstadoDTO()
-                {
-                    Nome = regiao.Estado.Nome,
-                    siglaEstado = regiao.Estado.siglaEstado
-                };
-
-                RegiaoConsumerDTO reg = new RegiaoConsumerDTO()
-                {
-                    Id = regiao.Id,
-                    NumeroDDD = regiao.NumeroDDD,
-                    DataCriacao = regiao.DataCriacao,
-                    siglaEstado = regiao.Estado.siglaEstado
-                };
+                RegiaoConsumerDTO reg = await MontarRegiaoConsumerDTO(ddd, response);
                 await _publishEndpoint.Publish(reg);
             }
             else
@@ -106,6 +87,32 @@ public class RegiaoService : IRegiaoService
             }
         }
     }
+
+    private async Task<RegiaoConsumerDTO> MontarRegiaoConsumerDTO(int ddd, HttpResponseMessage response)
+    {
+        var content = await response.Content.ReadAsStringAsync();
+        RegiaoAPIDTO? brasilApiDTO = JsonSerializer.Deserialize<RegiaoAPIDTO>(content);
+
+        Regiao regiao = MontaRegiaoComRetornoAPI(ddd, brasilApiDTO);
+        await _regiaorepository.CreateAsync(regiao);
+        _logger.LogInformation($"Publicando mensagem da região: {regiao.Estado}");
+
+        ReadEstadoDTO estado = new ReadEstadoDTO()
+        {
+            Nome = regiao.Estado.Nome,
+            siglaEstado = regiao.Estado.siglaEstado
+        };
+
+        RegiaoConsumerDTO reg = new RegiaoConsumerDTO()
+        {
+            Id = regiao.Id,
+            NumeroDDD = regiao.NumeroDDD,
+            DataCriacao = regiao.DataCriacao,
+            siglaEstado = regiao.Estado.siglaEstado
+        };
+        return reg;
+    }
+
     private Regiao MontaRegiaoComRetornoAPI(int ddd, RegiaoAPIDTO? regiaoApiDTO)
     {
         try

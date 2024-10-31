@@ -20,7 +20,7 @@ public class PostContatoConsumer : IConsumer<PostContatosRequest>
         _mapper = mapper;
     }
 
-    public async Task Consume(ConsumeContext<PostContatosRequest> context)
+    public async Task Consume(ConsumeContext<PostContatosRequest> context) 
     {
         try
         {
