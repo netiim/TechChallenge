@@ -33,7 +33,7 @@ namespace Testes.Integracao.HttpContato
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
                 var contatoDTO = new CreateContatoDTO
@@ -73,7 +73,7 @@ namespace Testes.Integracao.HttpContato
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
                 var contatoDTO = new CreateContatoDTO

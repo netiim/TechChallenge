@@ -35,7 +35,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {
@@ -78,7 +78,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {
@@ -121,7 +121,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {

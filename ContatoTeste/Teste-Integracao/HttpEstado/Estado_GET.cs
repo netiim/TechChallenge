@@ -1,17 +1,26 @@
 ﻿using Core.DTOs.ContatoDTO;
 using Core.DTOs.EstadoDTO;
 using Core.Entidades;
+using Docker.DotNet.Models;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using Testes.Integracao.HttpContato;
 
 namespace Testes.Integracao.HttpEstado
 {
     public class Estado_GET : BaseIntegrationTest
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly ConfiguracaoBD config;
         public Estado_GET(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
+            : base(integrationTechChallengerWebAppFactory)
+        {
+            _factory = integrationTechChallengerWebAppFactory;
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
+        }
 
         [Fact]
         [Trait("Categoria", "IntegracaoContato")]
@@ -32,7 +41,7 @@ namespace Testes.Integracao.HttpEstado
         public async Task GET_Buscar_Estados_Com_Autorizacao()
         {
             //Arrange
-            using var client = await app.GetClientWithAccessTokenAsync();
+            using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
             Estado estado = new Estado() { Nome = "São Paulo", siglaEstado = "SP" };
             await _context.Estado.AddAsync(estado);
             await _context.SaveChangesAsync();

@@ -1,4 +1,5 @@
 ﻿using Core.DTOs.UsuarioDTO;
+using Core.Entidades;
 using DotNet.Testcontainers.Builders;
 using Infraestrutura.Data;
 using Microsoft.AspNetCore.Hosting;
@@ -48,18 +49,17 @@ namespace Testes
 
             base.ConfigureWebHost(builder);
         }
-        public async Task<HttpClient> GetClientWithAccessTokenAsync()
+        public async Task<HttpClient> GetClientWithAccessTokenAsync(Usuario usuario)
         {
             var client = CreateClient();
 
-            CreateUsuarioDTO newUser = new()
+            UsuarioTokenDTO usuarioTokenDTO = new()
             {
-                Username = "neto",
-                Password = "123456",
-                Perfil = PerfilUsuario.Administrador  
+                Username = usuario.Username,
+                Password = usuario.Password
             };
 
-            var response = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
+            var response = await client.PostAsJsonAsync("/api/Token/CriarToken", usuario);
 
             response.EnsureSuccessStatusCode();
 

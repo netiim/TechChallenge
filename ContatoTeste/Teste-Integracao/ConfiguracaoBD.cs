@@ -1,13 +1,15 @@
-﻿using Core.Entidades;
+﻿using Core.DTOs.UsuarioDTO;
+using Core.Entidades;
 using Microsoft.EntityFrameworkCore;
+using static Core.Entidades.Usuario;
 
 namespace Testes.Integracao.HttpContato
 {
-    public class ConfiguracaoBD:BaseIntegrationTest
+    public class ConfiguracaoBD : BaseIntegrationTest
     {
         private IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory;
 
-        public ConfiguracaoBD(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory):base(integrationTechChallengerWebAppFactory)
+        public ConfiguracaoBD(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory) : base(integrationTechChallengerWebAppFactory)
         {
             this.integrationTechChallengerWebAppFactory = integrationTechChallengerWebAppFactory;
         }
@@ -53,6 +55,20 @@ namespace Testes.Integracao.HttpContato
             }
 
             return contato;
+        }
+        public Usuario AdicionarUsuarioAoBancodDados()
+        {
+            Usuario newUser = new()
+            {
+                Username = "neto",
+                Password = "123456",
+                Perfil = PerfilUsuario.Administrador
+            };
+
+            _context.Usuario.Add(newUser);
+            _context.SaveChanges();
+
+            return newUser;
         }
     }
 }
