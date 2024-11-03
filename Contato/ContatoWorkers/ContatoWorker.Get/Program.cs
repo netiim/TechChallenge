@@ -3,31 +3,37 @@ using ContatoWorker.Get.Consumers;
 using FluentValidation.AspNetCore;
 using Infraestrutura.Data;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Prometheus;
+using Microsoft.AspNetCore.Hosting;
 
-var builder = Host.CreateApplicationBuilder(args);
-
-builder.Services.AddInjecoesDependencias();
-builder.Services.AddAutoMapper();
-builder.Services.AddFluentValidation();
-builder.Services.AddDatabaseConfiguration(builder.Configuration);
-builder.Services.AddMassTransitWithRabbitMq(builder.Configuration);
-
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(8080);
-});
-
-// Configuração do middleware para expor métricas
-builder.WebHost.Configure(app =>
-{
-    app.UseRouting();
-    app.UseHttpMetrics(); // Middleware para capturar métricas HTTP
-    app.UseEndpoints(endpoints =>
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
     {
-        endpoints.MapMetrics(); // Endpoint /metrics para Prometheus
+        services.AddInjecoesDependencias();
+        services.AddAutoMapper();
+        services.AddFluentValidation();
+        services.AddDatabaseConfiguration(hostContext.Configuration);
+        services.AddMassTransitWithRabbitMq(hostContext.Configuration);
+    })
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.Configure(app =>
+        {
+            app.UseRouting();
+            app.UseHttpMetrics();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapMetrics(); 
+            });
+        });
+        webBuilder.UseKestrel(options =>
+        {
+            options.ListenAnyIP(8080); 
+        });
     });
-});
 
 var host = builder.Build();
 host.Run();
