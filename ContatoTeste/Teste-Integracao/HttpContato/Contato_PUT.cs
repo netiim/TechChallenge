@@ -22,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Com_Sucesso()
         {
             //Arange
@@ -35,7 +35,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {
@@ -65,7 +65,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Nao_Econtrado()
         {
             //Arange
@@ -78,7 +78,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {
@@ -108,7 +108,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Put")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task PUT_Contatos_Com_Erro()
         {
             //Arange
@@ -121,7 +121,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var contatoDTO = new PutContatoDTO
                 {

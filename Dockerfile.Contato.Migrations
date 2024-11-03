@@ -1,0 +1,25 @@
+# Imagem com SDK do .NET
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS migration
+
+WORKDIR /app
+
+# Copia os arquivos do projeto e restaura dependências
+COPY ["Contato/ContatoService/ContatoAPI/ContatoService.API.csproj", "Contato/ContatoService/ContatoAPI/"]
+COPY ["Contato/ContatoAplicacao/Contato.Aplicacao.csproj", "Contato/ContatoAplicacao/"]
+COPY ["Contato/ContatoInfraestrutura/Contato.Infraestrutura.csproj", "Contato/ContatoInfraestrutura/"]
+COPY ["Contato/ContatoCore/Contato.Core.csproj", "Contato/ContatoCore/"]
+RUN dotnet restore "./Contato/ContatoService/ContatoAPI/ContatoService.API.csproj"
+
+# Instala o dotnet-ef globalmente
+RUN dotnet tool install -g dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Copia o código fonte
+COPY . .
+
+# Build da aplicação
+WORKDIR "/app/Contato/ContatoService/ContatoAPI"
+RUN dotnet build -c Release
+
+# EntryPoint para executar as migrações
+ENTRYPOINT ["dotnet", "ef", "database", "update"] 

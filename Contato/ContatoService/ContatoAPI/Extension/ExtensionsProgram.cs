@@ -19,6 +19,8 @@ using Core.DTOs.ContatoDTO;
 using Core.Contratos.Request;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
+using Contatos.Aplicacao.Services;
+using Contatos.Core.Interfaces.Services;
 
 namespace ContatoAPI.Extension;
 
@@ -34,6 +36,7 @@ public static class ExtensionsProgram
         services.AddScoped<IContatoRepository, ContatoRepository>();
         services.AddScoped<IContatoService, ContatoService>();
         services.AddScoped<ITokenRepository, TokenRepository>();
+        services.AddScoped<IDatabaseService, DatabaseService>();
 
         return services;
     }
