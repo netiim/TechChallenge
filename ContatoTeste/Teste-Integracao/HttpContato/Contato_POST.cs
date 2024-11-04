@@ -22,7 +22,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Post")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task POST_Contato_Com_Sucesso()
         {
             using (var scope = _factory.Services.CreateScope())
@@ -33,7 +33,7 @@ namespace Testes.Integracao.HttpContato
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
                 var contatoDTO = new CreateContatoDTO
@@ -63,7 +63,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Post")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task POST_Contato_Com_ErroDDDInvalido()
         {            
             using (var scope = _factory.Services.CreateScope())
@@ -73,7 +73,7 @@ namespace Testes.Integracao.HttpContato
                 var contatoService = scopedServices.GetRequiredService<IContatoService>();
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
                 var contatoDTO = new CreateContatoDTO

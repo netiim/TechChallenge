@@ -1,14 +1,21 @@
 ﻿using Core.DTOs.UsuarioDTO;
 using Core.Entidades;
+using Docker.DotNet.Models;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
+using Testes.Integracao.HttpContato;
 using static Core.Entidades.Usuario;
 
 namespace Testes.Integracao.HttpToken
 {
     public class Token_POST : BaseIntegrationTest
     {
+        private readonly ConfiguracaoBD config;
         public Token_POST(IntegrationTechChallengerWebAppFactory integrationTechChallengerWebAppFactory)
-            : base(integrationTechChallengerWebAppFactory) { }
+            : base(integrationTechChallengerWebAppFactory)
+        {
+            config = new ConfiguracaoBD(integrationTechChallengerWebAppFactory);
+        }
 
         [Fact]
         [Trait("Categoria", "IntegracaoContato")]
@@ -73,14 +80,15 @@ namespace Testes.Integracao.HttpToken
         public async Task POST_Criar_Usuario_Valido()
         {
             //Arrange
+
+            using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
+
             CreateUsuarioDTO newUser = new()
             {
                 Username = "neto",
                 Password = "123456",
                 Perfil = PerfilUsuario.Administrador
             };
-            using var client = app.CreateClient();
-
             //Action
             var resultado = await client.PostAsJsonAsync("/api/Token/criar-usuario", newUser);
 

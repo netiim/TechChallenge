@@ -21,7 +21,7 @@ namespace Testes.Integracao.HttpContato
         }
 
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Get")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Contatos_Com_Sucesso()
         {
             //Arange
@@ -34,7 +34,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
 
@@ -57,7 +57,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Get")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Contato_PorId_Com_Sucesso()
         {
             //Arange
@@ -70,7 +70,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
 
@@ -93,7 +93,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Get")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Contato_PorDDD_Com_Sucesso()
         {
             //Arange
@@ -106,7 +106,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
 
@@ -129,7 +129,7 @@ namespace Testes.Integracao.HttpContato
             }
         }
         [Fact]
-        [Trait("Categoria", "IntegracaoContato-Get")]
+        [Trait("Categoria", "IntegracaoContato")]
         public async Task GET_Contatos_Buscar_Nao_Encontrado()
         {
             //Arange
@@ -141,7 +141,7 @@ namespace Testes.Integracao.HttpContato
                 var mapper = scopedServices.GetRequiredService<IMapper>();
 
                 // Simule a chamada HTTP POST e verifique o funcionamento do seu serviço
-                using var client = await app.GetClientWithAccessTokenAsync();
+                using var client = await app.GetClientWithAccessTokenAsync(config.AdicionarUsuarioAoBancodDados());
 
                 var serviceProvider = app.Services;
 

@@ -14,7 +14,6 @@ namespace ContatoAPI.Controllers
     {
         private readonly IRegiaoService _service;
         private readonly ILogger<RegiaoController> _logger;
-        //private readonly IMapper _mapper;
         /// <summary>
         /// Construtor do RegiaoController.
         /// </summary>
