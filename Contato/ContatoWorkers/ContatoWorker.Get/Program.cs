@@ -1,10 +1,5 @@
 using ContatoAPI.Extension;
-using ContatoWorker.Get.Consumers;
 using FluentValidation.AspNetCore;
-using Infraestrutura.Data;
-using MassTransit;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Prometheus;
 using Microsoft.AspNetCore.Hosting;
@@ -26,12 +21,12 @@ var builder = Host.CreateDefaultBuilder(args)
             app.UseHttpMetrics();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapMetrics(); 
+                endpoints.MapMetrics();
             });
         });
         webBuilder.UseKestrel(options =>
         {
-            options.ListenAnyIP(8080); 
+            options.ListenAnyIP(8080);
         });
     });
 
