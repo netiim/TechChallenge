@@ -14,15 +14,20 @@ namespace ContatoAPI.Controllers
     {
         private readonly IEstadoService _estadoService;
         private readonly IMapper _mapper;
+        private readonly ILogger<EstadoController> _logger;
         /// <summary>
         /// Construtor do EstadoController.
         /// </summary>
         /// <param name="estadoService">O serviço de Estado.</param>
         /// <param name="mapper">O mapeador para conversão de objetos.</param>
-        public EstadoController( IEstadoService estadoService, IMapper mapper)
+        public EstadoController(IEstadoService estadoService, IMapper mapper, ILogger<EstadoController> logger,IConfiguration config)
         {
+
             _estadoService = estadoService;
             _mapper = mapper;
+            _logger = logger;
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            _logger.LogCritical(connectionString);
         }
 
         /// <summary>
