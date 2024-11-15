@@ -121,9 +121,9 @@ public static class ExtensionsProgram
     }
     public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
     {
-        string? connectionString = env.IsDevelopment() ? 
-                                  configuration.GetConnectionString("DefaultConnection") 
-                                  : Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION_STRING");
+        string? connectionString = env.IsDevelopment()
+            ? configuration.GetConnectionString("DefaultConnection")
+            : Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION_STRING");
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString),

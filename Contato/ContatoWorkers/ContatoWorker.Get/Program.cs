@@ -10,8 +10,8 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddInjecoesDependencias();
         services.AddAutoMapper();
         services.AddFluentValidation();
-        services.AddDatabaseConfiguration(hostContext.Configuration);
-        services.AddMassTransitWithRabbitMq(hostContext.Configuration);
+        services.AddDatabaseConfiguration(hostContext.Configuration, hostContext.HostingEnvironment);
+        services.AddMassTransitWithRabbitMq(hostContext.Configuration, hostContext.HostingEnvironment);
     })
     .ConfigureWebHostDefaults(webBuilder =>
     {
