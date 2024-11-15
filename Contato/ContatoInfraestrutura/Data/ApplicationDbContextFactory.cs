@@ -13,8 +13,8 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
     public ApplicationDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-        optionsBuilder.UseSqlServer("Server=localhost;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;");
+        var sqlConnectionString = Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION_STRING");
+        optionsBuilder.UseSqlServer(sqlConnectionString);
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }

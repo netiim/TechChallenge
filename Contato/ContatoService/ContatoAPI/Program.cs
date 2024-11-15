@@ -8,6 +8,7 @@ using MassTransit;
 using Aplicacao.Consumers;
 using Core.DTOs.ContatoDTO;
 using Core.Contratos.Request;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +21,11 @@ builder.Services.AddAutoMapper();
 builder.Services.AddFluentValidation();
 builder.Services.AddCustomAuthentication(builder.Configuration);
 builder.Configuration.AddEnvironmentVariables();
+var logger = builder.Services.BuildServiceProvider().GetService<ILogger<Program>>();
 
-builder.Services.AddDatabaseConfiguration(builder.Configuration);
+builder.Services.AddDatabaseConfiguration(builder.Configuration, builder.Environment);
 
-builder.Services.AddMassTransitWithRabbitMq(builder.Configuration);
+builder.Services.AddMassTransitWithRabbitMq(builder.Configuration, builder.Environment);
 
 byte[] key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("SecretJWT"));
 

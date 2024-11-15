@@ -10,6 +10,7 @@ using MassTransit;
 using ContatoWorker.Get.Consumers;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ContatoAPI.Extension;
 
@@ -37,8 +38,12 @@ public static class ConfiguracaoBase
         services.AddFluentValidationAutoValidation();
         return services;
     }
-    public static void AddMassTransitWithRabbitMq(this IServiceCollection services, IConfiguration configuration)
+    public static void AddMassTransitWithRabbitMq(this IServiceCollection services, IConfiguration configuration, IHostEnvironment env)
     {
+        string? host = env.IsDevelopment() ? configuration["RabbitMq:Host"] : Environment.GetEnvironmentVariable("RABBITMQ_HOST");
+        string? username = env.IsDevelopment() ? configuration["RabbitMq:Username"] : Environment.GetEnvironmentVariable("RABBITMQ_USERNAME");
+        string? senha = env.IsDevelopment() ? configuration["RabbitMq:Password"] : Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD");
+
         services.AddMassTransit(x =>
         {
             x.AddConsumer<GetContatosConsumer>()
@@ -46,10 +51,10 @@ public static class ConfiguracaoBase
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(configuration["RabbitMq:Host"], h =>
+                cfg.Host(host, h =>
                 {
-                    h.Username(configuration["RabbitMq:Username"]);
-                    h.Password(configuration["RabbitMq:Password"]);
+                    h.Username(username);
+                    h.Password(senha);
                 });
 
                 cfg.UsePrometheusMetrics(serviceName: "contato-get");
@@ -58,9 +63,11 @@ public static class ConfiguracaoBase
             });
         });
     }
-    public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration, IHostEnvironment env)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        string? connectionString = env.IsDevelopment()
+            ? configuration.GetConnectionString("DefaultConnection")
+            : Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION_STRING");
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString),
             ServiceLifetime.Scoped);

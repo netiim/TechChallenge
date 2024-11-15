@@ -1,18 +1,34 @@
 using ContatoAPI.Extension;
-using ContatoWorker.Put.Consumers;
-using Infraestrutura.Data;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Prometheus;
+using Microsoft.AspNetCore.Hosting;
 
-var builder = Host.CreateApplicationBuilder(args);
-
-builder.Services.AddInjecoesDependencias();
-builder.Services.AddAutoMapper();
-builder.Services.AddFluentValidation();
-
-builder.Services.AddDatabaseConfiguration(builder.Configuration);
-
-builder.Services.AddMassTransitWithRabbitMq(builder.Configuration);
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddInjecoesDependencias();
+        services.AddAutoMapper();
+        services.AddFluentValidation();
+        services.AddDatabaseConfiguration(hostContext.Configuration, hostContext.HostingEnvironment);
+        services.AddMassTransitWithRabbitMq(hostContext.Configuration, hostContext.HostingEnvironment);
+    })
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.Configure(app =>
+        {
+            app.UseRouting();
+            app.UseHttpMetrics();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapMetrics();
+            });
+        });
+        webBuilder.UseKestrel(options =>
+        {
+            options.ListenAnyIP(8080);
+        });
+    });
 
 var host = builder.Build();
 host.Run();
