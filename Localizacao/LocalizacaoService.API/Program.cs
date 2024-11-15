@@ -12,41 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
-builder.Services.AddInjecoesDependencias();
+builder.Services.AddInjecoesDependencias(); 
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDbSettings"));
+builder.Services.AddDatabaseConfiguration(builder.Configuration, builder.Environment);
 
-builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
-{
-    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
-    return new MongoClient(settings.ConnectionString);
-});
-
-builder.Services.AddScoped(sp =>
-{
-    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
-    var client = sp.GetRequiredService<IMongoClient>();
-    return client.GetDatabase(settings.DatabaseName);
-});
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.Services.AddMassTransit(x =>
-{
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host(builder.Configuration["RabbitMq:Host"], h =>
-        {
-            h.Username(builder.Configuration["RabbitMq:Username"]);
-            h.Password(builder.Configuration["RabbitMq:Password"]);
-        });
 
-        cfg.UsePrometheusMetrics(serviceName: "localizacao_service");
-
-        cfg.Message<RegiaoConsumerDTO>(configTopology => { });
-        cfg.Message<ReadEstadoDTO>(configTopology => { });
-    });
-});
+builder.Services.AddMassTransitWithRabbitMq(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
