@@ -25,13 +25,12 @@
   "description": "MassTransit is a message-based distributed application framework for .NET http://masstransit-project.com.\r\n\r\nMassTransit supports Prometheus metric capture, which provides useful observability into the bus, endpoints, consumers, and messages.\r\n\r\nThis dashboard shows the messages published and sent using MassTransit framework.",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 17680,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 6,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -39,13 +38,14 @@
         "y": 0
       },
       "id": 58,
+      "panels": [],
       "title": "General",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "${datasource}"
       },
       "description": "Events are objects published and broadcasted to be picked up by all consumers that are listening to that event type. It means that something has happened. (e.g.: UserUpdated)",
       "fieldConfig": {
@@ -97,12 +97,12 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddxzxo073gy68c"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -164,7 +164,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Commands are objects sent direct to an endpoint and will be picked up by the first consumer that implements it. It means that something must be performed after receiving that message.",
       "fieldConfig": {
@@ -216,7 +216,7 @@
         "frameIndex": 0,
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -284,7 +284,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Number of bus instances",
       "fieldConfig": {
@@ -337,7 +337,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -356,7 +356,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of messages consumed",
       "fieldConfig": {
@@ -407,7 +407,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -496,301 +496,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
-      },
-      "description": "Total number of messages consumed (one to many events)",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:7339",
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 0,
-        "y": 22
-      },
-      "id": 43,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ddxzxo073gy68c"
-          },
-          "editorMode": "code",
-          "expr": "sum(increase(mt_publish_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Publish Total",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:7339",
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "reqps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 6,
-        "y": 22
-      },
-      "id": 64,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ddxzxo073gy68c"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(mt_publish_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Publish Rate",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
-      },
-      "description": "Total number of message publish faults",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:7339",
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
-        "y": 22
-      },
-      "id": 48,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ddxzxo073gy68c"
-          },
-          "editorMode": "code",
-          "expr": "sum(increase(mt_publish_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__range]))",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Publish Fault Total",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:7339",
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 22
-      },
-      "id": 63,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ddxzxo073gy68c"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(mt_publish_fault_total{env=\"$environment\",app=~\"$application\",message_type=~\"$MessageType\"}[$__rate_interval]))",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Publish Fault Rate",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of messages sent (one to one commands)",
       "fieldConfig": {
@@ -826,7 +532,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 30
+        "y": 22
       },
       "id": 44,
       "options": {
@@ -844,7 +550,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -863,7 +569,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "",
       "fieldConfig": {
@@ -899,7 +605,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 30
+        "y": 22
       },
       "id": 61,
       "options": {
@@ -917,7 +623,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -936,7 +642,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of message send faults",
       "fieldConfig": {
@@ -972,7 +678,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 30
+        "y": 22
       },
       "id": 50,
       "options": {
@@ -990,7 +696,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1009,7 +715,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "",
       "fieldConfig": {
@@ -1045,7 +751,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 30
+        "y": 22
       },
       "id": 62,
       "options": {
@@ -1063,7 +769,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1081,34 +787,21 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 30
       },
       "id": 18,
       "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "refId": "A"
-        }
-      ],
       "title": "Consumers",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of messages consumed",
       "fieldConfig": {
@@ -1128,7 +821,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           },
@@ -1140,7 +834,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 39
+        "y": 31
       },
       "id": 31,
       "options": {
@@ -1160,7 +854,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1179,7 +873,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "",
       "fieldConfig": {
@@ -1199,7 +893,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           },
@@ -1211,7 +906,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 39
+        "y": 31
       },
       "id": 65,
       "options": {
@@ -1229,7 +924,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1248,7 +943,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of message consume faults",
       "fieldConfig": {
@@ -1268,7 +963,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               }
             ]
           },
@@ -1280,7 +976,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 39
+        "y": 31
       },
       "id": 38,
       "options": {
@@ -1300,7 +996,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1319,7 +1015,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "",
       "fieldConfig": {
@@ -1339,7 +1035,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               }
             ]
           },
@@ -1351,7 +1048,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 39
+        "y": 31
       },
       "id": 60,
       "options": {
@@ -1369,7 +1066,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1388,7 +1085,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Number of receive endpoint instances.",
       "fieldConfig": {
@@ -1408,7 +1105,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "blue"
+                "color": "blue",
+                "value": null
               }
             ]
           },
@@ -1420,7 +1118,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 47
+        "y": 39
       },
       "id": 47,
       "options": {
@@ -1440,7 +1138,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1459,7 +1157,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Number of consumers in progress",
       "fieldConfig": {
@@ -1479,7 +1177,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "blue"
+                "color": "blue",
+                "value": null
               }
             ]
           },
@@ -1491,7 +1190,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 47
+        "y": 39
       },
       "id": 39,
       "options": {
@@ -1511,7 +1210,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1530,7 +1229,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "Total number of message consume retries",
       "fieldConfig": {
@@ -1550,7 +1249,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "yellow"
+                "color": "yellow",
+                "value": null
               }
             ]
           },
@@ -1562,7 +1262,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 47
+        "y": 39
       },
       "id": 42,
       "options": {
@@ -1582,7 +1282,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1601,7 +1301,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddxzxo073gy68c"
+        "uid": "de40m7v0gf3lsc"
       },
       "description": "",
       "fieldConfig": {
@@ -1621,7 +1321,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "yellow"
+                "color": "yellow",
+                "value": null
               }
             ]
           },
@@ -1633,7 +1334,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 47
+        "y": 39
       },
       "id": 59,
       "options": {
@@ -1653,7 +1354,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1670,41 +1371,6 @@
       "type": "stat"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                5
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "Consume Duration alert",
-        "noDataState": "no_data",
-        "notifications": []
-      },
       "datasource": {
         "type": "prometheus",
         "uid": "ddxzxo073gy68c"
@@ -1722,6 +1388,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -1753,7 +1420,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -1766,10 +1434,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 12,
+        "h": 1,
+        "w": 1,
         "x": 0,
-        "y": 55
+        "y": 47
       },
       "id": 6,
       "options": {
@@ -1784,7 +1452,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1802,41 +1470,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                42
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "10s",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "10s",
-        "frequency": "5s",
-        "handler": 1,
-        "name": "Delivery Duration Long",
-        "noDataState": "no_data",
-        "notifications": []
-      },
       "datasource": {
         "type": "prometheus",
         "uid": "ddxzxo073gy68c"
@@ -1854,6 +1487,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -1885,7 +1519,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -1898,10 +1533,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 12,
-        "y": 55
+        "h": 1,
+        "w": 1,
+        "x": 23,
+        "y": 47
       },
       "id": 8,
       "options": {
@@ -1916,7 +1551,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.3.1",
+      "pluginVersion": "11.3.0+security-01",
       "targets": [
         {
           "datasource": {
@@ -1934,8 +1569,9 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "5s",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [
     "MassTransit",
     "Event Driven Architecture"
@@ -1944,25 +1580,20 @@
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "prometheus",
-          "value": "ddxzxo073gy68c"
+          "value": "de40m7v0gf3lsc"
         },
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
           "text": "None",
           "value": ""
         },
@@ -1971,10 +1602,8 @@
           "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(env)",
-        "hide": 0,
         "includeAll": false,
         "label": "Environment",
-        "multi": false,
         "name": "environment",
         "options": [],
         "query": {
@@ -1983,14 +1612,11 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -1999,7 +1625,6 @@
           "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(domain)",
-        "hide": 0,
         "includeAll": true,
         "label": "Domain",
         "multi": true,
@@ -2011,14 +1636,11 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2027,7 +1649,6 @@
           "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(app)",
-        "hide": 0,
         "includeAll": true,
         "label": "Application",
         "multi": true,
@@ -2039,14 +1660,11 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2055,7 +1673,6 @@
           "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(message_type)",
-        "hide": 0,
         "includeAll": true,
         "label": "Message Type",
         "multi": true,
@@ -2067,17 +1684,12 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2086,7 +1698,6 @@
           "uid": "ddxzxo073gy68c"
         },
         "definition": "label_values(consumer_type)",
-        "hide": 0,
         "includeAll": true,
         "label": "Consumer Type",
         "multi": true,
@@ -2098,16 +1709,11 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2119,7 +1725,6 @@
         "hide": 2,
         "includeAll": true,
         "label": "Publish Message Type",
-        "multi": false,
         "name": "PublishMessageType",
         "options": [],
         "query": {
@@ -2128,17 +1733,11 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2159,16 +1758,10 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2179,7 +1772,6 @@
         "definition": "label_values(mt_saga_in_progress,consumer_type)",
         "hide": 2,
         "includeAll": true,
-        "multi": false,
         "name": "SagaType",
         "options": [],
         "query": {
@@ -2188,16 +1780,10 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "current": {
-          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2208,7 +1794,6 @@
         "definition": "label_values(mt_saga_in_progress,message_type)",
         "hide": 2,
         "includeAll": true,
-        "multi": false,
         "name": "SagaMessageType",
         "options": [],
         "query": {
@@ -2217,12 +1802,7 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       }
     ]
   },
@@ -2230,20 +1810,7 @@
     "from": "now-5m",
     "to": "now"
   },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ]
-  },
+  "timepicker": {},
   "timezone": "",
   "title": "MassTransit - Messages Monitoring",
   "uid": "vOtk-UjWz-2",
