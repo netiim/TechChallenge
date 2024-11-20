@@ -73,7 +73,6 @@ namespace TemplateWebApiNet8.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [HttpPost("criar-usuario")]
-        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Criausuario([FromBody] CreateUsuarioDTO usuarioDTO)
         {
             try

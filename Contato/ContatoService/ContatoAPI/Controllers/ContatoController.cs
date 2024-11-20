@@ -54,7 +54,7 @@ namespace ContatoAPI.Controllers
         /// <returns>Uma lista de contatos.</returns>
         /// <response code="200">Se a operação foi bem-sucedida e retorna a lista de contatos.</response>
         /// <response code="400">Se houve um erro na solicitação.</response>
-        [HttpGet("BuscarTodosContatos")]
+        [HttpGet("BuscarTodosContatos-TesteKubernetes")]
         public async Task<IActionResult> ObterTodos()
         {
             var response = await _requestGetClient.GetResponse<ContatosResponse, ContatoErroResponse>(new GetContatosRequest(), timeout: TimeSpan.FromSeconds(30));
