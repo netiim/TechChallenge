@@ -20,6 +20,7 @@ services:
     image: netiim/contato-post:latest
     container_name: contato-post
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
@@ -33,6 +34,7 @@ services:
     image: netiim/contato-delete:latest
     container_name: contato-delete
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
@@ -46,6 +48,7 @@ services:
     image: netiim/contato-put:latest
     container_name: contato-put
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
@@ -59,6 +62,7 @@ services:
     image: netiim/contato-get:latest
     container_name: contato-get
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sql-server;Database=TechChallenge;User ID=sa;Password=YourStrongPassword1!;TrustServerCertificate=True;
     depends_on:
       - db
