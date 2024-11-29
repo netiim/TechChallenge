@@ -19,7 +19,6 @@ public class DatabaseController : ControllerBase
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
     [HttpPost("ExecutarMigracaoBanco")]
-    [Authorize(Roles = Roles.Administrador)]
     public IActionResult Migrate()
     {
         try

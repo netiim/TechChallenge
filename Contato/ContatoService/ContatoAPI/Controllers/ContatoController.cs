@@ -6,6 +6,7 @@ using Core.DTOs.ContatoDTO;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Prometheus;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContatoAPI.Controllers
 {
@@ -160,8 +161,7 @@ namespace ContatoAPI.Controllers
             }
             catch (Exception e)
             {
-                publishFaultCounter.WithLabels("ContatoErroResponse").Inc();
-                return BadRequest(e.Message);
+                throw new Exception(e.Message);
             }
 
         }
